@@ -1,1 +1,1 @@
-*** Brawlstars Calculator Script
+### Brawlstars Calculator Script
