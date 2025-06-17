@@ -96,11 +96,13 @@ const outputEl = document.getElementById("output");
 async function runCalc(){
   const py = await pyReady;
   const calc = py.globals.get('calculate');
-  const result = calc([
+  const pyRes = calc([
     document.getElementById("b1").value,
     document.getElementById("b2").value,
     document.getElementById("b3").value
   ]);
+  const result = pyRes.toJs();
+  pyRes.destroy();
   outputEl.textContent = result;
 }
 
