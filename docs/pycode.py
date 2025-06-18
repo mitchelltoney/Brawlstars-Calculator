@@ -90,14 +90,14 @@ key = {
 "Willow":["Barley","Larry","Buzz"]
 }
 def countBrawler(name, counts): counts[name]=counts.get(name,0)+1
-def returnBrawlerString(name,counterclasses=True):
-    brawlerList=[]; counterClass="Counter Classes: "; count=0
-    for counter in key[name]:
-        if "T>" in counter:
-            counterClass+=((", " if count else "")+counter[2:]); count+=1; continue
-        brawlerList.append(counter)
-    return("—"*44+"\\n"+f"{name} Counters: "+", ".join(brawlerList)+
-           (("\\n"+counterClass)*(count>0)*counterclasses)+"\\n"+"—"*44)
+# def returnBrawlerString(name,counterclasses=True):
+#     brawlerList=[]; counterClass="Counter Classes: "; count=0
+#     for counter in key[name]:
+#         if "T>" in counter:
+#             counterClass+=((", " if count else "")+counter[2:]); count+=1; continue
+#         brawlerList.append(counter)
+#     return("—"*44+"\\n"+f"{name} Counters: "+", ".join(brawlerList)+
+#            (("\\n"+counterClass)*(count>0)*counterclasses)+"\\n"+"—"*44)
 def handleCases(name):
     n=name.lower()
     if "primo" in n: return "El Primo"
