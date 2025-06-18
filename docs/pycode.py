@@ -99,12 +99,16 @@ def countBrawler(name, counts): counts[name]=counts.get(name,0)+1
 #     return("—"*44+"\\n"+f"{name} Counters: "+", ".join(brawlerList)+
 #            (("\\n"+counterClass)*(count>0)*counterclasses)+"\\n"+"—"*44)
 def handleCases(name):
-    n=name.lower()
+    raw = name.strip()
+    for k in key.keys():
+        if k.lower() == raw.lower():
+            return k
+    n=raw.lower()
     if "primo" in n: return "El Primo"
     if "miko"  in n: return "Mico"
     if "mike"  in n: return "Dynamike"
     if "barry" in n: return "Berry"
-    return name.title()
+    return raw.title()
 def calculate(inputs):
     selected = []
     counts = {}
