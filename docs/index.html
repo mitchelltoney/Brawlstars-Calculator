@@ -160,7 +160,11 @@ async function runCalc(){
   const card = document.createElement("div");
   card.className = "counter-card";
   const img  = document.createElement("img");
-  img.src = `icons/grom.png`;                // keep hard-coded for now
+  const filename = name
+        .toLowerCase()          // grom → grom, Mr P → mr p, El Primo → el primo
+        .replace(/[\s.']/g, "_")
+        + ".png"; 
+  img.src = `icons/${filename}`;
   img.alt = name;
   const span = document.createElement("span");
   span.className = "name";
