@@ -98,13 +98,11 @@ async function runCalc(){
   const py = await pyReady;
   console.log("✅ pyReady resolved", py);
   const calc = py.globals.get('calculate');
-  const pyRes = calc([
+  const result = calc([
     document.getElementById("b1").value,
     document.getElementById("b2").value,
     document.getElementById("b3").value
   ]);
-  const result = pyRes.toString();
-  pyRes.destroy();
   outputEl.textContent = result;
 }
 
