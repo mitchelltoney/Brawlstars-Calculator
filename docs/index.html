@@ -65,6 +65,9 @@
       font-size: 0.9rem;
       text-shadow: 0 0 4px rgba(0,0,0,0.6);
     }
+    .row {       
+    margin-top: 1.25rem;
+    }
 </style>
 </head>
 <body>
@@ -127,55 +130,57 @@ async function runCalc(){
   console.log("raw from Python:", raw);
   const data = JSON.parse(raw);
 
-  // clear previous
   outputEl.innerHTML = "";
+  function makeCard(name){
+  const card = document.createElement("div");
+  card.className = "counter-card";
+  const img  = document.createElement("img");
+  img.src = `icons/grom.png`;                // keep hard-coded for now
+  img.alt = name;
+  const span = document.createElement("span");
+  span.className = "name";
+  span.textContent = name;
+  card.append(img, span);
+  return card;
+}
 
-  // 2) for each selected brawler group...
-  data.results.forEach(group => {
-    // optional: you could insert a heading here with group.brawler
-    group.counters.forEach(name => {
-      const card = document.createElement("div");
-      card.className = 'counter-card';
+/* 1) --- each selected brawler and its direct counters --- */
+data.results.forEach(group=>{
+  const row   = document.createElement("div");   // whole row
+  row.className = "row";
 
-      const img = document.createElement("img");
-    //   img.src = `icons/${name
-    //   .toLowerCase()
-    //   .replace(/[\s.']/g,'-')
-    //   .replace(/[^a-z0-9-]/g,'')
-    // }.png`;
-      img.src = `icons/grom.png`;
-      img.alt = name;
+  const label = document.createElement("h3");    // “Colt Counters:”
+  label.textContent = `${group.brawler} Counters:`;
+  row.appendChild(label);
 
-      const span = document.createElement("span");
-      span.className = 'name';
-      span.textContent = name;
+  const grid  = document.createElement("div");   // images grid
+  grid.className = "output-grid";
+  group.counters.forEach(c=>grid.appendChild(makeCard(c)));
 
-      card.append(img, span);
-      outputEl.append(card);
-    });
-  });
+  row.appendChild(grid);
+  outputEl.appendChild(row);
+});
 
-  // 3) render overlaps if you want
-  if (data.doubleOverlaps.length) {
-    const h4 = document.createElement('h4');
-    h4.textContent = 'Double Overlaps';
-    outputEl.append(h4);
-    data.doubleOverlaps.forEach(n => {
-      const span = document.createElement('span');
-      span.textContent = n;
-      outputEl.append(span);
-    });
-  }
-  if (data.tripleOverlaps.length) {
-    const h4 = document.createElement('h4');
-    h4.textContent = 'Triple Overlaps';
-    outputEl.append(h4);
-    data.tripleOverlaps.forEach(n => {
-      const span = document.createElement('span');
-      span.textContent = n;
-      outputEl.append(span);
-    });
-  }
+/* 2) --- overlaps (if any) --- */
+function renderOverlap(title, list){
+  if(!list.length) return;
+  const row   = document.createElement("div");
+  row.className = "row";
+
+  const label = document.createElement("h3");
+  label.textContent = title;
+  row.appendChild(label);
+
+  const grid  = document.createElement("div");
+  grid.className = "output-grid";
+  list.forEach(n=>grid.appendChild(makeCard(n)));
+
+  row.appendChild(grid);
+  outputEl.appendChild(row);
+}
+
+renderOverlap("Double Overlaps:", data.doubleOverlaps);
+renderOverlap("Triple Overlaps:", data.tripleOverlaps);
 }
 
 document.getElementById("go").addEventListener("click",runCalc);
