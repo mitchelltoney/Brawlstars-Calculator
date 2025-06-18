@@ -81,10 +81,11 @@
       gap:2rem;             
     }
     .row{                       
-      flex:1 1 140px;           
+      flex:1 1 160px;           
       text-align:center;   
     }
     .row .output-grid{
+      grid-template-columns: 1fr;
       justify-content:center;
     }
 </style>
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const dl = document.getElementById("brawlers");
   brawlerNames.forEach(n=>{const o=document.createElement("option");o.value=n;dl.appendChild(o)});
 });
-console.log("pursion loaded")
+console.log("lesion loaded")
 const pyReady = (async ()=>{
   const pyodide = await loadPyodide();
   await pyodide.loadPackage("micropip");
