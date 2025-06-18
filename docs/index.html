@@ -81,7 +81,7 @@
       gap:2rem;             
     }
     .row{                       
-      flex:1 1 160px;           
+      flex:1 1 140px;           
       text-align:center;   
     }
     .row .output-grid{
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const dl = document.getElementById("brawlers");
   brawlerNames.forEach(n=>{const o=document.createElement("option");o.value=n;dl.appendChild(o)});
 });
-console.log("lesion loaded")
+console.log("emplion loaded")
 const pyReady = (async ()=>{
   const pyodide = await loadPyodide();
   await pyodide.loadPackage("micropip");
