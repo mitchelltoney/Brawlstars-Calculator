@@ -42,6 +42,29 @@
         border-radius:8px;margin-top:1.75rem;max-height:60vh;overflow:auto
     }
     .footer{margin-top:2rem;font-size:.75rem;opacity:.8}
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+    }
+    .counter-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .counter-card img {
+      width: 64px; 
+      height: 64px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 0.25rem;
+      background: #fff;
+    }
+    .counter-card .name {
+      font-size: 0.9rem;
+      text-shadow: 0 0 4px rgba(0,0,0,0.6);
+    }
 </style>
 </head>
 <body>
@@ -61,7 +84,7 @@
 
     <button id="go">Go</button>
 
-    <pre id="output"></pre>
+    <div id="output" class="output-grid"></div>
 
 </div>
 
@@ -94,17 +117,67 @@ const pyReady = (async ()=>{
 
 const outputEl = document.getElementById("output");
 async function runCalc(){
-  console.group("runCalc ▶️");
   const py = await pyReady;
-  console.log("✅ pyReady resolved", py);
   const calc = py.globals.get('calculate');
   const raw = calc([
     document.getElementById("b1").value,
     document.getElementById("b2").value,
     document.getElementById("b3").value
   ]);
-  result = raw.replace(/\\n/g, '\n');
-  outputEl.textContent = result;
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch(e) {
+    // fallback: show raw if JSON fails
+    outputEl.textContent = raw;
+    return;
+  }
+
+  // clear previous
+  outputEl.innerHTML = "";
+
+  // 2) for each selected brawler group...
+  data.results.forEach(group => {
+    // optional: you could insert a heading here with group.brawler
+    group.counters.forEach(name => {
+      const card = document.createElement("div");
+      card.className = 'counter-card';
+
+      const img = document.createElement("img");
+      // img.src = `/icons/${name.toLowerCase().replace(/ /g,'-')}.png`;
+      img.src = `/icons/grom.png`;
+      img.alt = name;
+
+      const span = document.createElement("span");
+      span.className = 'name';
+      span.textContent = name;
+
+      card.append(img, span);
+      outputEl.append(card);
+    });
+  });
+
+  // 3) render overlaps if you want
+  if (data.doubleOverlaps.length) {
+    const h4 = document.createElement('h4');
+    h4.textContent = 'Double Overlaps';
+    outputEl.append(h4);
+    data.doubleOverlaps.forEach(n => {
+      const span = document.createElement('span');
+      span.textContent = n;
+      outputEl.append(span);
+    });
+  }
+  if (data.tripleOverlaps.length) {
+    const h4 = document.createElement('h4');
+    h4.textContent = 'Triple Overlaps';
+    outputEl.append(h4);
+    data.tripleOverlaps.forEach(n => {
+      const span = document.createElement('span');
+      span.textContent = n;
+      outputEl.append(span);
+    });
+  }
 }
 
 document.getElementById("go").addEventListener("click",runCalc);

@@ -1,4 +1,4 @@
-
+import json
 key = {
 "8bit":["Penny","Brock","Squeak","Piper"],
 "Amber":["Carl","Crow","Piper","Belle","Pam"],
@@ -106,20 +106,28 @@ def handleCases(name):
     if "barry" in n: return "Berry"
     return name.title()
 def calculate(inputs):
-    selected=set(); counts={}; blist=[]
+    selected = []
+    counts = {}
     for raw in inputs:
         if not raw: continue
-        b=handleCases(raw.strip())
+        b = handleCases(raw.strip())
         if b in selected or b not in key: continue
-        selected.add(b); blist.append(b)
-        for x in key[b]: countBrawler(x,counts)
-    out="";                    # assemble final string
-    for b in blist: out+=returnBrawlerString(b,False)+"\\n"
-    d=[k for k,v in counts.items() if v==2]
-    t=[k for k,v in counts.items() if v==3]
-    if d or t:
-        out+="—"*44+"\\n"
-        if d: out+="Double Overlaps: "+", ".join(d)+"\\n"
-        if t: out+="Triple Overlaps: "+", ".join(t)+"\\n"
-        out+="—"*44
-    return out
+        selected.append(b)
+        for x in key[b]:
+            countBrawler(x, counts)
+    results = []
+    for b in selected:
+        direct = [c for c in key[b] if not c.startswith("T>")]
+        classes = [c[2:] for c in key[b] if c.startswith("T>")]
+        results.append({
+            "brawler": b,
+            "counters": direct,
+            "classes": classes
+        })
+    doubles = [k for k,v in counts.items() if v == 2]
+    triples = [k for k,v in counts.items() if v == 3]
+    return json.dumps({
+        "results": results,
+        "doubleOverlaps": doubles,
+        "tripleOverlaps": triples
+    })
