@@ -124,14 +124,8 @@ async function runCalc(){
     document.getElementById("b2").value,
     document.getElementById("b3").value
   ]);
-  let data;
-  try {
-    data = JSON.parse(raw);
-  } catch(e) {
-    // fallback: show raw if JSON fails
-    outputEl.textContent = raw;
-    return;
-  }
+  console.log("raw from Python:", raw);
+  const data = JSON.parse(raw);
 
   // clear previous
   outputEl.innerHTML = "";
