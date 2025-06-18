@@ -83,7 +83,6 @@
     <datalist id="brawlers"></datalist>
 
     <button id="go">Go</button>
-    <img src="icons/grom.png" alt="Grom test">
 
     <div id="output" class="output-grid"></div>
 
@@ -139,8 +138,12 @@ async function runCalc(){
       card.className = 'counter-card';
 
       const img = document.createElement("img");
-      // img.src = `/icons/${name.toLowerCase().replace(/ /g,'-')}.png`;
-      img.src = '/icons/grom.png';
+    //   img.src = `icons/${name
+    //   .toLowerCase()
+    //   .replace(/[\s.']/g,'-')
+    //   .replace(/[^a-z0-9-]/g,'')
+    // }.png`;
+      img.src = `icons/grom.png`;
       img.alt = name;
 
       const span = document.createElement("span");
