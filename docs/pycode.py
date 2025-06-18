@@ -5,7 +5,7 @@ key = {
 "Angelo":["Kit","Max","Nani"],
 "Ash":["Rosa","Frank","Bull","Surge","T>Anti-Tanks", "Lumi"],
 "Barley":["Mico","Kenji","Edgar","Mortis","T>Assassins"],
-"Bea":["Piper","Sprout","Mr. P","T>Throwers"],
+"Bea":["Piper","Sprout","Mr P","T>Throwers"],
 "Belle":["Nani","Darryl","Piper"],
 "Berry":["Barley","Kenji","Mortis","T>Assassins"],
 "Bibi":["Surge","El Primo","Cordelius","Shelly"],
