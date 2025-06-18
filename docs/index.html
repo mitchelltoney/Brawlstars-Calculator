@@ -81,12 +81,12 @@
       display:flex;
       align-items:center;
       gap:1rem;            
-      margin-top:1.25rem;
+      margin-top:0.75rem;
       text-align:left;       
     }
     .row h3{
       margin:0;             
-      white-space:nowrap;
+      white-space:normal;
     }
     .row .output-grid{        
       display:flex;           
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const dl = document.getElementById("brawlers");
   brawlerNames.forEach(n=>{const o=document.createElement("option");o.value=n;dl.appendChild(o)});
 });
-console.log("gallion loaded")
+console.log("pallion loaded")
 const pyReady = (async ()=>{
   const pyodide = await loadPyodide();
   await pyodide.loadPackage("micropip");
@@ -175,7 +175,7 @@ data.results.forEach(group=>{
   row.className = "row";
 
   const label = document.createElement("h3");    // “Colt Counters:”
-  label.textContent = `${group.brawler} Counters:`;
+  label.innerHTML = `${group.brawler}<br>Counters :`;
   row.appendChild(label);
 
   const grid  = document.createElement("div");   // images grid
@@ -193,7 +193,7 @@ function renderOverlap(title, list){
   row.className = "row";
 
   const label = document.createElement("h3");
-  label.textContent = title;
+  label.innerHTML = title.replace(" ", "<br>");
   row.appendChild(label);
 
   const grid  = document.createElement("div");
