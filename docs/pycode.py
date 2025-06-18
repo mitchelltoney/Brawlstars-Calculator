@@ -35,7 +35,7 @@ key = {
 "Eve":["Piper","Penny","Janet","Max"],
 "Fang":["Clancy","Otis","Shelly","Gale"],
 "Finx":["El Primo"],
-"Frank":["Colette","El Primo","Griff","Chester", "Lumi"],
+"Frank":["Colette","El Primo","Griff","Chester", "Lumi", "Rico"],
 "Gale":["Janet","Amber","T>Thrower","Penny"],
 "Gene":["Mr P","Penny","Tara","Eve","Charlie","Belle"],
 "Gray":["Mr P","Charlie","Gus"],
@@ -90,7 +90,7 @@ key = {
 "Stu":["T>Healer","T>Sniper","Ruffs","Penny","Sandy","Poco","Belle"],
 "Surge":["T>Thrower","Ruffs","Tara","Charlie","Spike"],
 "Tara":["T>Thrower","Otis","Sandy","Janet"],
-"Tick":["Mico","Mortis","Darryl","Bibi"],
+"Tick":["Mico","Mortis","Darryl","Bibi", "Kenji"],
 "Willow":["Barley","Larry","Buzz"]
 }
 def countBrawler(name, counts): counts[name]=counts.get(name,0)+1
