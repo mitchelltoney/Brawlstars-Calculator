@@ -75,18 +75,23 @@
     margin-top: 1.25rem;
     }
     #output{
-      display:flex;             
-      flex-wrap:wrap;            
-      justify-content:center;   
-      gap:2rem;             
+      display:block;    
     }
-    .row{                       
-      flex:1 1 140px;           
-      text-align:center;   
+    .row{                    
+      display:flex;
+      align-items:center;
+      gap:1rem;            
+      margin-top:1.25rem;
+      text-align:left;       
     }
-    .row .output-grid{
-      grid-template-columns: 1fr;
-      justify-content:center;
+    .row h3{
+      margin:0;             
+      white-space:nowrap;
+    }
+    .row .output-grid{        
+      display:flex;           
+      flex-wrap:wrap;  
+      gap:0.75rem;
     }
 </style>
 </head>
@@ -127,7 +132,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const dl = document.getElementById("brawlers");
   brawlerNames.forEach(n=>{const o=document.createElement("option");o.value=n;dl.appendChild(o)});
 });
-console.log("emplion loaded")
+console.log("gallion loaded")
 const pyReady = (async ()=>{
   const pyodide = await loadPyodide();
   await pyodide.loadPackage("micropip");
