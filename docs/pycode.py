@@ -56,7 +56,7 @@ key = {
 "Lily":["RT","Jacky","Bull","Shelly"],
 "Lola":["Belle","Penny","Amber"],
 "Lou":["Belle","Bea","Bo","Poco","T>Thrower"],
-"Lumi":["Edgar", "Dynamike", "Grom", "Barley"],
+"Lumi":["Dynamike", "Grom", "Barley"],
 "Maisie":["Barley","Stu","Belle","Penny"],
 "Mandy":["Nani","Tick","Mortis","T>Thrower"],
 "Max":["Crow","Gus","Pam","Stu"],
