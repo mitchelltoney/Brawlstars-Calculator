@@ -7,10 +7,22 @@
 <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 
 <style>
+    @font-face {
+      font-family: 'Brawl Stars';
+      src: url('fonts/lilitaone-regular-webfont.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Brawl Stars';
+      src: url('fonts/nougat-extrablack-webfont.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
     html,body{height:100%;margin:0}
     body{
         display:flex;flex-direction:column;align-items:center;min-height:100vh;overflow-y:auto;
-        font-family:'Segoe UI',Roboto,Arial,sans-serif;
+        font-family:'Brawl Stars', sans-serif;
         background:#222 url('background.png') center/cover no-repeat fixed;
         color:#f8f8f8;text-align:center;padding:2rem 1rem;box-sizing:border-box
     }
