@@ -1,6 +1,6 @@
 import json
 key = {
-"8bit":["Penny","Brock","Squeak","Piper", "Colt", "Frank", "El Primo", "Mr P", "Edgar"],
+"8bit":["Penny","Brock","Squeak","Piper"],
 "Amber":["Carl","Crow","Piper","Belle","Pam"],
 "Angelo":["Kit","Max","Nani"],
 "Ash":["Rosa","Frank","Bull","Surge","T>Anti-Tanks", "Lumi"],

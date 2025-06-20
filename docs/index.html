@@ -185,10 +185,18 @@ async function runCalc(){
 
 /* 1) --- each selected brawler and its direct counters --- */
 data.results.forEach(group=>{
-  const row   = document.createElement("div");   // whole row
+  const row   = document.createElement("div");
   row.className = "row";
 
-  const label = document.createElement("h3");    // “Colt Counters:”
+  const subjectImg = document.createElement("img");
+  subjectImg.src = `icons/${group.brawler
+                    .toLowerCase()
+                    .replace(/[\s.']/g,"_")}.png`;
+  row.appendChild(subjectImg);        
+  subjectImg.alt = group.brawler;
+
+  // “Colt Counters:”
+  const label = document.createElement("h3");    
   label.innerHTML = `${group.brawler}<br>Counters :`;
   row.appendChild(label);
 
