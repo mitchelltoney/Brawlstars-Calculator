@@ -77,6 +77,13 @@
       margin-bottom: 0.25rem;
       background: #fff;
     }
+    .subject-icon{
+      width:64px;     
+      height:64px;
+      object-fit:cover;  
+      border-radius:6px; 
+      background:#fff;
+    }
     .counter-card .name {
       font-size: 0.9rem;
       text-shadow: 0 0 4px rgba(0,0,0,0.6);
@@ -189,6 +196,7 @@ data.results.forEach(group=>{
   row.className = "row";
 
   const subjectImg = document.createElement("img");
+  subjectImg.className = "subject-icon"
   subjectImg.src = `icons/${group.brawler
                     .toLowerCase()
                     .replace(/[\s.']/g,"_")}.png`;
