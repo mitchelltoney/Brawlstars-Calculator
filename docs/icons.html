@@ -10,7 +10,109 @@
 <!--  🔽  COPY-PASTE the whole <style> block from index.html  🔽  -->
 <style>
 /* …(all your existing rules)… */
+@font-face {
+      font-family: 'Brawl Stars';
+      src: url('fonts/lilitaone-regular-webfont.ttf') format('truetype');
+      font-weight: normal;
+}
+@font-face {
+    font-family: 'Brawl Stars Bold';
+    src: url('fonts/nougat-extrablack-webfont.ttf') format('truetype');
+    font-weight: normal;
+}
+html,body{height:100%;margin:0}
+body{
+    display:flex;flex-direction:column;align-items:center;min-height:100vh;overflow-y:auto;
+    font-family:'Brawl Stars', sans-serif;
+    background:#222 url('background.png') center/cover no-repeat fixed;
+    color:#f8f8f8;text-align:center;padding:2rem 1rem;box-sizing:border-box
+}
+.card{
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(6px);
+    border-radius:12px;
+    padding:2.5rem 3rem;max-width:720px;width:100%;
+    box-shadow:0 0 18px rgba(0,0,0,.45)
+}
+h1{margin-top:0;margin-bottom:1.25rem;text-shadow:0 0 8px rgba(0,0,0,.5)}
 
+label{display:block;margin:.5rem 0 .25rem;font-weight:600}
+input[type=text]{
+    margin-left: -1rem;
+    width:100%;padding:.65rem 1rem;font-size:1rem;
+    border-radius:8px;border:none;margin-bottom:1rem
+}
+button{
+    padding:.8rem 2.25rem;font-size:1.1rem;font-weight:700;
+    border:0;border-radius:8px;background:#ffca28;color:#111;cursor:pointer;
+    transition:transform .1s ease
+}
+button:hover{transform:scale(1.04)}
+input[type=file]{margin:1.5rem 0 0}
+
+pre{
+    white-space:pre-wrap;background:#111a;padding:1rem 1.5rem;
+    border-radius:8px;margin-top:1.75rem;max-height:60vh;overflow:auto
+}
+.footer{margin-top:2rem;font-size:.75rem;opacity:.8}
+.output-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+.counter-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.row{
+    text-align:center;
+}
+.output-grid{ 
+    justify-content:center; 
+}
+.counter-card img {
+    width: 64px; 
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.25rem;
+    background: #fff;
+}
+.subject-icon{
+    width:64px;     
+    height:64px;
+    object-fit:cover;  
+    border-radius:6px; 
+    background:#fff;
+}
+.counter-card .name {
+    font-size: 0.9rem;
+    text-shadow: 0 0 4px rgba(0,0,0,0.6);
+}
+.row {       
+margin-top: 1.25rem;
+}
+#output{
+    display:block;    
+}
+.row{                    
+    display:flex;
+    align-items:center;
+    gap:1rem;            
+    margin-top:0.75rem;
+    text-align:left;       
+}
+.row h3{
+    margin:0;             
+    white-space:normal;
+}
+.row .output-grid{        
+    display:flex;           
+    flex-wrap:wrap;  
+    gap:0.75rem;
+}
 /* extra rules only needed here */
 .icon-grid{
   display:grid;
