@@ -7,9 +7,7 @@
 <!-- Pyodide -->
 <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 
-<!--  🔽  COPY-PASTE the whole <style> block from index.html  🔽  -->
 <style>
-/* …(all your existing rules)… */
 @font-face {
       font-family: 'Brawl Stars';
       src: url('fonts/lilitaone-regular-webfont.ttf') format('truetype');
@@ -162,7 +160,7 @@ const brawlerNames = [
 "Stu","Surge","Tara","Tick","Willow"
 ];
 console.log("gallion5.0 loaded")
-/* ----------  load Pyodide & your python  ---------- */
+/* ----------  load Pyodide and python ---------- */
 const pyReady=(async()=>{
   const pyodide=await loadPyodide();
   await pyodide.loadPackage("micropip");
@@ -201,7 +199,7 @@ grid.addEventListener("click",e=>{
   }
 });
 
-/* ----------  calculation & output (same routine you already have) ---------- */
+/* ----------  calculation & output  ---------- */
 const outputEl=document.getElementById("output");
 
 function makeCard(name){
@@ -221,7 +219,7 @@ async function runCalc(){
   const py=await pyReady;
   const calc=py.globals.get("calculate");
 
-  /* pad with empty strings so the python expects three items */
+  /* pad with empty strings */
   const arr=[...picks];
   const raw=calc([arr[0]||"",arr[1]||"",arr[2]||""]);
   const data=JSON.parse(raw);
