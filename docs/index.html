@@ -241,7 +241,7 @@ function makeCard(name){
 }
 
 async function runCalc(){
-  if(!picks.size){alert("Select at least one brawler");return;}
+  if(!picks.length){alert("Select at least one brawler");return;}
   const py=await pyReady;
   const calc=py.globals.get("calculate");
 
