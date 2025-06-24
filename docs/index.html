@@ -186,7 +186,8 @@ const pyReady=(async()=>{
 
 /* ----------  build the icon grid  ---------- */
 const grid=document.getElementById("iconGrid");
-const picks=new Set();
+const picks = [];
+const MAX = 3; 
 
 function fileName(n){
   return n.toLowerCase().replace(/[\s.']/g,"_")+".png";
@@ -199,19 +200,29 @@ brawlerNames.forEach(n=>{
   grid.appendChild(img);
 });
 
-grid.addEventListener("click",e=>{
-  const img=e.target.closest("img");
-  if(!img) return;
-  const name=img.dataset.name;
+grid.addEventListener("click", e => {
+  const img  = e.target.closest("img");
+  if (!img) return;
 
-  if(img.classList.contains("selected")){
+  const name = img.dataset.name;
+  const i    = picks.indexOf(name);
+
+  if (i !== -1) {                     // already selected ⇒ un-select
+    picks.splice(i, 1);
     img.classList.remove("selected");
-    picks.delete(name);
-  }else{
-    if(picks.size===3){alert("Only three brawlers please");return;}
-    img.classList.add("selected");
-    picks.add(name);
+    return;
   }
+
+  /* -------- select a new one -------- */
+  if (picks.length === MAX) {
+    /* drop the oldest (FIFO) */
+    const oldest = picks.shift();
+    const oldImg = grid.querySelector(`img[data-name="${oldest}"]`);
+    if (oldImg) oldImg.classList.remove("selected");
+  }
+
+  picks.push(name);                   // add newest to the end
+  img.classList.add("selected");
 });
 
 /* ----------  calculation & output  ---------- */
@@ -235,8 +246,8 @@ async function runCalc(){
   const calc=py.globals.get("calculate");
 
   /* pad with empty strings */
-  const arr=[...picks];
-  const raw=calc([arr[0]||"",arr[1]||"",arr[2]||""]);
+  const arr  = [...picks, "", "", ""].slice(0, 3);
+  const raw  = calc(arr);
   const data=JSON.parse(raw);
 
   outputEl.innerHTML="";
