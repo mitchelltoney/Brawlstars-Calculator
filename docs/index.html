@@ -128,6 +128,23 @@ margin-top: 1.25rem;
   outline:3px solid #ffca28;
   transform:scale(1.08);
 }
+@media (hover: none) and (pointer: coarse) { /* mobile only optimization */
+  .icon-grid img {
+    will-change: box-shadow;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .icon-grid img.selected {
+    box-shadow: 0 0 0 3px #ffca28;
+    outline: none;
+    transform: none;
+  }
+
+  .icon-grid img:hover {
+    transform: none;
+  }
+}
 </style>
 </head>
 <body>
