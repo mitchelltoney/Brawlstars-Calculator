@@ -23,8 +23,25 @@ content="Quickly calculate and find the best Brawl Stars counter-picks. Counterp
     "url": "https://brawlcalculator.com/"
   }
   </script>
-<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
-
+<!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script> -->
+<script>
+  (function () {
+    /* 1.  Detect common search-engine bots */
+    const botRe = /(googlebot|bingpreview|duckduckbot|baiduspider|yandex|slurp)/i;
+    if (botRe.test(navigator.userAgent)) return;   // 👉 bots get no heavy JS
+  
+    /* 2.  Load Pyodide first */
+    const pyo = document.createElement('script');
+    pyo.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
+    pyo.onload = () => {
+        /* 3.  After Pyodide is ready, load your original logic */
+        const app = document.createElement('script');
+        app.src = 'app.js';          // the file you just created
+        document.head.appendChild(app);
+    };
+    document.head.appendChild(pyo);
+  })();
+  </script>
 <style>
     @font-face {
       font-family: 'Brawl Stars';
@@ -154,119 +171,5 @@ content="Quickly calculate and find the best Brawl Stars counter-picks. Counterp
     <div id="output" class="output-grid"></div>
 
 </div>
-
-<script>
-const brawlerNames = [
-"8bit","Amber","Angelo","Ash","Barley","Bea","Belle","Berry","Bibi","Bo","Bonnie","Brock",
-"Bull","Buster","Buzz","Byron","Carl","Charlie","Chester","Chuck","Clancy","Colette","Colt",
-"Cordelius","Crow","Darryl","Doug","Draco","Dynamike","Edgar","El Primo","Emz","Eve","Fang","Finx",
-"Frank","Gale","Gene","Gray","Griff","Grom","Gus","Hank","Jacky","Jae Young","Janet","Jessie","Juju","Kaze",
-"Kenji","Kit","Larry","Leon","Lily","Lola","Lou","Lumi","Maisie","Mandy","Max","Meeple","Meg",
-"Melodie","Mico","Moe","Mortis","Mr P","Nani","Nita","Ollie", "Otis","Pam","Pearl","Penny","Piper",
-"Poco","RT","Rico","Rosa","Ruffs","Sam","Sandy","Shade","Shelly","Spike","Sprout","Squeak",
-"Stu","Surge","Tara","Tick","Willow"
-];
-
-document.addEventListener("DOMContentLoaded",()=>{
-  const dl = document.getElementById("brawlers");
-  brawlerNames.forEach(n=>{const o=document.createElement("option");o.value=n;dl.appendChild(o)});
-});
-console.log("pallion3.0 loaded")
-const pyReady = (async ()=>{
-  const pyodide = await loadPyodide();
-  await pyodide.loadPackage("micropip");
-  const resp = await fetch("pycode.py");
-  if (!resp.ok) throw new Error("Failed to load python code.")
-  const pythonSrc = await resp.text();
-  pyodide.runPython(pythonSrc);
-  return pyodide;
-})();
-
-const outputEl = document.getElementById("output");
-async function runCalc(){
-  const py = await pyReady;
-  const calc = py.globals.get('calculate');
-  const raw = calc([
-    document.getElementById("b1").value,
-    document.getElementById("b2").value,
-    document.getElementById("b3").value
-  ]);
-  console.log("raw from Python:", raw);
-  const data = JSON.parse(raw);
-
-  outputEl.innerHTML = "";
-  function makeCard(name){
-  const card = document.createElement("div");
-  card.className = "counter-card";
-  const img  = document.createElement("img");
-  const filename = name
-        .toLowerCase()          // grom → grom, Mr P → mr p, El Primo → el primo
-        .replace(/[\s.']/g, "_")
-        + ".png"; 
-  img.src = `icons/${filename}`;
-  img.alt = name;
-  const span = document.createElement("span");
-  span.className = "name";
-  span.textContent = name;
-  card.append(img, span);
-  return card;
-}
-
-/* 1) --- each selected brawler and its direct counters --- */
-data.results.forEach(group=>{
-  const row   = document.createElement("div");
-  row.className = "row";
-
-  const subjectImg = document.createElement("img");
-  subjectImg.className = "subject-icon"
-  subjectImg.src = `icons/${group.brawler
-                    .toLowerCase()
-                    .replace(/[\s.']/g,"_")}.png`;
-  row.appendChild(subjectImg);        
-  subjectImg.alt = group.brawler;
-
-  // “Colt Counters:”
-  const label = document.createElement("h3");    
-  label.innerHTML = `${group.brawler}<br>Counters :`;
-  row.appendChild(label);
-
-  const grid  = document.createElement("div");   // images grid
-  grid.className = "output-grid";
-  group.counters.forEach(c=>grid.appendChild(makeCard(c)));
-
-  row.appendChild(grid);
-  outputEl.appendChild(row);
-});
-
-/* 2) --- overlaps (if any) --- */
-function renderOverlap(title, list){
-  if(!list.length) return;
-  const row   = document.createElement("div");
-  row.className = "row";
-
-  const label = document.createElement("h3");
-  label.innerHTML = title.replace(" ", "<br>");
-  row.appendChild(label);
-
-  const grid  = document.createElement("div");
-  grid.className = "output-grid";
-  list.forEach(n=>grid.appendChild(makeCard(n)));
-
-  row.appendChild(grid);
-  outputEl.appendChild(row);
-}
-
-renderOverlap("Double Overlaps:", data.doubleOverlaps);
-renderOverlap("Triple Overlaps:", data.tripleOverlaps);
-}
-
-document.getElementById("go").addEventListener("click",runCalc);
-["b1","b2","b3"].forEach(id=>{
-  document.getElementById(id).addEventListener("keydown",e=>{
-    if(e.key==="Enter"){runCalc()}
-  });
-});
-
-</script>
 </body>
 </html>
