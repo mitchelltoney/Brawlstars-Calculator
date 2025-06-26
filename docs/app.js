@@ -121,3 +121,12 @@ const brawlerNames = [
     }
     
     document.getElementById("go").addEventListener("click",runCalc);
+    //for enter key
+    ['b1','b2','b3'].forEach(id => {
+        document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            runCalc();
+        }
+        });
+    });

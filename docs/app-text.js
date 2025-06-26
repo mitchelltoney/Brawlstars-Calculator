@@ -29,14 +29,18 @@ brawlerNames.forEach(n => {
 /* ---------- calc & render ---------- */
 const out = document.getElementById("output");
 
-function makeCard(name) {
-  const card = document.createElement("div");
-  card.className = "counter-card";
-  card.innerHTML = `
-    <img src="icons/${name.toLowerCase().replace(/[\\s.']/g,'_')}.png" alt="${name}">
-    <span class="name">${name}</span>`;
-  return card;
-}
+function makeCard(name){
+    const card=document.createElement("div");
+    card.className="counter-card";
+    const img=document.createElement("img");
+    img.src=`icons/${fileName(name)}`;
+    img.alt=name;
+    const span=document.createElement("span");
+    span.className="name";span.textContent=name;
+    card.append(img,span);
+    return card;
+  }
+  
 
 async function runCalc() {
   const picks = [
@@ -63,5 +67,14 @@ async function runCalc() {
     out.appendChild(row);
   });
 }
-
-document.getElementById("go").addEventListener("click", runCalc);
+    //pressing go
+    document.getElementById("go").addEventListener("click", runCalc);
+    //for enter key
+    ['b1','b2','b3'].forEach(id => {
+        document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            runCalc();
+        }
+        });
+    });
