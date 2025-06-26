@@ -25,21 +25,17 @@ content="Quickly calculate and find the best Brawl Stars counter-picks. Counterp
     "url": "https://brawlcalculator.com/"
   }
   </script>
-<!-- Pyodide -->
+<!-- old pyodide loader that won't get indexed -->
 <!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script> -->
 <script>
   (function () {
-    /* 1.  Detect common search-engine bots */
     const botRe = /(googlebot|bingpreview|duckduckbot|baiduspider|yandex|slurp)/i;
-    if (botRe.test(navigator.userAgent)) return;   // 👉 bots get no heavy JS
-  
-    /* 2.  Load Pyodide first */
+    if (botRe.test(navigator.userAgent)) return;   // break for bots
     const pyo = document.createElement('script');
     pyo.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
     pyo.onload = () => {
-        /* 3.  After Pyodide is ready, load your original logic */
         const app = document.createElement('script');
-        app.src = 'app.js';          // the file you just created
+        app.src = 'app.js';
         document.head.appendChild(app);
     };
     document.head.appendChild(pyo);
