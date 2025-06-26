@@ -34,7 +34,7 @@ content="Quickly calculate and find the best Brawl Stars counter-picks. Counterp
       /* 2. Dynamically inject the Pyodide bundle for human visitors  */
       const s = document.createElement('script');
       s.src   = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
-      s.defer = true;                 // download in the background while HTML parses
+      s.async = false;                 // download in the background while HTML parses
       document.head.appendChild(s);
     })();
     </script>
