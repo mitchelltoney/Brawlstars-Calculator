@@ -179,6 +179,14 @@ margin-top: 1.25rem;
     font-size: 1.25rem;
     z-index: 1000;
 }
+#loading-screen img {
+  width: 96px; 
+  height: 96px;
+  animation: spin 1.0s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 @media (hover: none) and (pointer: coarse) { /* mobile only optimization */
   .icon-grid img {
     will-change: box-shadow;
@@ -200,7 +208,9 @@ margin-top: 1.25rem;
 </style>
 </head>
 <body>
-  <div id="loading-screen">Loading…</div>
+  <div id="loading-screen">
+    <img src="loading_chester.png" alt="Loading" class="spinner">
+  </div>
 <noscript>
   <p>This is the Brawler Counterpick Calculator. Select up to three brawlers and click Go to see your counters.</p>
 </noscript>
