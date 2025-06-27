@@ -10,6 +10,11 @@ console.log("gallion5.0 loaded")
       return pyodide;
     })();
     
+    pyReady.then(() => {
+        const screen = document.getElementById('loading-screen');
+        if (screen) screen.remove();
+    });
+    
     /* ----------  build the icon grid  ---------- */
     const grid=document.getElementById("iconGrid");
     const picks = [];

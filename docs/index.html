@@ -7,7 +7,7 @@ content="width=device-width, initial-scale=0.45, viewport-fit=cover">
 <title>Brawler Counterpick Calculator – Icon Picker</title>
 <meta name="robots" content="index, follow" />
 <meta name="description"
-content="Quickly calculate and find the best Brawl Stars counter-picks. Counterpicks are heavily influenced by SpenLC tierlists.">
+content="Quickly calculate and find the best Brawl Stars counter-picks. Counterpicks are heavily influenced by SpenLC tierlists for credibility.">
 <link rel="canonical" href="https://brawlcalculator.com/" />
 <script type="application/ld+json">
   {
@@ -185,11 +185,23 @@ margin-top: 1.25rem;
   .icon-grid img:hover {
     transform: none;
   }
+
+  #loading-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222 url('background.png') center/cover no-repeat fixed;
+    font-size: 1.25rem;
+    z-index: 1000;
+}
   
 }
 </style>
 </head>
 <body>
+  <div id="loading-screen">Loading…</div>
 <noscript>
   <p>This is the Brawler Counterpick Calculator. Select up to three brawlers and click Go to see your counters.</p>
 </noscript>
