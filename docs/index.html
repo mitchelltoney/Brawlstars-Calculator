@@ -31,7 +31,7 @@ content="Quickly calculate and find the best Brawl Stars counter-picks. Counterp
 <!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script> -->
 <script>
   (function () {
-    const botRe = /(googlebot|bingpreview|duckduckbot|baiduspider|yandex|slurp)/i;
+    const botRe = /(googlebot|bingpreview|duckduckbot|baiduspider|yandex|slurp|google-site-verification|adsbot|google-inspectiontool)/i;
     if (botRe.test(navigator.userAgent)) return;   // break for bots
     const pyo = document.createElement('script');
     pyo.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
