@@ -9,7 +9,7 @@ console.log("gallion5.0 loaded")
       pyodide.runPython(src);
       return pyodide;
     })();
-    
+
     pyReady.then(() => {
         const screen = document.getElementById('loading-screen');
         if (screen) screen.remove();
@@ -124,3 +124,4 @@ console.log("gallion5.0 loaded")
           runCalc();
         }
       });
+      
