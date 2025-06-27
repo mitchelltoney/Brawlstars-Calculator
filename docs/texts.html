@@ -143,9 +143,30 @@ content="Quickly calculate and find the best Brawl Stars counter-picks. Counterp
       flex-wrap:wrap;  
       gap:0.75rem;
     }
+    #loading-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222 url('background.png') center/cover no-repeat fixed;
+    font-size: 1.25rem;
+    z-index: 1000;
+    }
+    #loading-screen img {
+      width: 164x; 
+      height: 164px;
+      animation: spin 1.0s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 </style>
 </head>
 <body>
+  <div id="loading-screen">
+    <img src="loading_chester.png" alt="Loading" class="spinner">
+  </div>
 <div class="card">
     <p style="margin-top:-0.5rem;font-size:.9rem">
       Want to try the new input interface? <a href="index.html">Try it here!</a>

@@ -13,6 +13,11 @@ function fileName(n){
     pyodide.runPython(src);
     return pyodide;
   })();
+
+    pyReady.then(() => {
+        const screen = document.getElementById('loading-screen');
+        if (screen) screen.remove();
+    }); 
   
   /* ---------- build the datalist for auto-complete ---------- */
   const dl = document.getElementById("brawlers");
@@ -80,4 +85,3 @@ function fileName(n){
         }
         });
     });
-    
