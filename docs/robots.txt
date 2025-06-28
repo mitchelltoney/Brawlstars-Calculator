@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /texts.html
 
 Sitemap: https://brawlcalculator.com/sitemap.xml
