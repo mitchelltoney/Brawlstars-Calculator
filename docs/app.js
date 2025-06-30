@@ -1,5 +1,5 @@
 /* ----------  same master list  ---------- */
-import { brawlerNames } from "./brawlers.js";
+import { brawlerNames, brawlerNamesRarity } from "./brawlers.js";
 console.log("gallion5.0 loaded")
     /* ----------  load Pyodide and python ---------- */
     const pyReady=(async()=>{
@@ -18,18 +18,36 @@ console.log("gallion5.0 loaded")
     /* ----------  build the icon grid  ---------- */
     const grid=document.getElementById("iconGrid");
     const picks = [];
-    const MAX = 3; 
-    
+    const MAX = 3;
+    let currentList = brawlerNames;
+
     function fileName(n){
       return n.toLowerCase().replace(/[\s.']/g,"_")+".png";
     }
-    brawlerNames.forEach(n=>{
-      const img=document.createElement("img");
-      img.src=`icons/${fileName(n)}`;
-      img.alt=img.title=n;
-      img.dataset.name=n;
-      grid.appendChild(img);
-    });
+
+    function buildGrid(list){
+      grid.innerHTML="";
+      list.forEach(n=>{
+        const img=document.createElement("img");
+        img.src=`icons/${fileName(n)}`;
+        img.alt=img.title=n;
+        img.dataset.name=n;
+        if(picks.includes(n)) img.classList.add("selected");
+        grid.appendChild(img);
+      });
+    }
+
+    buildGrid(currentList);
+
+    const sortBtn = document.getElementById("sortToggle");
+    if (sortBtn) {
+      sortBtn.textContent = "Alphabetical";
+      sortBtn.addEventListener("click", () => {
+        currentList = currentList === brawlerNames ? brawlerNamesRarity : brawlerNames;
+        sortBtn.textContent = currentList === brawlerNames ? "Alphabetical" : "Rarity";
+        buildGrid(currentList);
+      });
+    }
     
     grid.addEventListener("click", e => {
       const img  = e.target.closest("img");
