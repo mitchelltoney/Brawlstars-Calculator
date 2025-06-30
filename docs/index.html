@@ -96,6 +96,16 @@ pre{
     border-radius:8px;margin-top:1.75rem;max-height:60vh;overflow:auto
 }
 .footer{margin-top:2rem;font-size:.75rem;opacity:.8}
+.controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+#sortToggle{
+    margin-right:1rem;
+    padding:.5rem 1rem;
+    font-size:.9rem;
+}
 .output-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -222,7 +232,10 @@ margin-top: 1.25rem;
     Prefer typing? <a href="texts.html">Switch to text inputs</a>
   </p>
 
-  <h2 style="margin:1rem 0 0.5rem">Pick up to three brawlers</h2>
+  <div class="controls">
+    <button id="sortToggle" class="sort-toggle">Alphabetical</button>
+    <h2 style="margin:1rem 0 0.5rem">Pick up to three brawlers</h2>
+  </div>
   <div id="iconGrid" class="icon-grid"></div>
 
   <button id="go" style="margin-top:0.5rem">Go</button>
