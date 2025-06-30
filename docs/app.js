@@ -19,7 +19,7 @@ console.log("gallion5.0 loaded")
     const grid=document.getElementById("iconGrid");
     const picks = [];
     const MAX = 3;
-    let currentList = brawlerNames;
+    let currentList = brawlerNamesRarity;
 
     function fileName(n){
       return n.toLowerCase().replace(/[\s.']/g,"_")+".png";
@@ -41,7 +41,7 @@ console.log("gallion5.0 loaded")
 
     const sortBtn = document.getElementById("sortToggle");
     if (sortBtn) {
-      sortBtn.textContent = "Alphabetical";
+      sortBtn.textContent = "Rarity";
       sortBtn.addEventListener("click", () => {
         currentList = currentList === brawlerNames ? brawlerNamesRarity : brawlerNames;
         sortBtn.textContent = currentList === brawlerNames ? "Alphabetical" : "Rarity";
