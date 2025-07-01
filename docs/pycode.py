@@ -44,7 +44,7 @@ key = {
 "Gus":["Piper","Mr P","Darryl"],
 "Hank":["Dynamike","Frank","Gale"],
 "Jacky":["Frank","Gale","Rosa"],
-"Jae Young":["Bea", "Buster", "Gene"],
+"Jae Yong":["Bea", "Buster", "Gene"],
 "Janet":["Frank","Carl","Kenji","Belle"],
 "Jessie":["T>Thrower","Belle","Squeak"],
 "Juju":["Frank","Tick","Larry","T>Wallbreaker"],
