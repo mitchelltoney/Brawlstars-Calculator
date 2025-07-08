@@ -1,5 +1,5 @@
 export const brawlerNames = [
-    "8bit", "Amber", "Angelo", "Ash", "Barley", "Bea", "Belle", "Berry", "Bibi", "Bo", "Bonnie", "Brock",
+    "8bit", "Alli", "Amber", "Angelo", "Ash", "Barley", "Bea", "Belle", "Berry", "Bibi", "Bo", "Bonnie", "Brock",
     "Bull", "Buster", "Buzz", "Byron", "Carl", "Charlie", "Chester", "Chuck", "Clancy", "Colette", "Colt",
     "Cordelius", "Crow", "Darryl", "Doug", "Draco", "Dynamike", "Edgar", "El Primo", "Emz", "Eve", "Fang",
     "Finx", "Frank", "Gale", "Gene", "Gray", "Griff", "Grom", "Gus", "Hank", "Jacky", "Jae Yong", "Janet", 
@@ -16,6 +16,6 @@ export const brawlerNamesRarity = [
     "Lola", "Sam", "Mandy", "Maisie", "Hank", "Pearl", "Larry", "Angelo", "Berry", "Shade", "Meeple", "Mortis",
     "Tara", "Gene", "Max", "Mr P", "Sprout", "Byron", "Squeak", "Lou", "Ruffs", "Buzz", "Fang", "Eve", "Janet",
     "Otis", "Buster", "Gray", "RT", "Willow", "Doug", "Chuck", "Charlie", "Mico", "Melodie", "Lily", "Clancy",
-    "Moe", "Juju", "Ollie", "Lumi", "Finx", "Jae Yong", "Spike", "Crow", "Leon", "Sandy", "Amber", "Meg",
+    "Moe", "Juju", "Ollie", "Lumi", "Finx", "Alli", "Jae Yong", "Spike", "Crow", "Leon", "Sandy", "Amber", "Meg",
     "Surge", "Chester", "Cordelius", "Kit", "Draco", "Kenji", "Kaze"
 ];
