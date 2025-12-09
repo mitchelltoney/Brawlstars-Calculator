@@ -35,10 +35,11 @@ key = {
 "Emz":["Mortis","Barley","Juju","Larry","Janet"],
 "Eve":["Piper","Penny","Janet","Max"],
 "Fang":["Clancy","Otis","Shelly","Gale"],
-"Finx":["El Primo"],
+"Finx":["El Primo", "Gus", "Larry"],
 "Frank":["Colette","El Primo","Griff","Chester", "Lumi", "Rico"],
 "Gale":["Janet","Amber","T>Thrower","Penny"],
 "Gene":["Mr P","Penny","Tara","Eve","Charlie","Belle"],
+"Gigi":["None yet"],
 "Gray":["Mr P","Charlie","Gus"],
 "Griff":["Lola","Stu","Bea"],
 "Grom":["Mico","Mortis","Kenji","Darryl", "Kaze","Edgar","T>Assassins"],
@@ -65,6 +66,7 @@ key = {
 "Meg":["Colette","Lou","Lola","Bea"],
 "Melodie":["Clancy","Cordelius","Buzz"],
 "Mico":["RT","Bull","Stu"],
+"Mina":["Bea","Bonnie","Finx", "Shelly"],
 "Moe":["Penny","Darryl","Larry"],
 "Mortis":["Jacky","Shade","Bull","Gale","Shelly"],
 "Mr P":["Edgar","Mortis","Bibi"],
@@ -92,7 +94,9 @@ key = {
 "Surge":["T>Thrower","Ruffs","Tara","Charlie","Spike"],
 "Tara":["T>Thrower","Otis","Sandy","Janet"],
 "Tick":["Mico","Mortis","Darryl","Bibi", "Kenji"],
-"Willow":["Barley","Larry","Buzz"]
+"Trunk":["Frank", "El Primo", "Bull", "Draco", "Mina"],
+"Willow":["Barley","Larry","Buzz"],
+"Ziggy":["Mortis", "Edgar", "Kaze", "Kenji", "Kit"]    
 }
 def countBrawler(name, counts): counts[name]=counts.get(name,0)+1
 # def returnBrawlerString(name,counterclasses=True):
