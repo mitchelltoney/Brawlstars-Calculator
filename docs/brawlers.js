@@ -16,6 +16,6 @@ export const brawlerNamesRarity = [
     "Lola", "Sam", "Mandy", "Maisie", "Hank", "Pearl", "Larry", "Angelo", "Berry", "Shade", "Meeple", "Trunk", "Mortis",
     "Tara", "Gene", "Max", "Mr P", "Sprout", "Byron", "Squeak", "Lou", "Ruffs", "Buzz", "Fang", "Eve", "Janet",
     "Otis", "Buster", "Gray", "RT", "Willow", "Doug", "Chuck", "Charlie", "Mico", "Melodie", "Lily", "Clancy",
-    "Moe", "Juju", "Ollie", "Lumi", "Finx", "Mina", "Ziggy", "Alli", "Jae Yong", "Spike", "Crow", "Leon", "Sandy", "Amber", "Meg",
-    "Surge", "Chester", "Cordelius", "Kit", "Draco", "Kenji", "Kaze"
+    "Moe", "Juju", "Ollie", "Lumi", "Finx", "Mina", "Ziggy", "Gigi", "Alli", "Jae Yong", "Spike", "Crow", "Leon", "Sandy", 
+    "Amber", "Meg", "Surge", "Chester", "Cordelius", "Kit", "Draco", "Kenji", "Kaze"
 ];
