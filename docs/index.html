@@ -71,6 +71,7 @@
 /* ── Base ── */
 html { scroll-behavior: smooth; }
 body {
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -326,7 +327,7 @@ footer strong { color: var(--text-2); font-weight: 500; }
 
 /* ── UI Update badge ── */
 .update-badge {
-  position: fixed;
+  position: absolute;
   top: 1.25rem;
   left: 1.25rem;
   display: flex;
