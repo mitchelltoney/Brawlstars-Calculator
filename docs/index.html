@@ -324,6 +324,33 @@ footer {
 }
 footer strong { color: var(--text-2); font-weight: 500; }
 
+/* ── Classic view link ── */
+.classic-link {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.85rem;
+  border-radius: 100px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: color var(--transition), background var(--transition), border-color var(--transition);
+  z-index: 50;
+}
+.classic-link:hover {
+  color: var(--text);
+  background: var(--surface-hi);
+  border-color: var(--border-hi);
+}
+
 /* ── Loading screen ── */
 #loading-screen {
   position: fixed;
@@ -395,6 +422,8 @@ footer strong { color: var(--text-2); font-weight: 500; }
 <footer>
   Counterpicks determined primarily from <strong>SpenLC</strong> ranking data.
 </footer>
+
+<a href="classic.html" class="classic-link">Classic view</a>
 
 </body>
 </html>

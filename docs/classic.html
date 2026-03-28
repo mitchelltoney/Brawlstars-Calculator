@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=0.45, viewport-fit=cover">
+<title>Brawl Stars Ranked Counterpick Calculator</title>
+<meta name="robots" content="index, follow" />
+<meta name="description"
+content="Quickly calculate and find the best Brawl Stars ranked counter-picks. Counterpicks are heavily influenced by SpenLC tierlists for credibility.">
+<link rel="canonical" href="https://brawlcalculator.com/" />
+<meta property="og:site_name" content="Brawlstars Calculator">
+<link rel="icon" type="image/x-icon" href="chester-favicon.ico">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Brawler Counterpick Calculator",
+    "description": "Brawl Stars counter-pick calculator for best brawlstars counters in ranked.",
+    "operatingSystem": "Web",
+    "applicationCategory": "GameApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "url": "https://brawlcalculator.com/"
+  }
+  </script>
+<!-- old pyodide loader that won't get indexed -->
+<!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script> -->
+<script>
+  (function () {
+    const botRe = /(googlebot|bingpreview|duckduckbot|baiduspider|yandex|slurp|google-site-verification|adsbot|google-inspectiontool)/i;
+    if (botRe.test(navigator.userAgent)) return;   // break for bots
+    const pyo = document.createElement('script');
+    pyo.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
+    pyo.onload = () => {
+        const app = document.createElement('script');
+        app.type = 'module';
+        app.src = 'app.js';
+        document.head.appendChild(app);
+    };
+    document.head.appendChild(pyo);
+  })();
+  </script>
+<style>
+@font-face {
+      font-family: 'Brawl Stars';
+      src: url('fonts/lilitaone-regular-webfont.ttf') format('truetype');
+      font-weight: normal;
+}
+@font-face {
+    font-family: 'Brawl Stars Bold';
+    src: url('fonts/nougat-extrablack-webfont.ttf') format('truetype');
+    font-weight: normal;
+}
+html,body{min-height:100vh;margin:0}
+body{
+    display:flex;flex-direction:column;align-items:center;min-height:100vh;overflow-y:auto;
+    font-family:'Brawl Stars', sans-serif;
+    background:#222 url('background.png') center/cover no-repeat fixed;
+    color:#f8f8f8;text-align:center;padding:2rem 1rem;box-sizing:border-box
+}
+.card{
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(6px);
+    border-radius:12px;
+    padding:2.5rem 3rem;max-width:720px;width:100%;
+    box-shadow:0 0 18px rgba(0,0,0,.45);
+    max-width:720px;
+}
+@media (min-width:1024px){
+  .card{
+    width: calc(100vw - 200px); /* desktop width increase */
+    max-width:calc(100vw - 200px); 
+  }
+}
+h1{margin-top:0;margin-bottom:1.25rem;text-shadow:0 0 8px rgba(0,0,0,.5)}
+
+label{display:block;margin:.5rem 0 .25rem;font-weight:600}
+input[type=text]{
+    margin-left: -1rem;
+    width:100%;padding:.65rem 1rem;font-size:1rem;
+    border-radius:8px;border:none;margin-bottom:1rem
+}
+button{
+    padding:.8rem 2.25rem;font-size:1.1rem;font-weight:700;
+    border:0;border-radius:8px;background:#ffca28;color:#111;cursor:pointer;
+}
+button:hover{transform:scale(1.04)}
+input[type=file]{margin:1.5rem 0 0}
+
+pre{
+    white-space:pre-wrap;background:#111a;padding:1rem 1.5rem;
+    border-radius:8px;margin-top:1.75rem;max-height:60vh;overflow:auto
+}
+.footer{margin-top:2rem;font-size:.75rem;opacity:.8}
+.controls{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+#sortToggle{
+    position:absolute;
+    left:0;
+    top:0;
+    margin-right:0;
+    padding:.5rem 1rem;
+    font-size:.9rem;
+}
+.output-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+.counter-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.row{
+    text-align:center;
+}
+.output-grid{ 
+    justify-content:center; 
+}
+.counter-card img {
+    width: 64px; 
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.25rem;
+    background: #545454;
+}
+.subject-icon{
+    width:64px;     
+    height:64px;
+    object-fit:cover;  
+    border-radius:6px; 
+    background:#545454;
+}
+.counter-card .name {
+    font-size: 0.9rem;
+    text-shadow: 0 0 4px rgba(0,0,0,0.6);
+}
+.row {       
+margin-top: 1.25rem;
+}
+#output{
+    display:block;    
+}
+.row{                    
+    display:flex;
+    align-items:center;
+    gap:1rem;            
+    margin-top:0.75rem;
+    text-align:left;       
+}
+.row h3{
+    margin:0;             
+    white-space:normal;
+}
+.row .output-grid{        
+    display:flex;           
+    flex-wrap:wrap;  
+    gap:0.75rem;
+}
+/* extra rules only needed here */
+.icon-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,64px);
+  justify-content:center;
+  gap:0.65rem;
+  margin:0 auto 1.75rem;
+}
+.icon-grid img{
+  width:60px;height:60px;object-fit:cover;
+  border-radius:6px;background:#545454;cursor:pointer;
+}
+.icon-grid img:hover{transform:scale(1.08)}
+.icon-grid img.selected{
+  outline:3px solid #ffca28;
+  transform:scale(1.08);
+}
+#loading-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222 url('background.png') center/cover no-repeat fixed;
+    font-size: 1.25rem;
+    z-index: 1000;
+}
+#loading-screen img {
+  width: 164px; 
+  height: 164px;
+  animation: spin 1.0s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@media (hover: none) and (pointer: coarse) { /* mobile only optimization */
+  .icon-grid img {
+    will-change: box-shadow;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .icon-grid img.selected {
+    box-shadow: 0 0 0 3px #ffca28;
+    outline: none;
+    transform: none;
+  }
+
+  .icon-grid img:hover {
+    transform: none;
+  }
+  
+}
+</style>
+</head>
+<body>
+  <div id="loading-screen">
+    <img src="loading_chester.png" alt="Loading" class="spinner">
+  </div>
+<noscript>
+  <p>This is the Brawler Counterpick Calculator. Select up to three brawlers and click Go to see your counters.</p>
+</noscript>
+<div class="card">
+  <h1>Brawler Counterpick Calculator</h1>
+  <p style="margin-top:-0.5rem;font-size:1.1rem;opacity:.85">
+    Click on the brawlers your opponents have picked, the results will show which brawlers counter them so you can make the best pick.
+  </p>
+
+  <div class="controls">
+    <button style="margin:0rem 0rem 0rem 2rem" id="sortToggle" class="sort-toggle">Alphabetical</button>
+    <h2 style="margin:0rem 0 1rem">Pick up to three brawlers</h2>
+  </div>
+  <div id="iconGrid" class="icon-grid"></div>
+
+  <button id="go" style="margin-top:0.5rem">Go</button>
+
+  <div id="output" class="output-grid"></div>
+  <p class="footer">
+    Counterpicks determined primarily from <strong>SpenLC</strong> ranking data.
+    &nbsp;·&nbsp; <a href="index.html" style="color:inherit;opacity:.7;text-decoration:underline">New UI</a>
+  </p>
+</div>
+</body>
+</html>
