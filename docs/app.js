@@ -109,7 +109,7 @@ console.log("gallion5.0 loaded")
         row.appendChild(sImg);
     
         const label=document.createElement("h3");
-        label.innerHTML=`${group.brawler}<br>Counters :`;
+        label.innerHTML=`${group.brawler}<br>Counters:`;
         row.appendChild(label);
     
         const grid=document.createElement("div");
@@ -119,9 +119,9 @@ console.log("gallion5.0 loaded")
         outputEl.appendChild(row);
       });
     
-      function renderOverlap(title,list){
+      function renderOverlap(title, list, cls){
         if(!list.length) return;
-        const row=document.createElement("div");row.className="row";
+        const row=document.createElement("div");row.className=`row ${cls}`;
         const label=document.createElement("h3");
         label.innerHTML=title.replace(" ","<br>");
         row.appendChild(label);
@@ -130,8 +130,8 @@ console.log("gallion5.0 loaded")
         row.appendChild(g);
         outputEl.appendChild(row);
       }
-      renderOverlap("Double Overlaps:",data.doubleOverlaps);
-      renderOverlap("Triple Overlaps:",data.tripleOverlaps);
+      renderOverlap("Double Overlaps:",data.doubleOverlaps,"overlap-double");
+      renderOverlap("Triple Overlaps:",data.tripleOverlaps,"overlap-triple");
     }
     
     document.getElementById("go").addEventListener("click",runCalc);
