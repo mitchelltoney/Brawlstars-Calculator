@@ -94,7 +94,7 @@ header {
 }
 
 h1 {
-  font-family: 'Brawl Stars Bold', sans-serif;
+  font-family: 'Brawl Stars', sans-serif;
   font-size: clamp(2rem, 5.5vw, 3.2rem);
   letter-spacing: -0.01em;
   line-height: 1.08;
@@ -130,20 +130,20 @@ h1 {
 }
 
 .picker-header h2 {
-  font-size: 0.7rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-3);
 }
 
 #sortToggle {
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.38rem 0.9rem;
+  padding: 0.45rem 1.1rem;
   border-radius: 100px;
   border: 1px solid var(--border-hi);
   background: var(--surface);
@@ -202,14 +202,21 @@ h1 {
   letter-spacing: 0.01em;
   padding: 0.85rem 3.25rem;
   border-radius: 100px;
-  border: none;
-  background: var(--gold);
-  color: #000;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
   cursor: pointer;
-  box-shadow: 0 4px 28px var(--gold-dim);
-  transition: transform var(--transition), box-shadow var(--transition);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
 }
-#go:hover  { transform: scale(1.04); box-shadow: 0 6px 36px var(--gold-glow); }
+#go:hover  {
+  transform: scale(1.04);
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.3);
+  box-shadow: 0 6px 32px rgba(0,0,0,0.4);
+}
 #go:active { transform: scale(0.97); }
 
 /* ── Results ── */
