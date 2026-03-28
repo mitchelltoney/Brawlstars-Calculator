@@ -5,7 +5,7 @@ console.log("gallion5.0 loaded")
     const pyReady=(async()=>{
       const pyodide=await loadPyodide();
       await pyodide.loadPackage("micropip");
-      const src=await (await fetch("pycode.py")).text();
+      const src=await (await fetch("pycode.py?v=2")).text();
       pyodide.runPython(src);
       return pyodide;
     })();
