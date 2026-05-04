@@ -610,7 +610,7 @@ footer strong { color: var(--text-2); font-weight: 500; }
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
-  body { padding: 3rem 1rem 5rem; }
+  body { padding: 3rem 1rem 7rem; }
   header { margin-bottom: 2.5rem; }
   h1 { font-size: 1.9rem; }
   .icon-grid { gap: 0.35rem; }
@@ -625,6 +625,14 @@ footer strong { color: var(--text-2); font-weight: 500; }
     order: 3;
     width: 100%;
     text-align: center;
+  }
+
+  /* Fix iOS Safari: backdrop-filter breaks position:fixed */
+  .feedback-btn,
+  .classic-link {
+    position: fixed;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
