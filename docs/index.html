@@ -158,6 +158,47 @@ h1 {
   border-color: rgba(255,255,255,0.22);
 }
 
+/* ── Size picker ── */
+.size-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.size-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+  padding: 0;
+}
+.size-btn:hover {
+  background: var(--surface-hi);
+  border-color: var(--border-hi);
+}
+.size-btn.active {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+.size-btn .swatch {
+  background: var(--text-2);
+  border-radius: 3px;
+  transition: background var(--transition);
+}
+.size-btn.active .swatch {
+  background: var(--gold);
+}
+/* swatch sizes representing S / M / L */
+.size-btn[data-size="small"]  .swatch { width: 10px; height: 10px; }
+.size-btn[data-size="medium"] .swatch { width: 14px; height: 14px; }
+.size-btn[data-size="large"]  .swatch { width: 18px; height: 18px; }
+
 /* ── Icon grid ── */
 .icon-grid {
   display: grid;
@@ -413,7 +454,6 @@ footer strong { color: var(--text-2); font-weight: 500; }
   body { padding: 3rem 1rem 5rem; }
   header { margin-bottom: 2.5rem; }
   h1 { font-size: 1.9rem; }
-  :root { --icon: 56px; }
   .icon-grid { gap: 0.35rem; }
   .row { padding: 0.9rem 1rem; gap: 0.9rem; }
   .subject-icon { width: 44px; height: 44px; }
@@ -448,6 +488,11 @@ footer strong { color: var(--text-2); font-weight: 500; }
 
 <div class="content">
   <div class="picker-header">
+    <div class="size-picker" aria-label="Icon size">
+      <button class="size-btn" data-size="small"  title="Small icons" ><span class="swatch"></span></button>
+      <button class="size-btn active" data-size="medium" title="Medium icons"><span class="swatch"></span></button>
+      <button class="size-btn" data-size="large"  title="Large icons" ><span class="swatch"></span></button>
+    </div>
     <h2>Pick up to three brawlers</h2>
     <button id="sortToggle">Rarity</button>
   </div>
@@ -463,6 +508,30 @@ footer strong { color: var(--text-2); font-weight: 500; }
 </footer>
 
 <a href="classic.html" class="classic-link">Classic view</a>
+
+<script>
+(function () {
+  const SIZES = { small: '44px', medium: '56px', large: '72px' };
+  const isMobile = window.matchMedia('(max-width: 640px)').matches;
+  const defaultSize = isMobile ? 'small' : 'medium';
+
+  function applySize(size) {
+    document.documentElement.style.setProperty('--icon', SIZES[size]);
+    document.querySelectorAll('.size-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.size === size);
+    });
+    try { localStorage.setItem('iconSize', size); } catch (e) {}
+  }
+
+  // restore saved preference, falling back to device-appropriate default
+  const saved = (() => { try { return localStorage.getItem('iconSize'); } catch (e) { return null; } })();
+  applySize(saved && SIZES[saved] ? saved : defaultSize);
+
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', () => applySize(btn.dataset.size));
+  });
+})();
+</script>
 
 <div class="update-badge">
   <span class="dot"></span>
