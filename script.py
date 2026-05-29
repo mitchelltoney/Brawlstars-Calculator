@@ -1,3 +1,5 @@
+# Frozen legacy artifact: a terminal-based version of the counterpick calculator.
+# Not used by the website (the site lives under docs/ and uses calculate.js).
 from prompt_toolkit import PromptSession
 from prompt_toolkit.completion import WordCompleter
 key = {"8bit":["Penny","Brock","Squeak", "Piper"],
