@@ -21,21 +21,7 @@
     "url": "https://brawlcalculator.com/"
   }
 </script>
-<script>
-  (function () {
-    const botRe = /(googlebot|bingpreview|duckduckbot|baiduspider|yandex|slurp|google-site-verification|adsbot|google-inspectiontool)/i;
-    if (botRe.test(navigator.userAgent)) return;
-    const pyo = document.createElement('script');
-    pyo.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
-    pyo.onload = () => {
-      const app = document.createElement('script');
-      app.type = 'module';
-      app.src = 'app.js';
-      document.head.appendChild(app);
-    };
-    document.head.appendChild(pyo);
-  })();
-</script>
+<script type="module" src="app.js"></script>
 <style>
 @font-face {
   font-family: 'Brawl Stars';
@@ -590,24 +576,6 @@ footer strong { color: var(--text-2); font-weight: 500; }
   border-color: var(--border-hi);
 }
 
-/* ── Loading screen ── */
-#loading-screen {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: var(--bg);
-  z-index: 1000;
-}
-#loading-screen img {
-  width: 180px;
-  height: 180px;
-  animation: spin 0.9s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
 /* ── Mobile ── */
 @media (max-width: 640px) {
   body { padding: 3rem 1rem 7rem; }
@@ -649,10 +617,6 @@ footer strong { color: var(--text-2); font-weight: 500; }
 </style>
 </head>
 <body>
-
-<div id="loading-screen">
-  <img src="loading_chester.png" alt="Loading">
-</div>
 
 <noscript>
   <p>This is the Brawler Counterpick Calculator. Select up to three brawlers and click Calculate to see your counters.</p>

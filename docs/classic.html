@@ -27,23 +27,7 @@ content="Quickly calculate and find the best Brawl Stars ranked counter-picks. C
     "url": "https://brawlcalculator.com/"
   }
   </script>
-<!-- old pyodide loader that won't get indexed -->
-<!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script> -->
-<script>
-  (function () {
-    const botRe = /(googlebot|bingpreview|duckduckbot|baiduspider|yandex|slurp|google-site-verification|adsbot|google-inspectiontool)/i;
-    if (botRe.test(navigator.userAgent)) return;   // break for bots
-    const pyo = document.createElement('script');
-    pyo.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
-    pyo.onload = () => {
-        const app = document.createElement('script');
-        app.type = 'module';
-        app.src = 'app.js';
-        document.head.appendChild(app);
-    };
-    document.head.appendChild(pyo);
-  })();
-  </script>
+<script type="module" src="app.js"></script>
 <style>
 @font-face {
       font-family: 'Brawl Stars';
@@ -185,24 +169,6 @@ margin-top: 1.25rem;
   outline:3px solid #ffca28;
   transform:scale(1.08);
 }
-#loading-screen {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #222 url('background.png') center/cover no-repeat fixed;
-    font-size: 1.25rem;
-    z-index: 1000;
-}
-#loading-screen img {
-  width: 164px; 
-  height: 164px;
-  animation: spin 1.0s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
 @media (hover: none) and (pointer: coarse) { /* mobile only optimization */
   .icon-grid img {
     will-change: box-shadow;
@@ -224,9 +190,6 @@ margin-top: 1.25rem;
 </style>
 </head>
 <body>
-  <div id="loading-screen">
-    <img src="loading_chester.png" alt="Loading" class="spinner">
-  </div>
 <noscript>
   <p>This is the Brawler Counterpick Calculator. Select up to three brawlers and click Go to see your counters.</p>
 </noscript>
