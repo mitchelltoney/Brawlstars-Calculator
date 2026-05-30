@@ -12,7 +12,7 @@ No user-facing features changed.
 | `docs/brawlers.js` — `brawlerNames`, `brawlerNamesRarity` | `docs/calculate.js` — `brawlersAlphabetical` (derived as `Object.keys(counters)`); `docs/counters.js` — `rarityOrder` |
 | `docs/pycode.py` — `returnBrawlerString` (commented-out) | removed |
 | Pyodide CDN load + `micropip` + `fetch("pycode.py?v=2")` + bot-detection IIFE in three HTML shells | direct `<script type="module" src="…">`; no runtime CDN, no WASM, no bot gate |
-| `loading_chester.png` + `#loading-screen` markup + `@keyframes spin` in three shells | removed (no async boot to mask) |
+| `loading_chester.png` + `#loading-screen` markup + `@keyframes spin` in three shells | re-added as a delayed slow-load-only overlay; invisible on fast/cached loads. Asset back in `docs/`; markup is injected by `docs/loader.js`; CSS + keyframes live in `docs/styles.css`. |
 | `@font-face` duplicated in three shells | `docs/styles.css`, linked from all three |
 | Body / `.card` / form / output styling duplicated between `docs/classic.html` and `docs/texts.html` | `docs/legacy.css`, linked from both |
 | `docs/index.html` 800 LOC; `classic.html` 254; `texts.html` 197 | 756 / 123 / 64 |
@@ -22,6 +22,18 @@ No user-facing features changed.
 | `script.py` (terminal CLI) | header comment marks it a frozen legacy artifact; logic untouched |
 | Counter overlaps tallied over all of `key[b]` including `T>` markers (bug — broken images in overlap rows) | tallied over `direct` only; class markers can no longer appear in `doubleOverlaps` / `tripleOverlaps` |
 | `T>Thrower` / `T>Throwers`, `T>Anti-Tanks` / `T>Anti-tanks`, etc. | normalized to singular `Thrower`, `Anti-Tank`, `Assassin`, `Tank`, `Wallbreaker`, `Healer`, `Sniper`; stored in `classes` field separately from `direct` |
+
+## Loading overlay tuning
+
+`docs/loader.js` exposes three constants at the top of the IIFE:
+
+| Constant | Default | What it controls |
+|---|---:|---|
+| `REVEAL_DELAY_MS` | `400` | How long the page is allowed to be busy before Chester appears. Increase to be more permissive (hide the loader from medium-speed loads); decrease if you want it to show sooner. |
+| `MIN_VISIBLE_MS`  | `400` | Once revealed, hold for at least this long before fading out — prevents reveal-then-instant-hide flicker. |
+| `HARD_TIMEOUT_MS` | `10000` | Unconditional dismissal. If a single asset hangs, the user can never get trapped behind the spinner. |
+
+Reduced motion (`prefers-reduced-motion: reduce`) suppresses the spin animation in `docs/styles.css`; a static Chester is shown instead.
 
 ## Preserved behavior
 

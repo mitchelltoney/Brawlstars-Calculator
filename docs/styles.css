@@ -8,3 +8,39 @@
   src: url('fonts/nougat-extrablack-webfont.ttf') format('truetype');
   font-weight: normal;
 }
+
+/* Slow-load-only loading overlay, controlled by loader.js. Starts invisible,
+ * is revealed by the script only if the page hasn't finished loading by the
+ * configured REVEAL_DELAY_MS, and fades back out via the transition below. */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #0c0c10;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+#loading-screen.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#loading-screen.fading {
+  opacity: 0;
+  pointer-events: none;
+}
+#loading-screen img {
+  width: 180px;
+  height: 180px;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  #loading-screen img { animation: none; }
+}
+
