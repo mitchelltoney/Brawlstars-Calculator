@@ -9,9 +9,8 @@
   font-weight: normal;
 }
 
-/* Slow-load-only loading overlay, controlled by loader.js. Starts invisible,
- * is revealed by the script only if the page hasn't finished loading by the
- * configured REVEAL_DELAY_MS, and fades back out via the transition below. */
+/* Loading overlay. Visible from first paint (the markup is in each page's
+ * HTML); loader.js adds .fading on window 'load' to transition it away. */
 #loading-screen {
   position: fixed;
   inset: 0;
@@ -21,13 +20,8 @@
   align-items: center;
   background: #0c0c10;
   z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-}
-#loading-screen.visible {
   opacity: 1;
-  pointer-events: auto;
+  transition: opacity 0.25s ease;
 }
 #loading-screen.fading {
   opacity: 0;
