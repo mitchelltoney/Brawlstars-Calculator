@@ -1,3 +1,45 @@
+# Feature: add a brawler by typing its name (`feature/add-brawler-by-name`)
+
+A second way to fill the 3-slot pick queue on `docs/index.html`: a small input + Add button placed directly above the Calculate button, with native `<datalist>` autocomplete sourced from the canonical roster. Confirm with Enter or the Add button. The icon picker is untouched.
+
+## What's shared (single source of truth)
+- `docs/calculate.js` now exports two pure pick-queue helpers:
+  - `addPick(picks, name) → picks` — additive; no-op if already present; FIFO-evicts the oldest at `MAX_PICKS` (3).
+  - `togglePick(picks, name) → picks` — remove if present, otherwise `addPick`.
+- Both helpers return new arrays; `MAX_PICKS` and `resolveName` are also exported.
+- `docs/app.js` was refactored: the icon click handler and the text input both call a single `applyPicks(next)` that diffs against the current `picks` array and toggles `.selected` accordingly. There is only one picks array and one set of grid highlights.
+
+## Text-input behavior
+- Resolves the typed string through the same `resolveName` the counter calculation uses — case-insensitive direct match, then the `primo` / `miko` / `mike` / `barry` aliases. So `primo` adds El Primo, `PENNY` adds Penny.
+- Additive only: typing the name of an already-selected brawler is a no-op (does *not* deselect — that would be surprising for an "Add" field).
+- Unknown name: brief red-border + shake on the input; nothing added; user can keep typing.
+- On a successful add, the input clears.
+- Enter inside the field is handled locally (`preventDefault` + `stopPropagation`) so it cannot reach the global Enter→Calculate handler.
+- No `<form>` — no submit-reload risk.
+- No auto-add while mid-type. The user must press Enter or click Add. (A literal exact-match like `Bo` would otherwise be mis-added while the user is typing toward `Bonnie`.)
+
+## Tests
+`tests/calculate.test.js` adds coverage for `addPick`, `togglePick`, `resolveName`, and `MAX_PICKS`:
+
+```
+$ npm test
+ℹ tests 23   ℹ pass 23   ℹ fail 0
+```
+
+## Manual QA checklist
+- Type `Shelly` + Enter → grid icon highlights, input clears.
+- Click two icons, then type a third → all three selected; Calculate works.
+- Type a 4th name → oldest pick un-highlights (FIFO), exactly like clicking a 4th icon.
+- Type an already-selected brawler → no change.
+- Aliases: `primo`, `miko`, `mike`, `barry` resolve.
+- Case-insensitive: `penny` / `PENNY` behave the same.
+- Invalid: `asdf` + Enter → red shake, nothing added.
+- Mix clicking and typing → highlights stay consistent.
+- Enter in the field does not trigger Calculate; page never reloads.
+- Mobile: datalist suggestions appear; Add button tappable.
+
+---
+
 # Refactor: drop Pyodide, single data source, dedupe CSS, add tests
 
 Branch: `refactor/drop-pyodide` (not pushed; deploy is the user's call).

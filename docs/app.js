@@ -1,8 +1,14 @@
-import { calculate, brawlersAlphabetical, rarityOrder } from "./calculate.js";
+import {
+  calculate,
+  brawlersAlphabetical,
+  rarityOrder,
+  resolveName,
+  addPick,
+  togglePick,
+} from "./calculate.js";
 
 const grid = document.getElementById("iconGrid");
 const picks = [];
-const MAX = 3;
 let currentList = rarityOrder;
 
 function fileName(n) {
@@ -23,6 +29,14 @@ function buildGrid(list) {
 
 buildGrid(currentList);
 
+// Populate the type-a-name datalist from the canonical roster.
+const datalist = document.getElementById("brawlerList");
+brawlersAlphabetical.forEach(n => {
+  const opt = document.createElement("option");
+  opt.value = n;
+  datalist.appendChild(opt);
+});
+
 const sortBtn = document.getElementById("sortToggle");
 if (sortBtn) {
   sortBtn.textContent = "Rarity";
@@ -33,28 +47,70 @@ if (sortBtn) {
   });
 }
 
+// Sync `picks` and `.selected` highlights to `next`. This is the SINGLE point
+// where pick state mutates: both the click handler and the text input go
+// through one of the pure helpers and then through here.
+function applyPicks(next) {
+  for (const old of picks) {
+    if (!next.includes(old)) {
+      const img = grid.querySelector(`img[data-name="${old}"]`);
+      if (img) img.classList.remove("selected");
+    }
+  }
+  for (const name of next) {
+    if (!picks.includes(name)) {
+      const img = grid.querySelector(`img[data-name="${name}"]`);
+      if (img) img.classList.add("selected");
+    }
+  }
+  picks.length = 0;
+  picks.push(...next);
+}
+
 grid.addEventListener("click", e => {
   const img = e.target.closest("img");
   if (!img) return;
-
-  const name = img.dataset.name;
-  const i = picks.indexOf(name);
-
-  if (i !== -1) {
-    picks.splice(i, 1);
-    img.classList.remove("selected");
-    return;
-  }
-
-  if (picks.length === MAX) {
-    const oldest = picks.shift();
-    const oldImg = grid.querySelector(`img[data-name="${oldest}"]`);
-    if (oldImg) oldImg.classList.remove("selected");
-  }
-
-  picks.push(name);
-  img.classList.add("selected");
+  applyPicks(togglePick(picks, img.dataset.name));
 });
+
+// Type-a-name input: additive, no toggling. Confirms on Enter or Add click.
+const nameInput = document.getElementById("nameAdd");
+const nameAddBtn = document.getElementById("nameAddBtn");
+
+function flashInvalid() {
+  if (!nameInput) return;
+  nameInput.classList.remove("invalid");
+  // Reflow so the animation restarts even on repeated invalids.
+  void nameInput.offsetWidth;
+  nameInput.classList.add("invalid");
+}
+
+function handleNameAdd() {
+  if (!nameInput) return;
+  const raw = nameInput.value;
+  if (!raw.trim()) return;
+  const resolved = resolveName(raw);
+  if (!resolved) { flashInvalid(); return; }
+  // The grid must contain this brawler's icon; if it doesn't (roster /
+  // grid out of sync — shouldn't happen), bail without mutating picks.
+  if (!grid.querySelector(`img[data-name="${resolved}"]`)) { flashInvalid(); return; }
+  applyPicks(addPick(picks, resolved));
+  nameInput.value = "";
+  nameInput.classList.remove("invalid");
+}
+
+if (nameInput) {
+  nameInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      // Add the brawler and prevent the global Enter→Calculate path below.
+      e.preventDefault();
+      e.stopPropagation();
+      handleNameAdd();
+    }
+  });
+  nameInput.addEventListener("input", () => nameInput.classList.remove("invalid"));
+}
+if (nameAddBtn) nameAddBtn.addEventListener("click", handleNameAdd);
 
 const outputEl = document.getElementById("output");
 

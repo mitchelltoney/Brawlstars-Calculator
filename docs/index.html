@@ -209,6 +209,60 @@ h1 {
   transform: scale(1.09);
 }
 
+/* ── Add-by-name row ── */
+.name-add {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+  max-width: 480px;
+  margin: 0 auto 1.25rem;
+}
+.name-add input {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 100px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.1rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.name-add input::placeholder { color: var(--text-3); }
+.name-add input:focus { border-color: var(--gold); }
+.name-add input.invalid {
+  border-color: #ff5b5b;
+  animation: nameAddShake 0.3s cubic-bezier(0.36,0.07,0.19,0.97);
+}
+@keyframes nameAddShake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+.name-add button {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.4rem;
+  border-radius: 100px;
+  border: 1px solid var(--border-hi);
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.name-add button:hover {
+  background: var(--surface-hi);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.22);
+}
+.name-add button:active { transform: scale(0.97); }
+
 /* ── Go button ── */
 .go-wrap {
   display: flex;
@@ -633,6 +687,14 @@ footer strong { color: var(--text-2); font-weight: 500; }
     <button id="sortToggle">Rarity</button>
   </div>
   <div id="iconGrid" class="icon-grid"></div>
+  <div class="name-add">
+    <input id="nameAdd" type="text" list="brawlerList"
+           placeholder="Add a brawler by name…"
+           aria-label="Add a brawler by name"
+           autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button type="button" id="nameAddBtn">Add</button>
+  </div>
+  <datalist id="brawlerList"></datalist>
   <div class="go-wrap">
     <button id="go">Calculate</button>
   </div>

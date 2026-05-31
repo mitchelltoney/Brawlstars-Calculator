@@ -1,7 +1,15 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { calculate, brawlersAlphabetical, rarityOrder } from "../docs/calculate.js";
+import {
+  calculate,
+  brawlersAlphabetical,
+  rarityOrder,
+  resolveName,
+  addPick,
+  togglePick,
+  MAX_PICKS,
+} from "../docs/calculate.js";
 import { counters } from "../docs/counters.js";
 
 test("calculate returns the documented object shape", () => {
@@ -147,4 +155,65 @@ test("duplicate picks are ignored after the first", () => {
 test("result order follows successful-pick order", () => {
   const out = calculate(["Frank", "Shelly", "Penny"]);
   assert.deepEqual(out.results.map(r => r.brawler), ["Frank", "Shelly", "Penny"]);
+});
+
+// ── Pick-queue helpers (shared by icon-click and type-a-name paths) ────────
+
+test("MAX_PICKS is 3", () => {
+  assert.equal(MAX_PICKS, 3);
+});
+
+test("addPick appends to an empty queue", () => {
+  assert.deepEqual(addPick([], "Shelly"), ["Shelly"]);
+});
+
+test("addPick appends to a partial queue, preserving order", () => {
+  assert.deepEqual(addPick(["Shelly"], "Penny"), ["Shelly", "Penny"]);
+  assert.deepEqual(addPick(["Shelly", "Penny"], "Frank"), ["Shelly", "Penny", "Frank"]);
+});
+
+test("addPick is a no-op when the name is already present", () => {
+  const before = ["Shelly", "Penny"];
+  const after = addPick(before, "Shelly");
+  assert.deepEqual(after, before);
+  // Returns a fresh array (caller may safely mutate without affecting input).
+  assert.notEqual(after, before);
+});
+
+test("addPick FIFO-evicts the oldest when a 4th distinct name is added", () => {
+  const out = addPick(["Shelly", "Penny", "Frank"], "Bo");
+  assert.deepEqual(out, ["Penny", "Frank", "Bo"]);
+  assert.equal(out.length, MAX_PICKS);
+});
+
+test("addPick does not mutate its input", () => {
+  const before = ["Shelly", "Penny", "Frank"];
+  const snapshot = before.slice();
+  addPick(before, "Bo");
+  assert.deepEqual(before, snapshot);
+});
+
+test("togglePick removes when present", () => {
+  assert.deepEqual(togglePick(["Shelly", "Penny"], "Shelly"), ["Penny"]);
+});
+
+test("togglePick behaves like addPick when absent (incl. FIFO at MAX)", () => {
+  assert.deepEqual(togglePick(["Shelly"], "Penny"), ["Shelly", "Penny"]);
+  assert.deepEqual(
+    togglePick(["Shelly", "Penny", "Frank"], "Bo"),
+    ["Penny", "Frank", "Bo"],
+  );
+});
+
+test("resolveName: canonical names, aliases, and unknowns", () => {
+  // Exported helper that the new text input uses to resolve user input.
+  assert.equal(resolveName("Shelly"), "Shelly");
+  assert.equal(resolveName("shelly"), "Shelly");
+  assert.equal(resolveName("  SHELLY  "), "Shelly");
+  assert.equal(resolveName("primo"), "El Primo");
+  assert.equal(resolveName("miko"),  "Mico");
+  assert.equal(resolveName("mike"),  "Dynamike");
+  assert.equal(resolveName("barry"), "Berry");
+  assert.equal(resolveName(""), null);
+  assert.equal(resolveName("asdf"), null);
 });

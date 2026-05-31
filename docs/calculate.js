@@ -18,10 +18,14 @@ const lowerToCanonical = new Map(
   brawlersAlphabetical.map(n => [n.toLowerCase(), n])
 );
 
+// Maximum opponents the picker can hold at once. Both the icon-click and
+// the type-a-name paths share this limit via the helpers below.
+export const MAX_PICKS = 3;
+
 // Resolve a user-typed name to a canonical key in `counters`, or null.
 // Mirrors pycode.py's handleCases(): direct case-insensitive match wins,
 // otherwise a handful of nickname substrings map to canonical names.
-function resolveName(raw) {
+export function resolveName(raw) {
   const trimmed = String(raw).trim();
   if (!trimmed) return null;
 
@@ -77,4 +81,29 @@ export function calculate(inputs) {
   }
 
   return { results, doubleOverlaps, tripleOverlaps };
+}
+
+// Pure pick-queue helpers. Both the icon-click and the type-a-name paths in
+// the UI go through these so the queue stays a single source of truth.
+// Each helper returns a NEW array; callers diff against their current state
+// to drive DOM highlight changes.
+
+// Additive: if `name` is already present, return an unchanged copy (no-op).
+// Otherwise append `name`; if that would exceed MAX_PICKS, FIFO-evict the
+// oldest entry first.
+export function addPick(picks, name) {
+  if (picks.includes(name)) return picks.slice();
+  const next = picks.slice();
+  if (next.length >= MAX_PICKS) next.shift();
+  next.push(name);
+  return next;
+}
+
+// Toggle: if `name` is present, remove it; otherwise behave like addPick.
+// This is the icon-click behavior, preserved from the pre-refactor code.
+export function togglePick(picks, name) {
+  if (picks.includes(name)) {
+    return picks.filter(p => p !== name);
+  }
+  return addPick(picks, name);
 }
