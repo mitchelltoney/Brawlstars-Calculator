@@ -41,6 +41,22 @@ export function resolveName(raw) {
   return null;
 }
 
+// Brawlers whose canonical name starts with `typed` (case-insensitive), in
+// roster (brawlersAlphabetical) order. Used both for the autocomplete
+// dropdown and the unique-prefix fallback below.
+export function prefixMatches(typed) {
+  const lower = String(typed).trim().toLowerCase();
+  if (!lower) return [];
+  return brawlersAlphabetical.filter(n => n.toLowerCase().startsWith(lower));
+}
+
+// If `typed` is a strict case-insensitive prefix of exactly one roster name,
+// return that name. Otherwise null. Lets "Br" expand to "Brock" on confirm.
+export function resolveUniquePrefix(typed) {
+  const matches = prefixMatches(typed);
+  return matches.length === 1 ? matches[0] : null;
+}
+
 // Compute counterpicks for up to three opposing brawlers.
 //
 // Returns:

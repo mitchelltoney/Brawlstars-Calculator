@@ -3,6 +3,8 @@ import {
   brawlersAlphabetical,
   rarityOrder,
   resolveName,
+  resolveUniquePrefix,
+  prefixMatches,
   addPick,
   togglePick,
 } from "./calculate.js";
@@ -28,14 +30,6 @@ function buildGrid(list) {
 }
 
 buildGrid(currentList);
-
-// Populate the type-a-name datalist from the canonical roster.
-const datalist = document.getElementById("brawlerList");
-brawlersAlphabetical.forEach(n => {
-  const opt = document.createElement("option");
-  opt.value = n;
-  datalist.appendChild(opt);
-});
 
 const sortBtn = document.getElementById("sortToggle");
 if (sortBtn) {
@@ -74,8 +68,67 @@ grid.addEventListener("click", e => {
 });
 
 // Type-a-name input: additive, no toggling. Confirms on Enter or Add click.
-const nameInput = document.getElementById("nameAdd");
+// Suggestions show only after the user starts typing and are filtered by
+// case-insensitive PREFIX (not substring); on confirm, a unique prefix
+// expands to its only match (so "Br" → Brock).
+const nameInput  = document.getElementById("nameAdd");
 const nameAddBtn = document.getElementById("nameAddBtn");
+const suggestEl  = document.getElementById("nameSuggestions");
+
+const MAX_SUGGESTIONS = 8;
+let currentMatches = [];
+let activeIndex = -1;
+
+function setExpanded(open) {
+  if (nameInput) nameInput.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+function renderSuggestions() {
+  suggestEl.innerHTML = "";
+  currentMatches.forEach((name, idx) => {
+    const li = document.createElement("li");
+    li.textContent = name;
+    li.dataset.name = name;
+    li.setAttribute("role", "option");
+    if (idx === activeIndex) {
+      li.classList.add("active");
+      li.setAttribute("aria-selected", "true");
+    }
+    suggestEl.appendChild(li);
+  });
+}
+
+function hideSuggestions() {
+  suggestEl.hidden = true;
+  setExpanded(false);
+  activeIndex = -1;
+}
+
+function refreshSuggestions() {
+  const raw = nameInput.value;
+  const matches = prefixMatches(raw).slice(0, MAX_SUGGESTIONS);
+  currentMatches = matches;
+  activeIndex = -1;
+  if (!matches.length) {
+    hideSuggestions();
+    return;
+  }
+  renderSuggestions();
+  suggestEl.hidden = false;
+  setExpanded(true);
+}
+
+function moveActive(delta) {
+  if (!currentMatches.length) return;
+  if (activeIndex === -1) {
+    activeIndex = delta > 0 ? 0 : currentMatches.length - 1;
+  } else {
+    activeIndex = (activeIndex + delta + currentMatches.length) % currentMatches.length;
+  }
+  renderSuggestions();
+  const el = suggestEl.children[activeIndex];
+  if (el) el.scrollIntoView({ block: "nearest" });
+}
 
 function flashInvalid() {
   if (!nameInput) return;
@@ -89,27 +142,76 @@ function handleNameAdd() {
   if (!nameInput) return;
   const raw = nameInput.value;
   if (!raw.trim()) return;
-  const resolved = resolveName(raw);
+
+  // Resolution order:
+  //   1. If the user is navigating with arrow keys, use the highlighted row.
+  //   2. resolveName: exact case-insensitive + primo/miko/mike/barry aliases.
+  //   3. Unique-prefix fallback: "Br" → Brock when Brock is the only roster
+  //      name starting with "Br".
+  let resolved = null;
+  if (activeIndex >= 0 && currentMatches[activeIndex]) {
+    resolved = currentMatches[activeIndex];
+  } else {
+    resolved = resolveName(raw) || resolveUniquePrefix(raw);
+  }
   if (!resolved) { flashInvalid(); return; }
-  // The grid must contain this brawler's icon; if it doesn't (roster /
-  // grid out of sync — shouldn't happen), bail without mutating picks.
   if (!grid.querySelector(`img[data-name="${resolved}"]`)) { flashInvalid(); return; }
+
   applyPicks(addPick(picks, resolved));
   nameInput.value = "";
   nameInput.classList.remove("invalid");
+  hideSuggestions();
 }
 
 if (nameInput) {
+  nameInput.addEventListener("input", () => {
+    nameInput.classList.remove("invalid");
+    refreshSuggestions();
+  });
+  nameInput.addEventListener("focus", () => {
+    if (nameInput.value.trim()) refreshSuggestions();
+  });
+  nameInput.addEventListener("blur", () => {
+    // Delay so a click on a suggestion can land before we hide.
+    setTimeout(hideSuggestions, 150);
+  });
   nameInput.addEventListener("keydown", e => {
     if (e.key === "Enter") {
-      // Add the brawler and prevent the global Enter→Calculate path below.
       e.preventDefault();
       e.stopPropagation();
       handleNameAdd();
+      return;
+    }
+    if (e.key === "Escape") {
+      hideSuggestions();
+      return;
+    }
+    if (e.key === "ArrowDown" && !suggestEl.hidden) {
+      e.preventDefault();
+      moveActive(1);
+      return;
+    }
+    if (e.key === "ArrowUp" && !suggestEl.hidden) {
+      e.preventDefault();
+      moveActive(-1);
+      return;
     }
   });
-  nameInput.addEventListener("input", () => nameInput.classList.remove("invalid"));
 }
+
+if (suggestEl) {
+  // mousedown (not click) so we beat the input's blur handler.
+  suggestEl.addEventListener("mousedown", e => {
+    const li = e.target.closest("li");
+    if (!li) return;
+    e.preventDefault();
+    nameInput.value = li.dataset.name;
+    activeIndex = -1;
+    currentMatches = [];
+    handleNameAdd();
+  });
+}
+
 if (nameAddBtn) nameAddBtn.addEventListener("click", handleNameAdd);
 
 const outputEl = document.getElementById("output");

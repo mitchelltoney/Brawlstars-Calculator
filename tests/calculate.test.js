@@ -6,6 +6,8 @@ import {
   brawlersAlphabetical,
   rarityOrder,
   resolveName,
+  resolveUniquePrefix,
+  prefixMatches,
   addPick,
   togglePick,
   MAX_PICKS,
@@ -203,6 +205,32 @@ test("togglePick behaves like addPick when absent (incl. FIFO at MAX)", () => {
     togglePick(["Shelly", "Penny", "Frank"], "Bo"),
     ["Penny", "Frank", "Bo"],
   );
+});
+
+test("prefixMatches: case-insensitive prefix, roster order, empty on blank", () => {
+  assert.deepEqual(prefixMatches(""), []);
+  assert.deepEqual(prefixMatches("   "), []);
+  // 'Br' uniquely matches Brock (Bo, Bonnie don't start with 'Br').
+  assert.deepEqual(prefixMatches("Br"), ["Brock"]);
+  assert.deepEqual(prefixMatches("br"), ["Brock"]);
+  // 'Bo' matches Bo and Bonnie, in roster (case-preserving alphabetical) order.
+  assert.deepEqual(prefixMatches("Bo"), ["Bo", "Bonnie"]);
+  // 'Z' uniquely matches Ziggy.
+  assert.deepEqual(prefixMatches("Z"), ["Ziggy"]);
+  // No matches.
+  assert.deepEqual(prefixMatches("xyz"), []);
+});
+
+test("resolveUniquePrefix: returns the only match, or null", () => {
+  assert.equal(resolveUniquePrefix("Br"), "Brock");      // unique
+  assert.equal(resolveUniquePrefix("br"), "Brock");      // case-insensitive
+  assert.equal(resolveUniquePrefix("Z"),  "Ziggy");      // unique
+  assert.equal(resolveUniquePrefix("Pen"), "Penny");     // unique
+  assert.equal(resolveUniquePrefix("Bo"),  null);        // Bo + Bonnie → ambiguous
+  assert.equal(resolveUniquePrefix("B"),   null);        // many matches
+  assert.equal(resolveUniquePrefix(""),    null);        // empty
+  assert.equal(resolveUniquePrefix("xyz"), null);        // no matches
+  assert.equal(resolveUniquePrefix("el p"), "El Primo"); // spaces inside prefix
 });
 
 test("resolveName: canonical names, aliases, and unknowns", () => {

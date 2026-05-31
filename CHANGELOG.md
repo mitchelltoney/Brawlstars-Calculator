@@ -1,6 +1,14 @@
 # Feature: add a brawler by typing its name (`feature/add-brawler-by-name`)
 
-A second way to fill the 3-slot pick queue on `docs/index.html`: a small input + Add button placed directly above the Calculate button, with native `<datalist>` autocomplete sourced from the canonical roster. Confirm with Enter or the Add button. The icon picker is untouched.
+A second way to fill the 3-slot pick queue on `docs/index.html`: a small input + Add button placed directly above the Calculate button, with a custom autocomplete dropdown sourced from the canonical roster. Confirm with Enter, click on a suggestion, or click Add. The icon picker is untouched.
+
+## Autocomplete behavior
+
+- The suggestion list is empty until the user starts typing. (Native `<datalist>` shows the full roster on focus in some browsers, which is what the user wants to avoid.)
+- Filtering is strict case-insensitive **prefix** match (not substring), in roster order. So typing `b` or `B` lists only brawlers whose name starts with B.
+- Keyboard: `ArrowDown` / `ArrowUp` highlight a row; `Enter` confirms; `Escape` closes.
+- Click on a row adds that brawler immediately.
+- **Unique-prefix expansion:** if no exact / alias match is found, but exactly one roster brawler starts with what was typed, that brawler is added. So `Br` → Brock, `Pen` → Penny, `el p` → El Primo. Ambiguous prefixes (`Bo` → Bo + Bonnie) flash invalid; the user can either disambiguate by typing more, or arrow-navigate the suggestion list.
 
 ## What's shared (single source of truth)
 - `docs/calculate.js` now exports two pure pick-queue helpers:
@@ -10,7 +18,7 @@ A second way to fill the 3-slot pick queue on `docs/index.html`: a small input +
 - `docs/app.js` was refactored: the icon click handler and the text input both call a single `applyPicks(next)` that diffs against the current `picks` array and toggles `.selected` accordingly. There is only one picks array and one set of grid highlights.
 
 ## Text-input behavior
-- Resolves the typed string through the same `resolveName` the counter calculation uses — case-insensitive direct match, then the `primo` / `miko` / `mike` / `barry` aliases. So `primo` adds El Primo, `PENNY` adds Penny.
+- Resolves the typed string through the same `resolveName` the counter calculation uses (case-insensitive direct match + `primo` / `miko` / `mike` / `barry` aliases), and falls back to `resolveUniquePrefix` if that returns null. So `primo` adds El Primo, `PENNY` adds Penny, `Br` adds Brock.
 - Additive only: typing the name of an already-selected brawler is a no-op (does *not* deselect — that would be surprising for an "Add" field).
 - Unknown name: brief red-border + shake on the input; nothing added; user can keep typing.
 - On a successful add, the input clears.

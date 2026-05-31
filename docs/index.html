@@ -217,9 +217,13 @@ h1 {
   max-width: 480px;
   margin: 0 auto 1.25rem;
 }
-.name-add input {
+.name-add-field {
+  position: relative;
   flex: 1;
   min-width: 0;
+}
+.name-add input {
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--border-hi);
   border-radius: 100px;
@@ -262,6 +266,38 @@ h1 {
   border-color: rgba(255,255,255,0.22);
 }
 .name-add button:active { transform: scale(0.97); }
+
+.name-suggestions {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0;
+  background: rgba(20,20,28,0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--radius-sm);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 60;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+}
+.name-suggestions[hidden] { display: none; }
+.name-suggestions li {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-2);
+  cursor: pointer;
+  user-select: none;
+}
+.name-suggestions li.active,
+.name-suggestions li:hover {
+  background: var(--surface-hi);
+  color: var(--text);
+}
 
 /* ── Go button ── */
 .go-wrap {
@@ -688,13 +724,17 @@ footer strong { color: var(--text-2); font-weight: 500; }
   </div>
   <div id="iconGrid" class="icon-grid"></div>
   <div class="name-add">
-    <input id="nameAdd" type="text" list="brawlerList"
-           placeholder="Add a brawler by name…"
-           aria-label="Add a brawler by name"
-           autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div class="name-add-field">
+      <input id="nameAdd" type="text"
+             placeholder="Add a brawler by name…"
+             aria-label="Add a brawler by name"
+             autocomplete="off" autocapitalize="off" spellcheck="false"
+             role="combobox" aria-autocomplete="list"
+             aria-expanded="false" aria-controls="nameSuggestions">
+      <ul id="nameSuggestions" class="name-suggestions" role="listbox" hidden></ul>
+    </div>
     <button type="button" id="nameAddBtn">Add</button>
   </div>
-  <datalist id="brawlerList"></datalist>
   <div class="go-wrap">
     <button id="go">Calculate</button>
   </div>
