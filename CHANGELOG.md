@@ -1,3 +1,49 @@
+# Data: meta-counter update for 15 brawlers
+
+Data-only edit (no behavior change). 15 brawlers' `direct` lists were
+**replaced** (not merged) with the user-supplied meta tier-list data. The
+ordering inside each `direct` array is meaningful — strongest counter
+first — and matches the source verbatim.
+
+## Replaced direct lists (old → new)
+
+| Brawler | Old | New |
+|---|---|---|
+| Dynamike | Mico, Mortis, Kenji, Edgar, Darryl | **Edgar, Colette, Chester, Otis** |
+| Edgar    | Surge, Doug, Jacky, Shelly | **Chester, Otis, Shelly, Griff, Bull, Stu** |
+| Colette  | Belle, Stu, Bea, Griff, Jessie | **Crow, Charlie, Ruffs, Meeple, Griff** |
+| Meeple   | Kenji, Frank, Ash | **Ruffs, Charlie, Lily, Squeak, Spike** |
+| Mortis   | Jacky, Shade, Bull, Gale, Shelly | **Shelly, Otis, Chester, Bull, Crow** |
+| Otis     | Barley, Juju, Larry, Stu, Amber | **Ruffs, Chester, Poco, Alli** |
+| Lou      | Belle, Bea, Bo, Poco | **Mortis, Kenji, Edgar, Lily, Nita** |
+| Nita     | Barley, Juju, Larry, Spike, Griff | **Mortis, Colette, Poco, Kenji, Lily** |
+| Chester  | Janet, Amber, Stu, Gale | **Ruffs, Meeple, Emz, Charlie** |
+| Crow     | Piper, Spike | **Rosa, Gus, Byron, Piper, Charlie** |
+| Leon     | Crow, Stu, Pearl | **Crow, Chester, Charlie, Emz, Mortis** |
+| Piper    | Nani, Tick, Kit, Kenji | **Ruffs, Charlie, Nani, Gene, Nita** |
+| Sirius   | Buster, Leon, Buzz, Penny, Edgar | **Penny, Mortis, Amber, Lou** |
+| Mina     | Bea, Bonnie, Finx, Shelly | **Kenji, Mortis, Stu, Shade, Meeple** |
+| Griff    | Lola, Stu, Bea | **Stu, Ruffs, Chester, Meeple, Max** |
+
+## Class changes
+- **Sirius**: `classes: [] → ["Thrower"]`. (Lou's `["Thrower"]` and Crow's `["Tank"]` were preserved unchanged.)
+
+## Spelling reconciliations
+The source's spellings were normalized to canonical roster keys:
+- **`Meepo` → `Meeple`** — appeared as the key for the 4th row and in the counter lists for Colette, Chester, Mina, and Griff. Brawl Stars has no brawler named "Meepo"; this is the existing Meeple.
+- **`Ali` → `Alli`** (in Otis's list) — roster key has the double-l.
+- The prompt also flagged a historical `Sirus → Sirius` correction; the data block in the prompt already used the canonical `Sirius`, so no further fix was needed there.
+
+## Mechanism notes dropped
+Per the product decision: source annotations like "(best)" / "(soft)" / "via super" / "gadget" were stripped — counter strength is now encoded by array order only.
+
+## Untouched data and tests
+- All 89 other brawlers' `direct` and `classes` are **byte-identical to main** (verified by diffing against `main:docs/counters.js`).
+- Roster size still 104; alphabetical and rarity rosters still cover the same set.
+- 25/25 tests pass without modification. None of the existing assertions reference the 15 changed lists (the regression and overlap tests use Shelly, Penny+Jessie+Mandy, and Cordelius+Doug+Draco — all untouched).
+
+---
+
 # Feature: add a brawler by typing its name (`feature/add-brawler-by-name`)
 
 A second way to fill the 3-slot pick queue on `docs/index.html`: a small input + Add button placed directly above the Calculate button, with a custom autocomplete dropdown sourced from the canonical roster. Confirm with Enter, click on a suggestion, or click Add. The icon picker is untouched.
