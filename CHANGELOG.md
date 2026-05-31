@@ -1,3 +1,55 @@
+# Data: meta-counter merge for 87 brawlers (`feature/meta-counter-merge-2`)
+
+Data-only edit. Second meta-counter pass — this time **UNION**ed with the
+existing lists per row (not replace). For each brawler the new entries are
+placed first in the given strength order, followed by any pre-existing
+entries not already present. Same merge rule for `classes`.
+
+## Effective changes (74 of 87 rows)
+74 brawlers had their `direct` and/or `classes` change. The full
+before→after diff lives in the commit message; full list of changed
+brawlers: 8bit, Amber, Ash, Bea, Bibi, Bo, Bonnie, Buster, Byron, Charlie,
+Chester, Chuck, Clancy, Colette, Colt, Crow, Dynamike, Edgar, Emz, Eve,
+Fang, Frank, Gale, Gene, Gray, Griff, Grom, Gus, Hank, Jacky, Janet,
+Jessie, Juju, Kenji, Kit, Larry, Leon, Lily, Lola, Lou, Maisie, Mandy,
+Max, Meeple, Meg, Melodie, Mico, Moe, Mortis, Mr P, Nani, Nita, Otis, Pam,
+Pearl, Penny, Piper, Poco, RT, Rico, Rosa, Ruffs, Sam, Sandy, Shade,
+Shelly, Spike, Sprout, Squeak, Stu, Surge, Tara, Tick, Willow.
+
+## Merged but no effective change (13 of 87)
+The new data was already fully covered by the existing lists; these rows
+are **byte-identical to main**: Angelo, Barley, Belle, Berry, Brock,
+Bull, Buzz, Carl, Cordelius, Darryl, Doug, Draco, El Primo.
+
+## New class categories
+Two tags joined the class vocabulary:
+- **Spawner** — Clancy, Gale, Gene, Max, Stu, Surge.
+- **Knockback** — Bibi, Gus.
+(Existing categories preserved: Anti-Tank, Assassin, Healer, Sniper, Tank, Thrower, Wallbreaker.)
+
+## Spelling reconciliations
+- **`Primo` → `El Primo`** in Fang and Juju (per `resolveName` alias).
+- **`8Bit` → `8bit`** in Pam and Pearl. This is a pre-existing data inconsistency (those rows had the capital-B form while the roster key is lowercase `8bit`). The merge-time dedupe would otherwise have produced two distinct items (`8bit` and `8Bit`) in Pam's list, so the merge script canonicalizes all `direct` entries through a case-insensitive lookup against the roster keys. The fix is consistent with the prompt's "store the roster's spelling" rule and surfaced only because these rows were touched.
+
+## ANOMALY-note resolutions (notes won where they conflicted with the data block)
+- **Mortis**: `direct: [Jacky, Shade, Bull, Shelly, Gale]` (not the truncated `[Edgar, Bibi]`).
+- **Shade**: `direct: [Lou, Jacky]`, `classes: [Tank]` (not the data-block line `[Nita, Spike, Penny]` / `classes: [—]`).
+- **Surge**: `direct: [Spike]`, `classes: [Thrower, Spawner]` (not the data-block line `[Janet]` / `classes: [—]`).
+- **Pearl**: `direct: [Jessie, Kenji, Bo]` — the source's `"Jessie (same as)"` annotation was dropped.
+
+## Untouched data and tests
+- All 17 brawlers absent from the data block (Alli, Bolt, Damien, Finx, Gigi, Glowy, Jae Yong, Kaze, Lumi, Mina, Najia, Ollie, Pierce, Sirius, Starr Nova, Trunk, Ziggy) are **byte-identical to main**.
+- Roster size unchanged at 104; alphabetical and rarity sets still match.
+- Two test assertions were updated because they reference touched brawlers' specific lists:
+  - "single-brawler matchup ... Shelly" — now expects merged `["Squeak","Carl","Piper","Stu","Nita","Spike","Penny"]` + `classes: ["Thrower"]`.
+  - "results.classes ... Stu" — now expects `["Thrower","Spawner","Healer","Sniper"]`.
+- 25/25 tests pass.
+
+## Deviations from the prompt
+- **`8Bit` → `8bit` normalization** in Pam and Pearl was not explicitly asked for, but is necessary to avoid the merge producing both `8bit` and `8Bit` as separate items in Pam's list. Documented here per the deviation-disclosure rule. If you'd rather preserve the capital-B form, revert just those two rows and we can dedupe case-insensitively instead.
+
+---
+
 # Data: meta-counter update for 15 brawlers
 
 Data-only edit (no behavior change). 15 brawlers' `direct` lists were

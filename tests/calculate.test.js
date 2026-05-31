@@ -42,8 +42,8 @@ test("single-brawler matchup returns that brawler's direct counters in order", (
   const out = calculate(["Shelly", "", ""]);
   assert.equal(out.results.length, 1);
   assert.equal(out.results[0].brawler, "Shelly");
-  assert.deepEqual(out.results[0].counters, ["Stu", "Nita", "Spike", "Penny"]);
-  assert.deepEqual(out.results[0].classes, []);
+  assert.deepEqual(out.results[0].counters, ["Squeak", "Carl", "Piper", "Stu", "Nita", "Spike", "Penny"]);
+  assert.deepEqual(out.results[0].classes, ["Thrower"]);
   assert.deepEqual(out.doubleOverlaps, []);
   assert.deepEqual(out.tripleOverlaps, []);
 });
@@ -134,8 +134,9 @@ test("results.counters contains only real brawler names (no class tokens)", () =
 
 test("results.classes contains normalized singular class names", () => {
   const stu = calculate(["Stu", "", ""]).results[0];
-  // Stu's original markers were T>Healer and T>Sniper.
-  assert.deepEqual(stu.classes, ["Healer", "Sniper"]);
+  // Stu's original markers were T>Healer and T>Sniper; the meta-merge later
+  // appended Thrower and Spawner.
+  assert.deepEqual(stu.classes, ["Thrower", "Spawner", "Healer", "Sniper"]);
 });
 
 test("unknown brawler name is handled gracefully (no throw, no entry)", () => {
