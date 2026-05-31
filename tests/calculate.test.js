@@ -27,10 +27,11 @@ test("calculate returns the documented object shape", () => {
   }
 });
 
-test("rosters expose the expected 101 brawlers", () => {
-  assert.equal(brawlersAlphabetical.length, 101);
-  assert.equal(rarityOrder.length, 101);
-  assert.equal(new Set(brawlersAlphabetical).size, 101);
+test("rosters are consistent and cover the same set of brawlers", () => {
+  const EXPECTED = 104;
+  assert.equal(brawlersAlphabetical.length, EXPECTED);
+  assert.equal(rarityOrder.length, EXPECTED);
+  assert.equal(new Set(brawlersAlphabetical).size, EXPECTED);
   assert.deepEqual(
     new Set(brawlersAlphabetical),
     new Set(rarityOrder),
@@ -213,8 +214,8 @@ test("prefixMatches: case-insensitive prefix, roster order, empty on blank", () 
   // 'Br' uniquely matches Brock (Bo, Bonnie don't start with 'Br').
   assert.deepEqual(prefixMatches("Br"), ["Brock"]);
   assert.deepEqual(prefixMatches("br"), ["Brock"]);
-  // 'Bo' matches Bo and Bonnie, in roster (case-preserving alphabetical) order.
-  assert.deepEqual(prefixMatches("Bo"), ["Bo", "Bonnie"]);
+  // 'Bo' matches Bo, Bolt, and Bonnie, in roster (case-preserving alphabetical) order.
+  assert.deepEqual(prefixMatches("Bo"), ["Bo", "Bolt", "Bonnie"]);
   // 'Z' uniquely matches Ziggy.
   assert.deepEqual(prefixMatches("Z"), ["Ziggy"]);
   // No matches.
