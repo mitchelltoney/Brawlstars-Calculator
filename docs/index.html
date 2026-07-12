@@ -21,6 +21,8 @@
 <meta name="twitter:image" content="https://brawlcalculator.com/og-image.jpg">
 <link rel="icon" type="image/x-icon" href="chester-favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0c0c10">
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -223,6 +225,14 @@
     submit.textContent = 'Send Feedback';
   });
 })();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 </script>
 
 </body>
