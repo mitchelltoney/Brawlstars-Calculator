@@ -1,3 +1,24 @@
+# Data: first counter lists for Damian, Starr Nova, Bolt, Nori (`revamp/2026-07-ux-perf-seo`)
+
+Researched via Exa web search (~299 sources reviewed across 4 parallel
+research agents; sources: PL Prodigy, noff.gg, the Brawl Stars wiki
+countered-by sections, lootbar/clutchpoints/sportsdunia guides). Lists
+keep only roster-valid names with explicit "counters/beats X" claims,
+ordered by cross-source consensus:
+
+- **Damian**: Cordelius, Colette, Piper, Gale, Belle, Chester, Stu ·
+  classes: Anti-Tank, Sniper. (Cordelius/Colette/Piper each 3+ sources.)
+- **Starr Nova**: Damian, Crow, Otis, Piper, Frank, Buster, Ash ·
+  classes: Tank.
+- **Bolt**: Gale, Piper, Mandy, Colette, Charlie, Willow · classes:
+  Sniper, Knockback. (Gale is the only 2-source counter; rest are
+  single-source — revisit in 2–4 weeks when stat sites catch up.)
+- **Nori**: Bull, Otis, Chester, Shelly, Gale, Darryl, Frank, Buzz ·
+  classes: Tank, Knockback. (Wiki countered-by + day-one guides; he is
+  2 days old — expect churn.)
+
+Pages/sitemap regenerated (`npm run generate`); all 34 tests pass.
+
 # July 2026 revamp: fixes, roster, perf, UX, PWA, SEO pages (`revamp/2026-07-ux-perf-seo`)
 
 One branch, eight commits, no behavior-breaking changes to the calculation
