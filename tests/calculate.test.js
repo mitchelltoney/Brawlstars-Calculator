@@ -28,7 +28,7 @@ test("calculate returns the documented object shape", () => {
 });
 
 test("rosters are consistent and cover the same set of brawlers", () => {
-  const EXPECTED = 104;
+  const EXPECTED = 105;
   assert.equal(brawlersAlphabetical.length, EXPECTED);
   assert.equal(rarityOrder.length, EXPECTED);
   assert.equal(new Set(brawlersAlphabetical).size, EXPECTED);
@@ -61,6 +61,24 @@ test("alias resolution: primo → El Primo, miko → Mico, mike → Dynamike, ba
     assert.equal(out.results.length, 1, `${alias} should resolve`);
     assert.equal(out.results[0].brawler, canonical, `${alias} → ${canonical}`);
   }
+});
+
+test("punctuation-insensitive resolution: 8-bit, mr. p, jae yong, r-t, damien", () => {
+  assert.equal(resolveName("8-bit"), "8bit");
+  assert.equal(resolveName("Mr. P"), "Mr P");
+  assert.equal(resolveName("jae yong"), "Jae-Yong");
+  assert.equal(resolveName("Jae-Yong"), "Jae-Yong");
+  assert.equal(resolveName("r-t"), "RT");
+  // Pre-July-2026 misspelling of Damian still resolves.
+  assert.equal(resolveName("damien"), "Damian");
+  assert.equal(resolveName("Damian"), "Damian");
+  // Nori is on the roster.
+  assert.equal(resolveName("nori"), "Nori");
+});
+
+test("prefixMatches is punctuation-insensitive ('jae y' → Jae-Yong)", () => {
+  assert.deepEqual(prefixMatches("jae y"), ["Jae-Yong"]);
+  assert.deepEqual(prefixMatches("8-b"), ["8bit"]);
 });
 
 test("case-insensitivity: 'penny', 'PENNY', 'Penny' behave identically", () => {

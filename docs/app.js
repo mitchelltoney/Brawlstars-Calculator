@@ -14,7 +14,7 @@ const picks = [];
 let currentList = rarityOrder;
 
 function fileName(n) {
-  return n.toLowerCase().replace(/[\s.']/g, "_") + ".png";
+  return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".png";
 }
 
 function buildGrid(list) {
@@ -258,7 +258,14 @@ function runCalc() {
 
     const cards = document.createElement("div");
     cards.className = "output-grid";
-    group.counters.forEach(c => cards.appendChild(makeCard(c)));
+    if (group.counters.length) {
+      group.counters.forEach(c => cards.appendChild(makeCard(c)));
+    } else {
+      const note = document.createElement("p");
+      note.className = "no-data";
+      note.textContent = `${group.brawler} is brand new — no curated counter data yet. It will be added with the next data update.`;
+      cards.appendChild(note);
+    }
     row.appendChild(cards);
     outputEl.appendChild(row);
   });

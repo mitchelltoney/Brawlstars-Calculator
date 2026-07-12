@@ -13,9 +13,16 @@ export const brawlersAlphabetical = Object.keys(counters);
 // Re-export rarityOrder so callers have a single import surface if they want.
 export { rarityOrder };
 
-// Lower-cased lookup index for case-insensitive name resolution.
-const lowerToCanonical = new Map(
-  brawlersAlphabetical.map(n => [n.toLowerCase(), n])
+// Normalize a name for lookup: lowercase and strip spaces, dots, apostrophes,
+// and hyphens, so "8-Bit", "Mr. P", "jae yong", and "El Primo" all resolve to
+// their canonical roster keys regardless of punctuation style.
+function normalizeName(raw) {
+  return String(raw).toLowerCase().replace(/[\s.'-]/g, "");
+}
+
+// Normalized lookup index for punctuation/case-insensitive name resolution.
+const normalToCanonical = new Map(
+  brawlersAlphabetical.map(n => [normalizeName(n), n])
 );
 
 // Maximum opponents the picker can hold at once. Both the icon-click and
@@ -29,14 +36,15 @@ export function resolveName(raw) {
   const trimmed = String(raw).trim();
   if (!trimmed) return null;
 
-  const direct = lowerToCanonical.get(trimmed.toLowerCase());
+  const direct = normalToCanonical.get(normalizeName(trimmed));
   if (direct) return direct;
 
   const n = trimmed.toLowerCase();
-  if (n.includes("primo")) return "El Primo";
-  if (n.includes("miko"))  return "Mico";
-  if (n.includes("mike"))  return "Dynamike";
-  if (n.includes("barry")) return "Berry";
+  if (n.includes("primo"))  return "El Primo";
+  if (n.includes("miko"))   return "Mico";
+  if (n.includes("mike"))   return "Dynamike";
+  if (n.includes("barry"))  return "Berry";
+  if (n.includes("damien")) return "Damian"; // pre-July-2026 misspelling
 
   return null;
 }
@@ -45,9 +53,9 @@ export function resolveName(raw) {
 // roster (brawlersAlphabetical) order. Used both for the autocomplete
 // dropdown and the unique-prefix fallback below.
 export function prefixMatches(typed) {
-  const lower = String(typed).trim().toLowerCase();
-  if (!lower) return [];
-  return brawlersAlphabetical.filter(n => n.toLowerCase().startsWith(lower));
+  const normal = normalizeName(String(typed).trim());
+  if (!normal) return [];
+  return brawlersAlphabetical.filter(n => normalizeName(n).startsWith(normal));
 }
 
 // If `typed` is a strict case-insensitive prefix of exactly one roster name,
