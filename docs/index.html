@@ -8,7 +8,19 @@
 <meta name="description" content="Quickly calculate and find the best Brawl Stars ranked counter-picks. Counterpicks are heavily influenced by SpenLC tierlists for credibility.">
 <link rel="canonical" href="https://brawlcalculator.com/" />
 <meta property="og:site_name" content="Brawlstars Calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Brawl Stars Counterpick Calculator">
+<meta property="og:description" content="Pick the enemy brawlers and instantly see the best counters for ranked. Hand-curated counter data, free, no login.">
+<meta property="og:url" content="https://brawlcalculator.com/">
+<meta property="og:image" content="https://brawlcalculator.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Brawl Stars Counterpick Calculator">
+<meta name="twitter:description" content="Pick the enemy brawlers and instantly see the best counters for ranked. Hand-curated counter data, free, no login.">
+<meta name="twitter:image" content="https://brawlcalculator.com/og-image.jpg">
 <link rel="icon" type="image/x-icon" href="chester-favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -447,8 +459,14 @@ footer {
   color: var(--text-3);
   text-align: center;
   letter-spacing: 0.03em;
+  max-width: 560px;
+  line-height: 1.7;
 }
 footer strong { color: var(--text-2); font-weight: 500; }
+footer p + p { margin-top: 0.6rem; }
+footer a { color: var(--text-2); }
+footer a:hover { color: var(--text); }
+footer .disclaimer { font-size: 0.64rem; }
 
 /* ── Feedback button ── */
 .feedback-btn {
@@ -722,7 +740,10 @@ footer strong { color: var(--text-2); font-weight: 500; }
 </div>
 
 <footer>
-  Counterpicks determined primarily from <strong>SpenLC</strong> ranking data.
+  <p>Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated <span id="dataFreshness">July 2026</span></p>
+  <p><a href="counters/">Browse counters brawler-by-brawler</a></p>
+  <p class="disclaimer">This material is unofficial and is not endorsed by Supercell. For more information
+    see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
 </footer>
 
 <a href="classic.html" class="classic-link">Classic view</a>

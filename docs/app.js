@@ -2,12 +2,16 @@ import {
   calculate,
   brawlersAlphabetical,
   rarityOrder,
+  dataUpdated,
   resolveName,
   resolveUniquePrefix,
   prefixMatches,
   addPick,
   togglePick,
 } from "./calculate.js";
+
+const freshnessEl = document.getElementById("dataFreshness");
+if (freshnessEl) freshnessEl.textContent = dataUpdated;
 
 const grid = document.getElementById("iconGrid");
 const picks = [];

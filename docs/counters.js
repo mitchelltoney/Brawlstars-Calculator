@@ -6,6 +6,10 @@
 //   direct  : real brawler names that counter this brawler, in curated order.
 //   classes : normalized class names (no "T>" prefix) that counter this brawler.
 
+// Human-readable freshness stamp shown in the index footer and on generated
+// per-brawler counter pages. Update whenever the counter lists are re-curated.
+export const dataUpdated = "July 2026";
+
 export const counters = {
   "8bit": { direct: ["Penny", "Brock", "Squeak", "Piper", "Belle"], classes: [] },
   "Alli": { direct: ["Gale", "RT", "Doug", "Chester"], classes: [] },

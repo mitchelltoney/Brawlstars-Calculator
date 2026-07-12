@@ -4,14 +4,14 @@
 // (The previous Python implementation also counted class markers, which
 // then leaked into the rendered overlap rows as broken image cards.)
 
-import { counters, rarityOrder } from "./counters.js";
+import { counters, rarityOrder, dataUpdated } from "./counters.js";
 
 // brawlerNames in case-preserving "alphabetical" order, equivalent to the
 // historical brawlers.js `brawlerNames` (curated, places "RT" before "Rico").
 export const brawlersAlphabetical = Object.keys(counters);
 
-// Re-export rarityOrder so callers have a single import surface if they want.
-export { rarityOrder };
+// Re-export rarityOrder and dataUpdated so callers have a single import surface.
+export { rarityOrder, dataUpdated };
 
 // Normalize a name for lookup: lowercase and strip spaces, dots, apostrophes,
 // and hyphens, so "8-Bit", "Mr. P", "jae yong", and "El Primo" all resolve to
