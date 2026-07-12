@@ -1,3 +1,62 @@
+# July 2026 revamp: fixes, roster, perf, UX, PWA, SEO pages (`revamp/2026-07-ux-perf-seo`)
+
+One branch, eight commits, no behavior-breaking changes to the calculation
+core (25 pre-existing tests untouched and passing; 7 new suite files/cases
+added on top).
+
+## Bug fixes
+- The document-level Enter shortcut no longer hijacks Enter inside the
+  feedback modal, form controls, links, or grid icons.
+- `alert()` validation replaced with an inline hint under Calculate.
+- Removed the permanently-pulsing "UI Update!" badge.
+- Deleted unused `icons/green.png` (1 MB) and duplicate `jaeyong.png`.
+
+## Roster / data
+- **Nori added** (Legendary, live 2026-07-09), icon from the Brawlify CDN,
+  counter list empty pending curation (renders a "brand new" note, not a
+  blank row). Same note for Bolt, Damian, Starr Nova.
+- **Damien → Damian**, **Jae Yong → Jae-Yong** (official spellings); old
+  spellings still resolve via alias; name lookup is now
+  punctuation-insensitive ("8-bit", "mr. p", "jae y").
+- New `dataUpdated` export in `counters.js` drives the visible freshness
+  stamp in the footer and on generated pages.
+
+## Performance
+- All brawler icons resized (≤176px) and converted to WebP: icon payload
+  3.2 MB → 844 KB. Grid lazy-loads with async decode.
+- Lilita One self-hosted as latin WOFF2 (10.7 KB) with `font-display:
+  swap` + preload; unused "Brawl Stars Bold" face and nougat TTF removed.
+- index.html's 655-line inline stylesheet extracted to cacheable
+  `index.css`.
+
+## UX
+- Pick tray (chips with remove buttons, Clear, n/3 count).
+- Results re-render live after the first calculation; Calculate
+  smooth-scrolls to results.
+- Grid icons keyboard-accessible (tab, Enter/Space, `aria-pressed`);
+  feedback modal traps focus and restores it on close.
+- Picks encoded in the URL (`?p=Frank,Piper`) — shareable, restored on
+  load.
+- Curated class weaknesses now rendered ("Also weak to: Thrower").
+- **Ban mode**: mark up to 6 bans (ranked draft rules); banned brawlers
+  grey out, can't be picked, and are filtered from results with a count.
+
+## Compliance / meta / PWA
+- Supercell Fan Content Policy disclaimer on all pages (policy
+  requirement).
+- Open Graph/Twitter cards with a branded og-image; apple-touch-icon;
+  web manifest + service worker (installable, offline-capable;
+  cache-first icons/fonts, network-first code).
+
+## SEO
+- `npm run generate` (scripts/generate-counter-pages.mjs) emits 105
+  static per-brawler pages under `docs/counters/<slug>/` (best counters,
+  reverse "strong against" index, class chips, calculator deep-link,
+  breadcrumb JSON-LD), a `/counters/` directory page, and a full
+  `sitemap.xml`. Output is committed; the deploy stays build-free.
+  **Rerun after every counters.js edit** — `tests/data.test.js` fails
+  loudly if pages/sitemap drift from the roster.
+
 # Data: meta-counter merge for 87 brawlers (`feature/meta-counter-merge-2`)
 
 Data-only edit. Second meta-counter pass — this time **UNION**ed with the
