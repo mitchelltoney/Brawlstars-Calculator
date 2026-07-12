@@ -4,6 +4,7 @@
   "type": "module",
   "description": "Dev-only test harness for docs/calculate.js. Not deployed (GitHub Pages serves docs/ only).",
   "scripts": {
-    "test": "node --test tests/*.test.js"
+    "test": "node --test tests/*.test.js",
+    "generate": "node scripts/generate-counter-pages.mjs"
   }
 }
