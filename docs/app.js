@@ -15,7 +15,16 @@ if (freshnessEl) freshnessEl.textContent = dataUpdated;
 
 const grid = document.getElementById("iconGrid");
 const picks = [];
+// Ranked bans: 3 per team, both teams may ban the same brawler → at most 6
+// distinct names. Bans are display-side only: banned brawlers are marked in
+// the grid, can't be picked, and are hidden from results.
+const bans = new Set();
+const MAX_BANS = 6;
+let banMode = false;
 let currentList = rarityOrder;
+// Results go live (re-render on every pick/ban change) only after the user
+// has explicitly calculated once, so the first experience stays button-driven.
+let hasCalculated = false;
 
 function fileName(n) {
   return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
@@ -30,7 +39,11 @@ function buildGrid(list) {
     img.dataset.name = n;
     img.loading = "lazy";
     img.decoding = "async";
+    img.tabIndex = 0;
+    img.setAttribute("role", "button");
+    img.setAttribute("aria-pressed", picks.includes(n) ? "true" : "false");
     if (picks.includes(n)) img.classList.add("selected");
+    if (bans.has(n)) img.classList.add("banned");
     grid.appendChild(img);
   });
 }
@@ -54,25 +67,144 @@ function applyPicks(next) {
   for (const old of picks) {
     if (!next.includes(old)) {
       const img = grid.querySelector(`img[data-name="${old}"]`);
-      if (img) img.classList.remove("selected");
+      if (img) {
+        img.classList.remove("selected");
+        img.setAttribute("aria-pressed", "false");
+      }
     }
   }
   for (const name of next) {
     if (!picks.includes(name)) {
       const img = grid.querySelector(`img[data-name="${name}"]`);
-      if (img) img.classList.add("selected");
+      if (img) {
+        img.classList.add("selected");
+        img.setAttribute("aria-pressed", "true");
+      }
     }
   }
   picks.length = 0;
   picks.push(...next);
+  onPicksChanged();
+}
+
+function onPicksChanged() {
   if (picks.length) showCalcHint(false);
+  renderTray();
+  syncUrl();
+  if (hasCalculated) renderResults({ scroll: false });
+}
+
+// ── Ban mode ───────────────────────────────────────────────────────────────
+
+const banToggle = document.getElementById("banToggle");
+
+function updateBanToggle() {
+  if (!banToggle) return;
+  banToggle.textContent = bans.size ? `Bans (${bans.size})` : "Bans";
+  banToggle.classList.toggle("active", banMode);
+  banToggle.setAttribute("aria-pressed", banMode ? "true" : "false");
+}
+
+function toggleBan(name) {
+  const img = grid.querySelector(`img[data-name="${name}"]`);
+  if (bans.has(name)) {
+    bans.delete(name);
+    if (img) img.classList.remove("banned");
+  } else {
+    if (bans.size >= MAX_BANS) return;
+    bans.add(name);
+    if (img) img.classList.add("banned");
+    // A banned brawler can't stay picked.
+    if (picks.includes(name)) applyPicks(picks.filter(p => p !== name));
+  }
+  updateBanToggle();
+  if (hasCalculated) renderResults({ scroll: false });
+}
+
+if (banToggle) {
+  banToggle.addEventListener("click", () => {
+    banMode = !banMode;
+    grid.classList.toggle("ban-mode", banMode);
+    updateBanToggle();
+  });
+}
+
+// ── Grid interaction (mouse + keyboard) ────────────────────────────────────
+
+function handleGridActivate(img) {
+  const name = img.dataset.name;
+  if (banMode) {
+    toggleBan(name);
+    return;
+  }
+  if (bans.has(name)) return; // banned brawlers can't be picked
+  applyPicks(togglePick(picks, name));
 }
 
 grid.addEventListener("click", e => {
   const img = e.target.closest("img");
   if (!img) return;
-  applyPicks(togglePick(picks, img.dataset.name));
+  handleGridActivate(img);
 });
+
+grid.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const img = e.target.closest("img");
+  if (!img) return;
+  e.preventDefault();
+  e.stopPropagation(); // keep the global Enter→calculate shortcut out of it
+  handleGridActivate(img);
+});
+
+// ── Pick tray ──────────────────────────────────────────────────────────────
+
+const trayEl = document.getElementById("pickTray");
+
+function renderTray() {
+  if (!trayEl) return;
+  trayEl.innerHTML = "";
+  if (!picks.length) {
+    trayEl.hidden = true;
+    return;
+  }
+  trayEl.hidden = false;
+  picks.forEach(name => {
+    const chip = document.createElement("span");
+    chip.className = "pick-chip";
+    const img = document.createElement("img");
+    img.src = `icons/${fileName(name)}`;
+    img.alt = "";
+    img.decoding = "async";
+    const label = document.createElement("span");
+    label.textContent = name;
+    const rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "chip-remove";
+    rm.setAttribute("aria-label", `Remove ${name}`);
+    rm.textContent = "✕";
+    rm.addEventListener("click", () => applyPicks(picks.filter(p => p !== name)));
+    chip.append(img, label, rm);
+    trayEl.appendChild(chip);
+  });
+  const count = document.createElement("span");
+  count.className = "pick-count";
+  count.textContent = `${picks.length}/3`;
+  const clear = document.createElement("button");
+  clear.type = "button";
+  clear.className = "chip-clear";
+  clear.textContent = "Clear";
+  clear.addEventListener("click", () => applyPicks([]));
+  trayEl.append(count, clear);
+}
+
+// ── Shareable URL state (?p=Name,Name) ─────────────────────────────────────
+
+function syncUrl() {
+  const url = new URL(window.location.href);
+  if (picks.length) url.searchParams.set("p", picks.join(","));
+  else url.searchParams.delete("p");
+  history.replaceState(null, "", url);
+}
 
 // Type-a-name input: additive, no toggling. Confirms on Enter or Add click.
 // Suggestions show only after the user starts typing and are filtered by
@@ -152,7 +284,7 @@ function handleNameAdd() {
 
   // Resolution order:
   //   1. If the user is navigating with arrow keys, use the highlighted row.
-  //   2. resolveName: exact case-insensitive + primo/miko/mike/barry aliases.
+  //   2. resolveName: exact punctuation-insensitive match + aliases.
   //   3. Unique-prefix fallback: "Br" → Brock when Brock is the only roster
   //      name starting with "Br".
   let resolved = null;
@@ -162,6 +294,7 @@ function handleNameAdd() {
     resolved = resolveName(raw) || resolveUniquePrefix(raw);
   }
   if (!resolved) { flashInvalid(); return; }
+  if (bans.has(resolved)) { flashInvalid(); return; }
   if (!grid.querySelector(`img[data-name="${resolved}"]`)) { flashInvalid(); return; }
 
   applyPicks(addPick(picks, resolved));
@@ -221,7 +354,14 @@ if (suggestEl) {
 
 if (nameAddBtn) nameAddBtn.addEventListener("click", handleNameAdd);
 
+// ── Results ────────────────────────────────────────────────────────────────
+
 const outputEl = document.getElementById("output");
+const calcHint = document.getElementById("calcHint");
+
+function showCalcHint(show) {
+  if (calcHint) calcHint.hidden = !show;
+}
 
 function makeCard(name) {
   const card = document.createElement("div");
@@ -237,18 +377,12 @@ function makeCard(name) {
   return card;
 }
 
-const calcHint = document.getElementById("calcHint");
-
-function showCalcHint(show) {
-  if (calcHint) calcHint.hidden = !show;
-}
-
-function runCalc() {
-  if (!picks.length) { showCalcHint(true); return; }
-  showCalcHint(false);
+function renderResults({ scroll = false } = {}) {
+  hasCalculated = true;
 
   const arr = [...picks, "", "", ""].slice(0, 3);
   const data = calculate(arr);
+  let hiddenByBans = 0;
 
   outputEl.innerHTML = "";
   data.results.forEach(group => {
@@ -257,50 +391,102 @@ function runCalc() {
     sImg.className = "subject-icon";
     sImg.src = `icons/${fileName(group.brawler)}`;
     sImg.alt = group.brawler;
+    sImg.decoding = "async";
     row.appendChild(sImg);
 
     const label = document.createElement("h3");
     label.innerHTML = `${group.brawler}<br>Counters:`;
     row.appendChild(label);
 
+    const body = document.createElement("div");
+    body.className = "row-body";
+
     const cards = document.createElement("div");
     cards.className = "output-grid";
-    if (group.counters.length) {
-      group.counters.forEach(c => cards.appendChild(makeCard(c)));
+    const visible = group.counters.filter(c => !bans.has(c));
+    hiddenByBans += group.counters.length - visible.length;
+    if (visible.length) {
+      visible.forEach(c => cards.appendChild(makeCard(c)));
     } else {
       const note = document.createElement("p");
       note.className = "no-data";
-      note.textContent = `${group.brawler} is brand new — no curated counter data yet. It will be added with the next data update.`;
+      note.textContent = group.counters.length
+        ? `All of ${group.brawler}'s counters are banned.`
+        : `${group.brawler} is brand new — no curated counter data yet. It will be added with the next data update.`;
       cards.appendChild(note);
     }
-    row.appendChild(cards);
+    body.appendChild(cards);
+
+    if (group.classes.length) {
+      const cls = document.createElement("p");
+      cls.className = "class-note";
+      cls.textContent = "Also weak to: " + group.classes.join(", ");
+      body.appendChild(cls);
+    }
+
+    row.appendChild(body);
     outputEl.appendChild(row);
   });
 
   function renderOverlap(title, list, cls) {
-    if (!list.length) return;
+    const visible = list.filter(n => !bans.has(n));
+    hiddenByBans += list.length - visible.length;
+    if (!visible.length) return;
     const row = document.createElement("div"); row.className = `row ${cls}`;
     const label = document.createElement("h3");
     label.innerHTML = title.replace(" ", "<br>");
     row.appendChild(label);
     const g = document.createElement("div"); g.className = "output-grid";
-    list.forEach(n => g.appendChild(makeCard(n)));
+    visible.forEach(n => g.appendChild(makeCard(n)));
     row.appendChild(g);
     outputEl.appendChild(row);
   }
   renderOverlap("Double Overlaps:", data.doubleOverlaps, "overlap-double");
   renderOverlap("Triple Overlaps:", data.tripleOverlaps, "overlap-triple");
+
+  if (hiddenByBans > 0) {
+    const note = document.createElement("p");
+    note.className = "ban-note";
+    note.textContent = `${hiddenByBans} banned counter${hiddenByBans === 1 ? "" : "s"} hidden from results.`;
+    outputEl.appendChild(note);
+  }
+
+  if (scroll && outputEl.firstChild) {
+    outputEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function runCalc() {
+  if (!picks.length) { showCalcHint(true); return; }
+  showCalcHint(false);
+  renderResults({ scroll: true });
 }
 
 document.getElementById("go").addEventListener("click", runCalc);
 // Global Enter shortcut for keyboard users — but never when the user is
-// interacting with a form control, link, or the feedback modal (Enter must
-// keep its native behavior there: submitting the form, pressing the button).
+// interacting with a form control, link, grid icon, or the feedback modal
+// (Enter must keep its native behavior there).
 document.addEventListener("keydown", e => {
   if (e.key !== "Enter") return;
   const t = e.target;
   if (t instanceof Element &&
-      t.closest("input, textarea, select, button, a, .modal-backdrop")) return;
+      t.closest('input, textarea, select, button, a, [role="button"], .modal-backdrop')) return;
   e.preventDefault();
   runCalc();
 });
+
+// ── Deep links: restore picks from ?p=Name,Name and show results ──────────
+(function restoreFromUrl() {
+  const param = new URLSearchParams(window.location.search).get("p");
+  if (!param) return;
+  let next = [];
+  for (const part of param.split(",")) {
+    const name = resolveName(part);
+    if (name) next = addPick(next, name);
+  }
+  if (!next.length) return;
+  applyPicks(next);
+  renderResults({ scroll: false });
+  // Shared links exist to show the result — bring it into view after layout.
+  requestAnimationFrame(() => outputEl.scrollIntoView({ block: "start" }));
+})();

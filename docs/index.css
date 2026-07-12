@@ -90,7 +90,13 @@ h1 {
   color: var(--text-3);
 }
 
-#sortToggle {
+.picker-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+#sortToggle,
+#banToggle {
   font-family: inherit;
   font-size: 0.88rem;
   font-weight: 600;
@@ -104,10 +110,16 @@ h1 {
   cursor: pointer;
   transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
-#sortToggle:hover {
+#sortToggle:hover,
+#banToggle:hover {
   background: var(--surface-hi);
   color: var(--text);
   border-color: rgba(255,255,255,0.22);
+}
+#banToggle.active {
+  border-color: rgba(255,91,91,0.6);
+  color: #ff9f9f;
+  background: rgba(255,91,91,0.08);
 }
 
 /* ── Size picker ── */
@@ -181,6 +193,74 @@ h1 {
   box-shadow: 0 0 0 4px var(--gold-glow), 0 8px 24px rgba(0,0,0,0.5);
   transform: scale(1.09);
 }
+.icon-grid img:focus-visible {
+  outline-color: var(--gold);
+}
+.icon-grid img.banned {
+  filter: grayscale(1) brightness(0.45);
+  outline-color: rgba(255,91,91,0.75);
+}
+.icon-grid.ban-mode img:hover {
+  outline-color: rgba(255,91,91,0.75);
+}
+
+/* ── Pick tray ── */
+.pick-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+}
+.pick-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 100px;
+  padding: 0.3rem 0.55rem 0.3rem 0.35rem;
+  font-size: 0.82rem;
+  color: var(--text);
+  animation: fadeUp 0.2s ease both;
+}
+.pick-chip img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.chip-remove {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.1rem 0.25rem;
+  line-height: 1;
+  transition: color var(--transition);
+}
+.chip-remove:hover { color: #ff9f9f; }
+.pick-count {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+.chip-clear {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  transition: color var(--transition);
+}
+.chip-clear:hover { color: var(--text); }
 
 /* ── Add-by-name row ── */
 .name-add {
@@ -404,6 +484,25 @@ h1 {
   font-size: 0.82rem;
   color: var(--text-2);
   line-height: 1.5;
+}
+
+.row-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.class-note {
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--text-2);
+}
+.ban-note {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-3);
+  padding: 0.25rem 0;
 }
 
 /* overlap accent rows */

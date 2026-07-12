@@ -60,9 +60,14 @@
       <button class="size-btn" data-size="large"  title="Large icons" ><span class="swatch"></span></button>
     </div>
     <h2>Pick up to three brawlers</h2>
-    <button id="sortToggle">Rarity</button>
+    <div class="picker-actions">
+      <button id="banToggle" aria-pressed="false"
+              title="Ban mode: tap brawlers to mark them banned — they're hidden from results">Bans</button>
+      <button id="sortToggle">Rarity</button>
+    </div>
   </div>
   <div id="iconGrid" class="icon-grid"></div>
+  <div id="pickTray" class="pick-tray" aria-live="polite" hidden></div>
   <div class="name-add">
     <div class="name-add-field">
       <input id="nameAdd" type="text"
@@ -156,13 +161,35 @@
   const submit   = document.getElementById('feedbackSubmit');
   const success  = document.getElementById('feedbackSuccess');
 
-  function openModal()  { backdrop.classList.add('open'); }
-  function closeModal() { backdrop.classList.remove('open'); }
+  let lastFocus = null;
+
+  function openModal() {
+    lastFocus = document.activeElement;
+    backdrop.classList.add('open');
+    const first = document.getElementById('fbType');
+    if (first) first.focus();
+  }
+  function closeModal() {
+    if (!backdrop.classList.contains('open')) return;
+    backdrop.classList.remove('open');
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  }
 
   document.getElementById('feedbackOpen').addEventListener('click', openModal);
   document.getElementById('feedbackClose').addEventListener('click', closeModal);
   backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Keep Tab focus inside the dialog while it is open.
+  backdrop.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const els = Array.from(backdrop.querySelectorAll('select, textarea, input, button'))
+      .filter(el => !el.disabled && el.offsetParent !== null);
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
