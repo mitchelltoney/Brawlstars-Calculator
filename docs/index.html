@@ -330,6 +330,15 @@ h1 {
 }
 #go:active { transform: scale(0.97); }
 
+/* ── Inline validation hint ── */
+.calc-hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #ff9f9f;
+  margin: -2.25rem 0 2.5rem;
+  animation: fadeUp 0.25s ease both;
+}
+
 /* ── Results ── */
 #output {
   display: flex;
@@ -434,44 +443,6 @@ footer {
   letter-spacing: 0.03em;
 }
 footer strong { color: var(--text-2); font-weight: 500; }
-
-/* ── UI Update badge ── */
-.update-badge {
-  position: absolute;
-  top: 1.25rem;
-  left: 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: inherit;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #000;
-  background: var(--gold);
-  padding: 0.4rem 0.85rem;
-  border-radius: 100px;
-  box-shadow: 0 4px 16px var(--gold-glow);
-  z-index: 50;
-  animation: badgePop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
-}
-.update-badge .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #000;
-  opacity: 0.5;
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes badgePop {
-  from { opacity: 0; transform: scale(0.7); }
-  to   { opacity: 1; transform: scale(1); }
-}
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50%       { opacity: 1;   transform: scale(1.4); }
-}
 
 /* ── Feedback button ── */
 .feedback-btn {
@@ -738,6 +709,9 @@ footer strong { color: var(--text-2); font-weight: 500; }
   <div class="go-wrap">
     <button id="go">Calculate</button>
   </div>
+  <p id="calcHint" class="calc-hint" role="status" hidden>
+    Select at least one brawler first — tap an icon above or type a name.
+  </p>
   <div id="output"></div>
 </div>
 
@@ -851,11 +825,6 @@ footer strong { color: var(--text-2); font-weight: 500; }
   });
 })();
 </script>
-
-<div class="update-badge">
-  <span class="dot"></span>
-  UI Update!
-</div>
 
 </body>
 </html>

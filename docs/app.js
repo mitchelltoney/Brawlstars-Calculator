@@ -59,6 +59,7 @@ function applyPicks(next) {
   }
   picks.length = 0;
   picks.push(...next);
+  if (picks.length) showCalcHint(false);
 }
 
 grid.addEventListener("click", e => {
@@ -229,8 +230,15 @@ function makeCard(name) {
   return card;
 }
 
+const calcHint = document.getElementById("calcHint");
+
+function showCalcHint(show) {
+  if (calcHint) calcHint.hidden = !show;
+}
+
 function runCalc() {
-  if (!picks.length) { alert("Select at least one brawler"); return; }
+  if (!picks.length) { showCalcHint(true); return; }
+  showCalcHint(false);
 
   const arr = [...picks, "", "", ""].slice(0, 3);
   const data = calculate(arr);
@@ -271,9 +279,14 @@ function runCalc() {
 }
 
 document.getElementById("go").addEventListener("click", runCalc);
+// Global Enter shortcut for keyboard users — but never when the user is
+// interacting with a form control, link, or the feedback modal (Enter must
+// keep its native behavior there: submitting the form, pressing the button).
 document.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    runCalc();
-  }
+  if (e.key !== "Enter") return;
+  const t = e.target;
+  if (t instanceof Element &&
+      t.closest("input, textarea, select, button, a, .modal-backdrop")) return;
+  e.preventDefault();
+  runCalc();
 });
