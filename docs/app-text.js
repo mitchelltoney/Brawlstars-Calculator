@@ -1,7 +1,7 @@
 import { calculate, brawlersAlphabetical } from "./calculate.js";
 
 function fileName(n) {
-  return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".png";
+  return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
 }
 
 const dl = document.getElementById("brawlers");

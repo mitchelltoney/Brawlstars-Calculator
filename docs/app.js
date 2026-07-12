@@ -18,7 +18,7 @@ const picks = [];
 let currentList = rarityOrder;
 
 function fileName(n) {
-  return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".png";
+  return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
 }
 
 function buildGrid(list) {
@@ -28,6 +28,8 @@ function buildGrid(list) {
     img.src = `icons/${fileName(n)}`;
     img.alt = img.title = n;
     img.dataset.name = n;
+    img.loading = "lazy";
+    img.decoding = "async";
     if (picks.includes(n)) img.classList.add("selected");
     grid.appendChild(img);
   });
@@ -227,6 +229,7 @@ function makeCard(name) {
   const img = document.createElement("img");
   img.src = `icons/${fileName(name)}`;
   img.alt = name;
+  img.decoding = "async";
   const span = document.createElement("span");
   span.className = "name";
   span.textContent = name;
