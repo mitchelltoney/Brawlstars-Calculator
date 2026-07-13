@@ -17,6 +17,7 @@
   --radius:       18px;
   --radius-sm:    12px;
   --icon:         66px;
+  --content-w:    1280px;
   --transition:   0.18s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -42,7 +43,7 @@ body {
 /* ── Site nav ── */
 .site-nav {
   width: 100%;
-  max-width: 1280px;
+  max-width: var(--content-w);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,8 +129,35 @@ h1 {
 
 /* ── Main content ── */
 .content {
+  position: relative;
   width: 100%;
-  max-width: 1280px;
+  max-width: var(--content-w);
+}
+
+/* ── Width drag handle ──
+ * Deliberately near-invisible: a thin grabber pill on the content's right
+ * edge. Dragging resizes the layout symmetrically (content stays centered);
+ * double-click or Home resets; arrow keys nudge when focused. */
+.width-handle {
+  position: absolute;
+  right: -18px;
+  top: 210px;
+  width: 5px;
+  height: 52px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.10);
+  cursor: ew-resize;
+  touch-action: none;
+  transition: background var(--transition);
+}
+.width-handle:hover,
+.width-handle:focus-visible,
+.width-handle.dragging {
+  background: rgba(255,214,10,0.55);
+  outline: none;
+}
+@media (max-width: 640px) {
+  .width-handle { display: none; }
 }
 
 /* ── Picker controls bar ── */

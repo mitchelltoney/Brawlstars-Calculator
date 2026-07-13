@@ -37,10 +37,10 @@
   }
 </script>
 <link rel="preload" href="fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script src="loader.js?v=2026-07-13.2"></script>
-<script type="module" src="app.js?v=2026-07-13.2"></script>
-<link rel="stylesheet" href="styles.css?v=2026-07-13.2">
-<link rel="stylesheet" href="index.css?v=2026-07-13.2">
+<script src="loader.js?v=2026-07-13.3"></script>
+<script type="module" src="app.js?v=2026-07-13.3"></script>
+<link rel="stylesheet" href="styles.css?v=2026-07-13.3">
+<link rel="stylesheet" href="index.css?v=2026-07-13.3">
 </head>
 <body>
 
@@ -105,6 +105,9 @@
     Select at least one brawler first — tap an icon above or type a name.
   </p>
   <div id="output"></div>
+  <div id="widthHandle" class="width-handle" role="slider" tabindex="0"
+       aria-label="Layout width" aria-valuemin="720" aria-valuenow="1280"
+       title="Drag to adjust layout width (double-click to reset)"></div>
 </div>
 
 <footer>
@@ -167,6 +170,61 @@
   document.querySelectorAll('.size-btn').forEach(btn => {
     btn.addEventListener('click', () => applySize(btn.dataset.size));
   });
+})();
+</script>
+
+<script>
+(function () {
+  const DEFAULT = 1280, MIN = 720;
+  const root = document.documentElement;
+  const handle = document.getElementById('widthHandle');
+  if (!handle) return;
+
+  function maxW() { return Math.min(1920, window.innerWidth - 24); }
+
+  function apply(w, save) {
+    w = Math.round(Math.max(MIN, Math.min(maxW(), w)));
+    root.style.setProperty('--content-w', w + 'px');
+    handle.setAttribute('aria-valuenow', String(w));
+    handle.setAttribute('aria-valuemax', String(Math.round(maxW())));
+    if (save) try { localStorage.setItem('contentWidth', String(w)); } catch (e) {}
+    return w;
+  }
+
+  let current = (() => {
+    try { return Number(localStorage.getItem('contentWidth')) || DEFAULT; }
+    catch (e) { return DEFAULT; }
+  })();
+  current = apply(current, false);
+
+  let startX = 0, startW = 0;
+  handle.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    startX = e.clientX;
+    startW = current;
+    handle.classList.add('dragging');
+    handle.setPointerCapture(e.pointerId);
+  });
+  handle.addEventListener('pointermove', e => {
+    if (!handle.classList.contains('dragging')) return;
+    // The layout is centered, so moving the right edge by X changes the
+    // total width by 2X (both sides grow/shrink together).
+    current = apply(startW + (e.clientX - startX) * 2, false);
+  });
+  function endDrag() {
+    if (!handle.classList.contains('dragging')) return;
+    handle.classList.remove('dragging');
+    apply(current, true);
+  }
+  handle.addEventListener('pointerup', endDrag);
+  handle.addEventListener('pointercancel', endDrag);
+  handle.addEventListener('dblclick', () => { current = apply(DEFAULT, true); });
+  handle.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp')      { current = apply(current + 40, true); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown'){ current = apply(current - 40, true); e.preventDefault(); }
+    else if (e.key === 'Home')                              { current = apply(DEFAULT, true); e.preventDefault(); }
+  });
+  window.addEventListener('resize', () => { current = apply(current, false); });
 })();
 </script>
 

@@ -9,7 +9,7 @@
 //
 // Bump CACHE whenever a breaking asset change ships (renamed files, new
 // icon format) so stale entries are dropped on activate.
-const CACHE = "bc-2026-07-13.2";
+const CACHE = "bc-2026-07-13.3";
 
 const PRECACHE = [
   "./",
