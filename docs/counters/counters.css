@@ -45,7 +45,7 @@ body {
   color: var(--text);
   text-decoration: none;
 }
-.brand img { border-radius: 8px; }
+.brand img { display: block; }
 .nav-links { display: flex; align-items: center; gap: 1rem; }
 .nav-quiet {
   font-size: 0.78rem;

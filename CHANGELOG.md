@@ -1,3 +1,16 @@
+# Polish: balanced subtitle, nav icon, no arrows, wider icon hit areas
+
+- Subtitle rewritten + `text-wrap: balance` (was three ragged lines).
+- Nav brand uses the transparent Chester art (the flattened icon tile
+  clashed with the gradient background).
+- Arrow glyphs removed from the nav CTAs.
+- Grid icons are now real `<button>` cells whose padding extends the
+  clickable area into the gutters (Playwright-verified with an
+  edge-of-cell click); also better semantics for keyboard/screen readers.
+- `npm run stamp` now bumps a `.N` suffix for same-day redeploys.
+- Added `<link rel="icon" sizes="192x192">` so Google has a hi-res
+  favicon candidate for search results.
+
 # UI/UX pass: site nav, ban-mode clarity, cache-skew fix (`revamp/2026-07-ux-perf-seo`)
 
 Playwright-verified on desktop (1440×900) and mobile (390×844, DPR 3):

@@ -46,15 +46,12 @@ function card(name) {
 function pageShell({ title, description, canonical, body, ogTitle }) {
   const nav = `<nav class="site-nav">
   <a class="brand" href="/">
-    <img src="/apple-touch-icon.png" alt="" width="26" height="26" decoding="async">
+    <img src="/loading_chester.png" alt="" width="26" height="26" decoding="async">
     <span>Brawl Calculator</span>
   </a>
   <div class="nav-links">
     <a class="nav-quiet" href="/counters/">All brawlers</a>
-    <a class="nav-cta" href="/">
-      Open Calculator
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+    <a class="nav-cta" href="/">Open Calculator</a>
   </div>
 </nav>`;
 
@@ -78,6 +75,7 @@ function pageShell({ title, description, canonical, body, ogTitle }) {
 <meta name="twitter:description" content="${esc(description)}">
 <meta name="twitter:image" content="${SITE}/og-image.jpg">
 <link rel="icon" type="image/x-icon" href="/chester-favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
@@ -234,7 +232,7 @@ body {
   color: var(--text);
   text-decoration: none;
 }
-.brand img { border-radius: 8px; }
+.brand img { display: block; }
 .nav-links { display: flex; align-items: center; gap: 1rem; }
 .nav-quiet {
   font-size: 0.78rem;

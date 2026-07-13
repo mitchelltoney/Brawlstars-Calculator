@@ -8,7 +8,7 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-07-13";
+} from "./calculate.js?v=2026-07-13.1";
 
 const freshnessEl = document.getElementById("dataFreshness");
 if (freshnessEl) freshnessEl.textContent = dataUpdated;
@@ -30,21 +30,29 @@ function fileName(n) {
   return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
 }
 
+// Each grid entry is a real <button> whose padding extends the clickable
+// area into the gap between icons; the inner img is pointer-events: none so
+// every click lands on the button.
 function buildGrid(list) {
   grid.innerHTML = "";
   list.forEach(n => {
+    const cell = document.createElement("button");
+    cell.type = "button";
+    cell.className = "icon-cell";
+    cell.dataset.name = n;
+    cell.title = n;
+    cell.setAttribute("aria-label", n);
+    cell.setAttribute("aria-pressed", picks.includes(n) ? "true" : "false");
+    if (picks.includes(n)) cell.classList.add("selected");
+    if (bans.has(n)) cell.classList.add("banned");
     const img = document.createElement("img");
     img.src = `icons/${fileName(n)}`;
-    img.alt = img.title = n;
-    img.dataset.name = n;
+    img.alt = "";
     img.loading = "lazy";
     img.decoding = "async";
-    img.tabIndex = 0;
-    img.setAttribute("role", "button");
-    img.setAttribute("aria-pressed", picks.includes(n) ? "true" : "false");
-    if (picks.includes(n)) img.classList.add("selected");
-    if (bans.has(n)) img.classList.add("banned");
-    grid.appendChild(img);
+    img.draggable = false;
+    cell.appendChild(img);
+    grid.appendChild(cell);
   });
 }
 
@@ -66,19 +74,19 @@ if (sortBtn) {
 function applyPicks(next) {
   for (const old of picks) {
     if (!next.includes(old)) {
-      const img = grid.querySelector(`img[data-name="${old}"]`);
-      if (img) {
-        img.classList.remove("selected");
-        img.setAttribute("aria-pressed", "false");
+      const cell = grid.querySelector(`.icon-cell[data-name="${old}"]`);
+      if (cell) {
+        cell.classList.remove("selected");
+        cell.setAttribute("aria-pressed", "false");
       }
     }
   }
   for (const name of next) {
     if (!picks.includes(name)) {
-      const img = grid.querySelector(`img[data-name="${name}"]`);
-      if (img) {
-        img.classList.add("selected");
-        img.setAttribute("aria-pressed", "true");
+      const cell = grid.querySelector(`.icon-cell[data-name="${name}"]`);
+      if (cell) {
+        cell.classList.add("selected");
+        cell.setAttribute("aria-pressed", "true");
       }
     }
   }
@@ -106,14 +114,14 @@ function updateBanToggle() {
 }
 
 function toggleBan(name) {
-  const img = grid.querySelector(`img[data-name="${name}"]`);
+  const cell = grid.querySelector(`.icon-cell[data-name="${name}"]`);
   if (bans.has(name)) {
     bans.delete(name);
-    if (img) img.classList.remove("banned");
+    if (cell) cell.classList.remove("banned");
   } else {
     if (bans.size >= MAX_BANS) return;
     bans.add(name);
-    if (img) img.classList.add("banned");
+    if (cell) cell.classList.add("banned");
     // A banned brawler can't stay picked.
     if (picks.includes(name)) applyPicks(picks.filter(p => p !== name));
   }
@@ -134,8 +142,8 @@ if (banToggle) {
 
 // ── Grid interaction (mouse + keyboard) ────────────────────────────────────
 
-function handleGridActivate(img) {
-  const name = img.dataset.name;
+function handleGridActivate(cell) {
+  const name = cell.dataset.name;
   if (banMode) {
     toggleBan(name);
     return;
@@ -149,19 +157,13 @@ function handleGridActivate(img) {
   applyPicks(togglePick(picks, name));
 }
 
+// Native <button> cells: click covers mouse, touch, AND keyboard
+// (Enter/Space fire click on buttons; the global Enter shortcut already
+// ignores buttons).
 grid.addEventListener("click", e => {
-  const img = e.target.closest("img");
-  if (!img) return;
-  handleGridActivate(img);
-});
-
-grid.addEventListener("keydown", e => {
-  if (e.key !== "Enter" && e.key !== " ") return;
-  const img = e.target.closest("img");
-  if (!img) return;
-  e.preventDefault();
-  e.stopPropagation(); // keep the global Enter→calculate shortcut out of it
-  handleGridActivate(img);
+  const cell = e.target.closest(".icon-cell");
+  if (!cell) return;
+  handleGridActivate(cell);
 });
 
 // ── Pick tray ──────────────────────────────────────────────────────────────
@@ -303,7 +305,7 @@ function handleNameAdd() {
   }
   if (!resolved) { flashInvalid(); return; }
   if (bans.has(resolved)) { flashInvalid(); return; }
-  if (!grid.querySelector(`img[data-name="${resolved}"]`)) { flashInvalid(); return; }
+  if (!grid.querySelector(`.icon-cell[data-name="${resolved}"]`)) { flashInvalid(); return; }
 
   applyPicks(addPick(picks, resolved));
   nameInput.value = "";

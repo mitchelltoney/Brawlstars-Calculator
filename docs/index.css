@@ -59,7 +59,7 @@ body {
   text-decoration: none;
   letter-spacing: 0.01em;
 }
-.brand img { border-radius: 8px; }
+.brand img { display: block; }
 .nav-links {
   display: flex;
   align-items: center;
@@ -121,8 +121,9 @@ h1 {
   line-height: 1.6;
   color: var(--text-2);
   font-weight: 400;
-  max-width: 420px;
+  max-width: 520px;
   margin: 0 auto;
+  text-wrap: balance;
 }
 
 /* ── Main content ── */
@@ -222,39 +223,52 @@ h1 {
 .size-btn[data-size="large"]  .swatch { width: 18px; height: 18px; }
 
 /* ── Icon grid ── */
+/* Each icon is a real <button> (.icon-cell); its padding extends the
+ * clickable area into the gutters between icons. */
 .icon-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, var(--icon));
+  grid-template-columns: repeat(auto-fill, calc(var(--icon) + 0.5rem));
   justify-content: center;
-  gap: 0.45rem;
+  gap: 0;
   margin-bottom: 2.5rem;
 }
 
-.icon-grid img {
+.icon-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.icon-cell img {
+  display: block;
   width: var(--icon);
   height: var(--icon);
   object-fit: cover;
   border-radius: 14px;
   background: var(--surface);
-  cursor: pointer;
   outline: 2px solid transparent;
   outline-offset: 2px;
   transition: transform var(--transition), box-shadow var(--transition), outline-color var(--transition);
   will-change: transform;
+  pointer-events: none; /* clicks always land on the button */
 }
-.icon-grid img:hover {
+.icon-cell:hover img {
   transform: scale(1.09);
   box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
-.icon-grid img.selected {
+.icon-cell.selected img {
   outline-color: var(--gold);
   box-shadow: 0 0 0 4px var(--gold-glow), 0 8px 24px rgba(0,0,0,0.5);
   transform: scale(1.09);
 }
-.icon-grid img:focus-visible {
+.icon-cell:focus-visible { outline: none; }
+.icon-cell:focus-visible img {
   outline-color: var(--gold);
 }
-.icon-grid img.banned {
+.icon-cell.banned img {
   filter: grayscale(1) brightness(0.45);
   outline-color: rgba(255,91,91,0.75);
 }
@@ -263,7 +277,7 @@ h1 {
   outline-offset: 10px;
   border-radius: 6px;
 }
-.icon-grid.ban-mode img:hover {
+.icon-grid.ban-mode .icon-cell:hover img {
   outline-color: rgba(255,91,91,0.75);
 }
 .ban-hint {
@@ -760,7 +774,7 @@ footer .disclaimer { font-size: 0.64rem; }
 }
 
 /* ── Touch ── */
-.icon-grid img, .size-btn, #sortToggle, #banToggle,
+.icon-cell, .size-btn, #sortToggle, #banToggle,
 .name-add button, #go, .chip-remove, .chip-clear {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -798,10 +812,10 @@ footer .disclaimer { font-size: 0.64rem; }
 }
 
 @media (hover: none) and (pointer: coarse) {
-  .icon-grid img,
+  .icon-cell img,
   .counter-card img { transition: none; }
-  .icon-grid img:hover { transform: none; box-shadow: none; }
-  .icon-grid img.selected {
+  .icon-cell:hover img { transform: none; box-shadow: none; }
+  .icon-cell.selected img {
     transform: none;
     outline-color: var(--gold);
     box-shadow: 0 0 0 4px var(--gold-glow);
