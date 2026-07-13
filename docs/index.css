@@ -42,7 +42,7 @@ body {
 /* ── Site nav ── */
 .site-nav {
   width: 100%;
-  max-width: 980px;
+  max-width: 1280px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -129,7 +129,7 @@ h1 {
 /* ── Main content ── */
 .content {
   width: 100%;
-  max-width: 980px;
+  max-width: 1280px;
 }
 
 /* ── Picker controls bar ── */
