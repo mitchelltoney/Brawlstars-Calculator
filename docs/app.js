@@ -8,7 +8,8 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-07-13.3";
+} from "./calculate.js?v=2026-07-13.4";
+import { matchupNotes } from "./matchup-notes.js?v=2026-07-13.4";
 
 const freshnessEl = document.getElementById("dataFreshness");
 if (freshnessEl) freshnessEl.textContent = dataUpdated;
@@ -373,7 +374,7 @@ function showCalcHint(show) {
   if (calcHint) calcHint.hidden = !show;
 }
 
-function makeCard(name) {
+function makeCard(name, why) {
   const card = document.createElement("div");
   card.className = "counter-card";
   const img = document.createElement("img");
@@ -383,6 +384,7 @@ function makeCard(name) {
   const span = document.createElement("span");
   span.className = "name";
   span.textContent = name;
+  if (why) card.title = why; // hover explains the matchup
   card.append(img, span);
   return card;
 }
@@ -416,7 +418,8 @@ function renderResults({ scroll = false } = {}) {
     const visible = group.counters.filter(c => !bans.has(c));
     hiddenByBans += group.counters.length - visible.length;
     if (visible.length) {
-      visible.forEach(c => cards.appendChild(makeCard(c)));
+      visible.forEach(c =>
+        cards.appendChild(makeCard(c, matchupNotes[group.brawler]?.[c])));
     } else {
       const note = document.createElement("p");
       note.className = "no-data";

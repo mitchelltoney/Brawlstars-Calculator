@@ -9,7 +9,7 @@
 //
 // Bump CACHE whenever a breaking asset change ships (renamed files, new
 // icon format) so stale entries are dropped on activate.
-const CACHE = "bc-2026-07-13.3";
+const CACHE = "bc-2026-07-13.4";
 
 const PRECACHE = [
   "./",
@@ -18,6 +18,7 @@ const PRECACHE = [
   "app.js",
   "calculate.js",
   "counters.js",
+  "matchup-notes.js",
   "loader.js",
   "loading_chester.png",
   "fonts/lilitaone-latin.woff2",

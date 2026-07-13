@@ -11,6 +11,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { counters, rarityOrder, dataUpdated } from "../docs/counters.js";
+import { matchupNotes } from "../docs/matchup-notes.js";
 
 const DOCS = join(dirname(fileURLToPath(import.meta.url)), "..", "docs");
 const roster = Object.keys(counters);
@@ -74,6 +75,20 @@ test("sitemap covers home, counters index, and every brawler page", () => {
   for (const name of roster) {
     const loc = `<loc>https://brawlcalculator.com/counters/${slug(name)}/</loc>`;
     assert.ok(xml.includes(loc), `sitemap missing ${loc} — run npm run generate`);
+  }
+});
+
+test("matchup notes only reference real (defender, counter) pairs", () => {
+  for (const [d, notes] of Object.entries(matchupNotes)) {
+    assert.ok(d in counters, `note defender "${d}" is not on the roster`);
+    for (const [c, note] of Object.entries(notes)) {
+      assert.ok(
+        counters[d].direct.includes(c),
+        `${d} <- ${c}: note exists but ${c} is not a listed counter of ${d}`
+      );
+      assert.equal(typeof note, "string");
+      assert.ok(note.length >= 20 && note.length <= 200, `${d} <- ${c}: note length ${note.length}`);
+    }
   }
 });
 

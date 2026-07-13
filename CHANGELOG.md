@@ -1,3 +1,19 @@
+# Matchup explanations: 566 per-pair "why" notes (Codex-assisted pipeline)
+
+Every counter pair now has a one-sentence explanation of why the counter
+works, in `docs/matchup-notes.js` (hand-editable).
+
+Pipeline: kit grounding pack from the Brawlify API (descriptions, star
+powers, gadgets for all 107 brawlers) → 21 self-contained batches → Codex
+CLI workers (`codex exec`, web search enabled) wrote the notes → automated
+validation (coverage 566/566, name integrity, length/style bounds,
+banned-phrase and cross-contamination checks; zero errors) → full manual
+read-through + loadout-name spot-checks against kit data (all real).
+
+Rendering: visible sentence per counter on all 105 /counters/ pages
+(counter-list rows) and hover tooltips on calculator result cards. New
+data test guards note keys map to real pairs.
+
 # Polish: balanced subtitle, nav icon, no arrows, wider icon hit areas
 
 - Subtitle rewritten + `text-wrap: balance` (was three ragged lines).

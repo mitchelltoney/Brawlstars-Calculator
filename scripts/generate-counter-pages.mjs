@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 import { counters, rarityOrder, dataUpdated } from "../docs/counters.js";
+import { matchupNotes } from "../docs/matchup-notes.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "docs", "counters");
@@ -114,12 +115,28 @@ function brawlerPage(name) {
     ],
   };
 
+  // With matchup notes: a vertical list (icon + name + why). Without: the
+  // compact card grid.
+  const notes = matchupNotes[name] ?? {};
+  const hasNotes = direct.some(c => notes[c]);
+  const countersBody = hasNotes
+    ? `<ul class="counter-list">
+${direct.map(c => `  <li>
+    <a class="counter-link" href="/counters/${slug(c)}/">
+      <img src="${iconFile(c)}" alt="" width="44" height="44" loading="lazy" decoding="async">
+      <span>${esc(c)}</span>
+    </a>
+    ${notes[c] ? `<p class="why">${esc(notes[c])}</p>` : ""}
+  </li>`).join("\n")}
+</ul>`
+    : `<div class="grid">
+${direct.map(card).join("\n")}
+  </div>`;
+
   const countersSection = direct.length
     ? `<section>
   <h2>Best counters to ${esc(name)}</h2>
-  <div class="grid">
-${direct.map(card).join("\n")}
-  </div>
+  ${countersBody}
 </section>`
     : `<section>
   <h2>Best counters to ${esc(name)}</h2>
@@ -152,7 +169,7 @@ ${JSON.stringify(jsonLd)}
 ${countersSection}
 ${classesSection}
 ${beatsSection}
-<a class="cta" href="/?p=${encodeURIComponent(name)}">Countering a full enemy team? Open the calculator →</a>
+<a class="cta" href="/?p=${encodeURIComponent(name)}">Countering a full enemy team? Open the calculator</a>
 </main>`;
 
   return pageShell({
@@ -294,6 +311,41 @@ section h2 {
   margin-bottom: 0.9rem;
 }
 .grid { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+.counter-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.counter-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.65rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.counter-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 0 0 92px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+}
+.counter-link img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: var(--surface); }
+.counter-link:hover { color: var(--gold); }
+.counter-list .why {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  min-width: 0;
+}
 .card {
   display: flex;
   flex-direction: column;
