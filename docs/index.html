@@ -36,10 +36,10 @@
   }
 </script>
 <link rel="preload" href="fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script src="loader.js"></script>
-<script type="module" src="app.js"></script>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="index.css">
+<script src="loader.js?v=2026-07-13"></script>
+<script type="module" src="app.js?v=2026-07-13"></script>
+<link rel="stylesheet" href="styles.css?v=2026-07-13">
+<link rel="stylesheet" href="index.css?v=2026-07-13">
 </head>
 <body>
 
@@ -48,6 +48,20 @@
 <noscript>
   <p>This is the Brawler Counterpick Calculator. Select up to three brawlers and click Calculate to see your counters.</p>
 </noscript>
+
+<nav class="site-nav">
+  <a class="brand" href="/">
+    <img src="apple-touch-icon.png" alt="" width="26" height="26" decoding="async">
+    <span>Brawl Calculator</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-quiet" href="classic.html">Classic view</a>
+    <a class="nav-cta" href="counters/">
+      Counters by Brawler
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
 
 <header>
   <h1>Brawler Counterpick<br>Calculator</h1>
@@ -68,8 +82,10 @@
       <button id="sortToggle">Rarity</button>
     </div>
   </div>
-  <div id="iconGrid" class="icon-grid"></div>
-  <div id="pickTray" class="pick-tray" aria-live="polite" hidden></div>
+  <p id="banHint" class="ban-hint" hidden>
+    Ban mode is on — tap brawlers to mark them banned; they'll be hidden from results.
+    Tap <strong>Bans</strong> again to finish.
+  </p>
   <div class="name-add">
     <div class="name-add-field">
       <input id="nameAdd" type="text"
@@ -82,6 +98,8 @@
     </div>
     <button type="button" id="nameAddBtn">Add</button>
   </div>
+  <div id="iconGrid" class="icon-grid"></div>
+  <div id="pickTray" class="pick-tray" aria-live="polite" hidden></div>
   <div class="go-wrap">
     <button id="go">Calculate</button>
   </div>
@@ -93,12 +111,10 @@
 
 <footer>
   <p>Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated <span id="dataFreshness">July 2026</span></p>
-  <p><a href="counters/">Browse counters brawler-by-brawler</a></p>
+  <p><a href="counters/">Browse counters brawler-by-brawler</a> · <a href="classic.html">Classic view</a></p>
   <p class="disclaimer">This material is unofficial and is not endorsed by Supercell. For more information
     see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
 </footer>
-
-<a href="classic.html" class="classic-link">Classic view</a>
 
 <button class="feedback-btn" id="feedbackOpen">Feedback</button>
 

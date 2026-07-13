@@ -28,7 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5rem 1.5rem 7rem;
+  padding: 1.25rem 1.5rem 4.5rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: var(--text);
@@ -37,6 +37,64 @@ body {
     radial-gradient(ellipse 60% 50% at 85% 100%,  rgba(80,80,220,0.06) 0%, transparent 100%),
     var(--bg);
   background-attachment: fixed;
+}
+
+/* ── Site nav ── */
+.site-nav {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Brawl Stars', sans-serif;
+  font-size: 1.05rem;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.brand img { border-radius: 8px; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav-quiet {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-quiet:hover { color: var(--text); }
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  padding: 0.55rem 1.15rem;
+  border-radius: 100px;
+  color: var(--gold);
+  text-decoration: none;
+  background: rgba(255,214,10,0.08);
+  border: 1px solid rgba(255,214,10,0.35);
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.nav-cta:hover {
+  background: rgba(255,214,10,0.14);
+  border-color: rgba(255,214,10,0.55);
+  transform: translateY(-1px);
 }
 
 /* ── Header ── */
@@ -59,7 +117,7 @@ h1 {
 }
 
 .subtitle {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: var(--text-2);
   font-weight: 400;
@@ -200,9 +258,22 @@ h1 {
   filter: grayscale(1) brightness(0.45);
   outline-color: rgba(255,91,91,0.75);
 }
+.icon-grid.ban-mode {
+  outline: 1.5px dashed rgba(255,91,91,0.45);
+  outline-offset: 10px;
+  border-radius: 6px;
+}
 .icon-grid.ban-mode img:hover {
   outline-color: rgba(255,91,91,0.75);
 }
+.ban-hint {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #ff9f9f;
+  margin: -0.25rem 0 1rem;
+  animation: fadeUp 0.2s ease both;
+}
+.ban-hint strong { font-weight: 700; }
 
 /* ── Pick tray ── */
 .pick-tray {
@@ -236,9 +307,10 @@ h1 {
   background: none;
   border: none;
   color: var(--text-3);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   cursor: pointer;
-  padding: 0.1rem 0.25rem;
+  padding: 0.3rem 0.45rem;
+  margin: -0.2rem -0.15rem -0.2rem -0.25rem;
   line-height: 1;
   transition: color var(--transition);
 }
@@ -514,7 +586,7 @@ h1 {
 
 /* ── Footer ── */
 footer {
-  margin-top: 5rem;
+  margin-top: 3.5rem;
   font-size: 0.7rem;
   color: var(--text-3);
   text-align: center;
@@ -687,36 +759,20 @@ footer .disclaimer { font-size: 0.64rem; }
   line-height: 1.5;
 }
 
-/* ── Classic view link ── */
-.classic-link {
-  position: fixed;
-  bottom: 1.25rem;
-  right: 1.25rem;
-  font-family: inherit;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--text-3);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 0.4rem 0.85rem;
-  border-radius: 100px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: color var(--transition), background var(--transition), border-color var(--transition);
-  z-index: 50;
-}
-.classic-link:hover {
-  color: var(--text);
-  background: var(--surface-hi);
-  border-color: var(--border-hi);
+/* ── Touch ── */
+.icon-grid img, .size-btn, #sortToggle, #banToggle,
+.name-add button, #go, .chip-remove, .chip-clear {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
-  body { padding: 3rem 1rem 7rem; }
+  body { padding: 1rem 1rem 6.5rem; }
+  .site-nav { margin-bottom: 2rem; }
+  .nav-quiet { display: none; }
+  .brand { font-size: 0.95rem; }
+  .nav-cta { font-size: 0.76rem; padding: 0.5rem 0.9rem; }
   header { margin-bottom: 2.5rem; }
   h1 { font-size: 1.9rem; }
   .icon-grid { gap: 0.35rem; }
@@ -734,8 +790,7 @@ footer .disclaimer { font-size: 0.64rem; }
   }
 
   /* On mobile: pin to the document bottom, not the viewport */
-  .feedback-btn,
-  .classic-link {
+  .feedback-btn {
     position: absolute;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;

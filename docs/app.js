@@ -8,7 +8,7 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js";
+} from "./calculate.js?v=2026-07-13";
 
 const freshnessEl = document.getElementById("dataFreshness");
 if (freshnessEl) freshnessEl.textContent = dataUpdated;
@@ -121,10 +121,13 @@ function toggleBan(name) {
   if (hasCalculated) renderResults({ scroll: false });
 }
 
+const banHint = document.getElementById("banHint");
+
 if (banToggle) {
   banToggle.addEventListener("click", () => {
     banMode = !banMode;
     grid.classList.toggle("ban-mode", banMode);
+    if (banHint) banHint.hidden = !banMode;
     updateBanToggle();
   });
 }
@@ -137,7 +140,12 @@ function handleGridActivate(img) {
     toggleBan(name);
     return;
   }
-  if (bans.has(name)) return; // banned brawlers can't be picked
+  // Outside ban mode, tapping a banned brawler unbans it (least surprise) —
+  // it can't be picked while banned.
+  if (bans.has(name)) {
+    toggleBan(name);
+    return;
+  }
   applyPicks(togglePick(picks, name));
 }
 

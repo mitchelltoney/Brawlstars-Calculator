@@ -1,3 +1,27 @@
+# UI/UX pass: site nav, ban-mode clarity, cache-skew fix (`revamp/2026-07-ux-perf-seo`)
+
+Playwright-verified on desktop (1440×900) and mobile (390×844, DPR 3):
+all flows exercised (bans, picks, tray, calculate, URL state), zero
+console errors, 34 tests green.
+
+- **Bans investigation**: the feature worked in a driven browser on both
+  viewports — the reported "does nothing" was HTML/JS cache skew right
+  after deploy (fresh index.html + stale cached app.js has no listener).
+  Fixed structurally: all script/style/module-import URLs now carry a
+  `?v=YYYY-MM-DD` stamp; `npm run stamp` rewrites every stamp (and the
+  service-worker cache name) to today. **Run it before deploying any
+  JS/CSS/data change.**
+- **Ban-mode clarity**: active hint line ("Ban mode is on — tap
+  brawlers…"), dashed red boundary around the grid, and tapping a banned
+  brawler outside ban mode now unbans it.
+- **Site nav** on the calculator and all 105 generated pages: brand +
+  gold "Counters by Brawler" CTA (was a buried footer link) + Classic
+  view; floating classic-view pill removed.
+- **Layout polish**: add-by-name input moved above the grid; dead space
+  tightened (body/footer margins); subtitle to 16px on mobile;
+  touch-action: manipulation on tap targets; larger chip-remove hit
+  areas; nav collapses gracefully on mobile.
+
 # Data: first counter lists for Damian, Starr Nova, Bolt, Nori (`revamp/2026-07-ux-perf-seo`)
 
 Researched via Exa web search (~299 sources reviewed across 4 parallel

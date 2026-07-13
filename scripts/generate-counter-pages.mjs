@@ -44,6 +44,20 @@ function card(name) {
 }
 
 function pageShell({ title, description, canonical, body, ogTitle }) {
+  const nav = `<nav class="site-nav">
+  <a class="brand" href="/">
+    <img src="/apple-touch-icon.png" alt="" width="26" height="26" decoding="async">
+    <span>Brawl Calculator</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-quiet" href="/counters/">All brawlers</a>
+    <a class="nav-cta" href="/">
+      Open Calculator
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>`;
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,6 +84,7 @@ function pageShell({ title, description, canonical, body, ogTitle }) {
 <link rel="stylesheet" href="/counters/counters.css">
 </head>
 <body>
+${nav}
 ${body}
 <footer>
   <p>Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated ${esc(dataUpdated)}</p>
@@ -200,6 +215,54 @@ body {
     radial-gradient(ellipse 60% 50% at 85% 100%, rgba(80,80,220,0.06) 0%, transparent 100%),
     var(--bg);
   background-attachment: fixed;
+}
+.site-nav {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Brawl Stars', sans-serif;
+  font-size: 1.05rem;
+  color: var(--text);
+  text-decoration: none;
+}
+.brand img { border-radius: 8px; }
+.nav-links { display: flex; align-items: center; gap: 1rem; }
+.nav-quiet {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.nav-quiet:hover { color: var(--text); }
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.5rem 1.05rem;
+  border-radius: 100px;
+  color: var(--gold);
+  text-decoration: none;
+  background: rgba(255,214,10,0.08);
+  border: 1px solid rgba(255,214,10,0.35);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.nav-cta:hover { background: rgba(255,214,10,0.14); border-color: rgba(255,214,10,0.55); }
+@media (max-width: 640px) {
+  .nav-quiet { display: none; }
 }
 .crumbs {
   width: 100%;
