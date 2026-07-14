@@ -64,7 +64,7 @@ function card(name) {
 </a>`;
 }
 
-function pageShell({ title, description, canonical, body, ogTitle }) {
+function pageShell({ title, description, canonical, body, ogTitle, scripts = "" }) {
   const nav = `<nav class="site-nav">
   <a class="brand" href="/">
     <img src="/loading_chester.png" alt="" width="26" height="26" decoding="async">
@@ -111,6 +111,7 @@ ${body}
   <p class="disclaimer">This material is unofficial and is not endorsed by Supercell. For more information
     see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
 </footer>
+${scripts}
 </body>
 </html>
 `;
@@ -225,16 +226,41 @@ function indexPage() {
   <p class="subtitle">Hand-curated counterpicks for every brawler · updated ${esc(dataUpdated)}</p>
 </header>
 <main>
+  <div class="page-search">
+    <input id="brawlerSearch" type="search" placeholder="Search brawlers…"
+           aria-label="Search brawlers" autocomplete="off" autocapitalize="off" spellcheck="false">
+  </div>
   <div class="grid index-grid">
 ${[...roster].sort((a, b) => a.localeCompare(b)).map(card).join("\n")}
   </div>
+  <p class="note search-empty" hidden>No brawlers match that search.</p>
 </main>`;
+  const scripts = `<script>
+(function () {
+  var input = document.getElementById('brawlerSearch');
+  if (!input) return;
+  var cards = [].slice.call(document.querySelectorAll('.index-grid .card'));
+  var empty = document.querySelector('.search-empty');
+  input.addEventListener('input', function () {
+    var q = input.value.trim().toLowerCase().replace(/[\\s.'-]+/g, '');
+    var shown = 0;
+    cards.forEach(function (c) {
+      var name = c.textContent.trim().toLowerCase().replace(/[\\s.'-]+/g, '');
+      var hit = !q || name.indexOf(q) !== -1;
+      c.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    if (empty) empty.hidden = shown > 0;
+  });
+})();
+</script>`;
   return pageShell({
     title: `Brawl Stars Counters for Every Brawler (${dataUpdated})`,
     ogTitle: "Brawl Stars Counters — Every Brawler",
     description: `Who counters every Brawl Stars brawler — hand-curated ranked counter lists for all ${roster.length} brawlers, updated ${dataUpdated}.`,
     canonical,
     body,
+    scripts,
   });
 }
 
@@ -409,6 +435,23 @@ section h2 {
 .card img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--surface); }
 .card span { max-width: 76px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .index-grid { justify-content: center; }
+.page-search { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+.page-search input {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 100px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 1.2rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.page-search input::placeholder { color: var(--text-3); }
+.page-search input:focus { border-color: var(--gold); }
+.search-empty { text-align: center; }
 .note { font-size: 0.9rem; color: var(--text-2); line-height: 1.6; }
 .classes { font-size: 0.85rem; color: var(--text-2); }
 .chip {

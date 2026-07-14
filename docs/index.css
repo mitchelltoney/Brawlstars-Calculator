@@ -497,6 +497,79 @@ h1 {
 }
 #go:active { transform: scale(0.97); }
 
+/* ── Counters-by-brawler feature card ── */
+.feature-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 2.5rem auto 0;
+  max-width: 640px;
+  padding: 1.1rem 1.4rem;
+  background: rgba(255,214,10,0.05);
+  border: 1px solid rgba(255,214,10,0.25);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.feature-card:hover {
+  background: rgba(255,214,10,0.09);
+  border-color: rgba(255,214,10,0.45);
+  transform: translateY(-1px);
+}
+.feature-icons {
+  display: flex;
+  flex-shrink: 0;
+}
+.feature-icons img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #16161c;
+  margin-left: -10px;
+}
+.feature-icons img:first-child { margin-left: 0; }
+.feature-text { flex: 1; min-width: 0; }
+.feature-text h3 {
+  font-family: 'Brawl Stars', sans-serif;
+  font-size: 1.02rem;
+  margin-bottom: 0.2rem;
+  color: var(--gold);
+}
+.feature-text p {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+.feature-go {
+  flex-shrink: 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 0.45rem 0.9rem;
+  border: 1px solid rgba(255,214,10,0.35);
+  border-radius: 100px;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .feature-card { flex-direction: column; text-align: center; gap: 0.8rem; }
+}
+
+/* ── Result-row guide links ── */
+.row h3 a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--text-3);
+  transition: color var(--transition), border-color var(--transition);
+}
+.row h3 a:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
 /* ── Inline validation hint ── */
 .calc-hint {
   text-align: center;

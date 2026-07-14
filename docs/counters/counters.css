@@ -169,6 +169,23 @@ section h2 {
 .card img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--surface); }
 .card span { max-width: 76px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .index-grid { justify-content: center; }
+.page-search { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+.page-search input {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 100px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 1.2rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.page-search input::placeholder { color: var(--text-3); }
+.page-search input:focus { border-color: var(--gold); }
+.search-empty { text-align: center; }
 .note { font-size: 0.9rem; color: var(--text-2); line-height: 1.6; }
 .classes { font-size: 0.85rem; color: var(--text-2); }
 .chip {

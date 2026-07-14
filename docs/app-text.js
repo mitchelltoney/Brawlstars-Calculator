@@ -1,4 +1,4 @@
-import { calculate, brawlersAlphabetical } from "./calculate.js?v=2026-07-14";
+import { calculate, brawlersAlphabetical } from "./calculate.js?v=2026-07-14.1";
 
 function fileName(n) {
   return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";

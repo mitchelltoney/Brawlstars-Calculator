@@ -8,8 +8,8 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-07-14";
-import { matchupNotes } from "./matchup-notes.js?v=2026-07-14";
+} from "./calculate.js?v=2026-07-14.1";
+import { matchupNotes } from "./matchup-notes.js?v=2026-07-14.1";
 
 const freshnessEl = document.getElementById("dataFreshness");
 if (freshnessEl) freshnessEl.textContent = dataUpdated;
@@ -29,6 +29,11 @@ let hasCalculated = false;
 
 function fileName(n) {
   return n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
+}
+
+// URL slug for /counters/<slug>/ pages — must match scripts/generate-counter-pages.mjs.
+function pageSlug(n) {
+  return n.toLowerCase().replace(/[\s.'-]+/g, "-");
 }
 
 // Each grid entry is a real <button> whose padding extends the clickable
@@ -407,7 +412,8 @@ function renderResults({ scroll = false } = {}) {
     row.appendChild(sImg);
 
     const label = document.createElement("h3");
-    label.innerHTML = `${group.brawler}<br>Counters:`;
+    label.innerHTML =
+      `<a href="counters/${pageSlug(group.brawler)}/" title="${group.brawler}'s full counter guide">${group.brawler}</a><br>Counters:`;
     row.appendChild(label);
 
     const body = document.createElement("div");

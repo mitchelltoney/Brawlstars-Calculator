@@ -41,6 +41,10 @@
   <p class="subtitle">Hand-curated counterpicks for every brawler · updated July 2026</p>
 </header>
 <main>
+  <div class="page-search">
+    <input id="brawlerSearch" type="search" placeholder="Search brawlers…"
+           aria-label="Search brawlers" autocomplete="off" autocapitalize="off" spellcheck="false">
+  </div>
   <div class="grid index-grid">
 <a class="card" href="/counters/8bit/">
   <img src="/icons/8bit.webp" alt="8bit" width="72" height="72" loading="lazy" decoding="async">
@@ -463,6 +467,7 @@
   <span>Ziggy</span>
 </a>
   </div>
+  <p class="note search-empty" hidden>No brawlers match that search.</p>
 </main>
 <footer>
   <p>Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated July 2026</p>
@@ -470,5 +475,24 @@
   <p class="disclaimer">This material is unofficial and is not endorsed by Supercell. For more information
     see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
 </footer>
+<script>
+(function () {
+  var input = document.getElementById('brawlerSearch');
+  if (!input) return;
+  var cards = [].slice.call(document.querySelectorAll('.index-grid .card'));
+  var empty = document.querySelector('.search-empty');
+  input.addEventListener('input', function () {
+    var q = input.value.trim().toLowerCase().replace(/[\s.'-]+/g, '');
+    var shown = 0;
+    cards.forEach(function (c) {
+      var name = c.textContent.trim().toLowerCase().replace(/[\s.'-]+/g, '');
+      var hit = !q || name.indexOf(q) !== -1;
+      c.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    if (empty) empty.hidden = shown > 0;
+  });
+})();
+</script>
 </body>
 </html>
