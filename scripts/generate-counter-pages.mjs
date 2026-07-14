@@ -16,6 +16,8 @@ import { dirname, join } from "node:path";
 
 import { counters, rarityOrder, dataUpdated } from "../docs/counters.js";
 import { matchupNotes } from "../docs/matchup-notes.js";
+import { reverseNotes } from "../docs/reverse-notes.js";
+import { loadoutIcons } from "../docs/loadout-icons.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "docs", "counters");
@@ -36,6 +38,24 @@ for (const [name, { direct }] of Object.entries(counters)) {
 }
 
 const today = new Date().toISOString().slice(0, 10);
+
+// Render a note with inline star power/gadget icons: any exact loadout name
+// from loadoutIcons gets its icon embedded before the name. Longest names
+// first so overlapping names can't partially match.
+const loadoutNamesByLength = Object.keys(loadoutIcons).sort((a, b) => b.length - a.length);
+function renderNote(note) {
+  let html = esc(note);
+  for (const item of loadoutNamesByLength) {
+    const escaped = esc(item);
+    if (!html.includes(escaped)) continue;
+    html = html.replace(
+      escaped,
+      `<span class="loadout"><img src="/loadout-icons/${loadoutIcons[item]}" alt="" width="18" height="18" loading="lazy" decoding="async">${escaped}</span>`
+    );
+    break; // notes mention at most one loadout item
+  }
+  return html;
+}
 
 function card(name) {
   return `<a class="card" href="/counters/${slug(name)}/">
@@ -126,7 +146,7 @@ ${direct.map(c => `  <li>
       <img src="${iconFile(c)}" alt="" width="44" height="44" loading="lazy" decoding="async">
       <span>${esc(c)}</span>
     </a>
-    ${notes[c] ? `<p class="why">${esc(notes[c])}</p>` : ""}
+    ${notes[c] ? `<p class="why">${renderNote(notes[c])}</p>` : ""}
   </li>`).join("\n")}
 </ul>`
     : `<div class="grid">
@@ -147,12 +167,28 @@ ${direct.map(card).join("\n")}
     ? `<p class="classes">Also weak to: ${classes.map(c => `<span class="chip">${esc(c)}</span>`).join(" ")}</p>`
     : "";
 
+  // Dedicated reverse notes (reverseNotes[owner][target]): phrased for this
+  // page's perspective and naming the target, so the sentence matches the
+  // row label beside it.
+  const hasBeatNotes = beats.some(t => reverseNotes[name]?.[t]);
+  const beatsBody = hasBeatNotes
+    ? `<ul class="counter-list">
+${beats.map(t => `  <li>
+    <a class="counter-link" href="/counters/${slug(t)}/">
+      <img src="${iconFile(t)}" alt="" width="44" height="44" loading="lazy" decoding="async">
+      <span>${esc(t)}</span>
+    </a>
+    ${reverseNotes[name]?.[t] ? `<p class="why">${renderNote(reverseNotes[name][t])}</p>` : ""}
+  </li>`).join("\n")}
+</ul>`
+    : `<div class="grid">
+${beats.map(card).join("\n")}
+  </div>`;
+
   const beatsSection = beats.length
     ? `<section>
   <h2>${esc(name)} is a strong pick against</h2>
-  <div class="grid">
-${beats.map(card).join("\n")}
-  </div>
+  ${beatsBody}
 </section>`
     : "";
 
@@ -345,6 +381,13 @@ section h2 {
   color: var(--text-2);
   line-height: 1.55;
   min-width: 0;
+}
+.loadout { white-space: nowrap; color: var(--text); }
+.loadout img {
+  width: 18px;
+  height: 18px;
+  vertical-align: -3px;
+  margin-right: 3px;
 }
 .card {
   display: flex;

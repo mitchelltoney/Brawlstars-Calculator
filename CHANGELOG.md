@@ -1,3 +1,20 @@
+# Loadout icons in notes, ultra editorial pass, rewritten reverse notes
+
+- **Pass 2 (editorial)**: all 566 forward notes re-reviewed by Codex on
+  gpt-5.6-sol at ultra reasoning effort; 176 improved, 390 confirmed;
+  validation 566/566 clean. Loadout mentions now spelled exactly per
+  game data.
+- **Pass 3 (reverse notes)**: new `docs/reverse-notes.js` — 566 dedicated
+  sentences for the "X is a strong pick against" sections, phrased from
+  the page owner's perspective and naming the target (the previous plan
+  of reusing forward notes misaligned with the row labels).
+- **Inline loadout icons**: 82 star power/gadget icons (Brawlify CDN,
+  36px WebP, 320KB total under docs/loadout-icons/) embedded before
+  their names inside note text on all pages; name->file map in
+  docs/loadout-icons.js. Shared gadget names (Rocket Fuel/Rocket Laces:
+  Bolt+Brock; Take Cover: Hank SP + Ruffs gadget) disambiguated by
+  pair ownership.
+
 # Matchup explanations: 566 per-pair "why" notes (Codex-assisted pipeline)
 
 Every counter pair now has a one-sentence explanation of why the counter
