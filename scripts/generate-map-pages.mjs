@@ -97,8 +97,19 @@ ${scripts}
 `;
 }
 
+// Mode-icon src with a content-hash cache buster (icons get pixel-edited).
+const iconHashCache = new Map();
+function iconSrc(file) {
+  if (!iconHashCache.has(file)) {
+    try {
+      iconHashCache.set(file, createHash("sha1").update(readFileSync(join(ROOT, "docs", "mode-icons", file))).digest("hex").slice(0, 8));
+    } catch { iconHashCache.set(file, "0"); }
+  }
+  return `/mode-icons/${file}?v=${iconHashCache.get(file)}`;
+}
+
 function modeChip(m, { link = true } = {}) {
-  const icon = m.icon ? `<img src="/mode-icons/${m.icon}" alt="" width="18" height="18" loading="lazy" decoding="async">` : "";
+  const icon = m.icon ? `<img src="${iconSrc(m.icon)}" alt="" width="18" height="18" loading="lazy" decoding="async">` : "";
   const inner = `${icon}<span>${esc(m.name)}</span>`;
   return link
     ? `<a class="mode-tag" href="/maps/?mode=${m.slug}">${inner}</a>`
@@ -193,7 +204,7 @@ function mapsIndex() {
   const nicheCount = maps.length - standardCount;
 
   const chip = (m, extra = "") => `  <button class="mode-chip${extra}" data-mode="${m.slug}">
-    ${m.icon ? `<img src="/mode-icons/${m.icon}" alt="" width="18" height="18" loading="lazy" decoding="async">` : ""}
+    ${m.icon ? `<img src="${iconSrc(m.icon)}" alt="" width="18" height="18" loading="lazy" decoding="async">` : ""}
     ${esc(m.name)} <span class="count">${m.count}</span>
   </button>`;
 
@@ -215,7 +226,7 @@ ${nicheModes.map(m => chip(m, " niche-chip")).join("\n")}
     <div class="map-card-body">
       <h3>${esc(m.name)}</h3>
       <p class="map-card-mode">
-        ${modeMeta?.icon ? `<img src="/mode-icons/${modeMeta.icon}" alt="" width="22" height="22" loading="lazy" decoding="async">` : ""}
+        ${modeMeta?.icon ? `<img src="${iconSrc(modeMeta.icon)}" alt="" width="22" height="22" loading="lazy" decoding="async">` : ""}
         ${esc(m.mode)}
       </p>
       <span class="conf-dot ${conf.cls}" title="${esc(conf.label)}: ${esc(conf.blurb)}"></span>
