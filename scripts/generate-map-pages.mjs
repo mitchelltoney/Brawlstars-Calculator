@@ -388,10 +388,11 @@ section h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.07em; text-
 .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 0.8rem; }
 .map-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; text-decoration: none; color: var(--text); transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease; }
 .map-card:hover { border-color: var(--border-hi); background: var(--surface-hi); transform: translateY(-2px); }
-.map-card img { width: 100%; height: 150px; object-fit: cover; object-position: top; background: #101016; }
+.map-card > img { width: 100%; height: 150px; object-fit: cover; object-position: top; background: #101016; }
 .map-card-body { position: relative; padding: 0.6rem 0.75rem 0.7rem; }
 .map-card h3 { font-size: 0.88rem; line-height: 1.25; margin-bottom: 0.2rem; padding-right: 14px; }
 .map-card-mode { display: flex; align-items: center; gap: 0.3rem; font-size: 0.7rem; color: var(--text-3); }
+.map-card-mode img { width: 15px; height: 15px; border-radius: 3px; }
 .conf-dot { position: absolute; top: 0.7rem; right: 0.7rem; width: 9px; height: 9px; border-radius: 50%; }
 .conf-high  { background: #4cd964; }
 .conf-med   { background: var(--gold); }

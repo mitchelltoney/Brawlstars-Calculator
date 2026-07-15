@@ -4,7 +4,7 @@
 // (The previous Python implementation also counted class markers, which
 // then leaked into the rendered overlap rows as broken image cards.)
 
-import { counters, rarityOrder, dataUpdated } from "./counters.js?v=2026-07-15.1";
+import { counters, rarityOrder, dataUpdated } from "./counters.js?v=2026-07-15.2";
 
 // brawlerNames in case-preserving "alphabetical" order, equivalent to the
 // historical brawlers.js `brawlerNames` (curated, places "RT" before "Rico").
