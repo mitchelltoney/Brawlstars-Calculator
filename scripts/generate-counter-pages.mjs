@@ -11,6 +11,8 @@
 // by this script too, so the whole docs/counters/ tree is reproducible).
 
 import { mkdir, writeFile, rm } from "node:fs/promises";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -101,8 +103,8 @@ function pageShell({ title, description, canonical, body, ogTitle, scripts = "" 
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/counters/counters.css">
+<link rel="stylesheet" href="/styles.css?v=${stylesHash}">
+<link rel="stylesheet" href="/counters/counters.css?v=${cssHash}">
 </head>
 <body>
 ${nav}
@@ -494,6 +496,12 @@ footer a { color: var(--text-2); }
 footer a:hover { color: var(--text); }
 footer .disclaimer { font-size: 0.64rem; }
 `;
+
+// Content-hash cache busters so stylesheet changes are visible immediately
+// (GitHub Pages otherwise serves stale CSS for up to 10 minutes).
+const hash8 = s => createHash("sha1").update(s).digest("hex").slice(0, 8);
+const cssHash = hash8(css);
+const stylesHash = hash8(readFileSync(join(ROOT, "docs", "styles.css"), "utf8"));
 
 function sitemap() {
   const urls = [

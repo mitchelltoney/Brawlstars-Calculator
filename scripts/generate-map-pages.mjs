@@ -8,6 +8,8 @@
 // mode icons and brawler icons are self-hosted.
 
 import { mkdir, writeFile, rm, readdir } from "node:fs/promises";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -78,8 +80,8 @@ function pageShell({ title, description, canonical, body, scripts = "" }) {
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/maps/maps.css">
+<link rel="stylesheet" href="/styles.css?v=${stylesHash}">
+<link rel="stylesheet" href="/maps/maps.css?v=${cssHash}">
 </head>
 <body>
 ${body}
@@ -440,6 +442,13 @@ footer .disclaimer { font-size: 0.64rem; }
   .map-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
 `;
+
+// Content-hash cache busters: any change to a stylesheet changes the URL
+// every generated page references, so deploys are visible immediately
+// instead of after GitHub Pages' 10-minute cache window.
+const hash8 = s => createHash("sha1").update(s).digest("hex").slice(0, 8);
+const cssHash = hash8(css);
+const stylesHash = hash8(readFileSync(join(ROOT, "docs", "styles.css"), "utf8"));
 
 // ── Emit ────────────────────────────────────────────────────────────────────
 // Wipe generated map dirs (keep nothing stale), then write everything.
