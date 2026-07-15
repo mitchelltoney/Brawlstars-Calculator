@@ -21,6 +21,18 @@ const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
 const brawlerIcon = n => "/icons/" + n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
 const brawlerSlug = n => n.toLowerCase().replace(/[\s.'-]+/g, "-");
 
+// Limited-time / niche modes collapse behind a "More modes" chip on the
+// index and their cards hide from the default All view (still searchable
+// and directly linkable). Confirmed with the site owner 2026-07-15.
+const NICHE_MODES = new Set([
+  "Present Plunder", "Love Bombing", "Hawkins Hunt", "Combat Cooking",
+  "Food Fight", "Paint Brawl", "Spirit Wars", "Token Run", "Shadow Smash",
+  "Super Ball", "Volley Brawl", "Dodgebrawl", "Subway Run", "Soul Collector",
+  "Safe Blast", "Mecha Guard", "Upside Showdown", "Duo Mega Boss",
+  "Treasure Hunt", "Loaded Showdown", "Loaded Duo Showdown",
+  "Trio Wipeout", "Trio Gem Grab",
+]);
+
 const CONFIDENCE = {
   high:   { label: "Strong data",        blurb: "Backed by multiple competitive sources.",              cls: "conf-high" },
   medium: { label: "Decent data",        blurb: "Based on limited competitive sources.",                cls: "conf-med" },
@@ -173,18 +185,29 @@ function mapsIndex() {
   const canonical = `${SITE}/maps/`;
   const researched = maps.filter(m => m.confidence !== "none").length;
 
-  const chips = `<div class="mode-chips" id="modeChips">
-  <button class="mode-chip active" data-mode="all">All <span class="count">${maps.length}</span></button>
-${modes.map(m => `  <button class="mode-chip" data-mode="${m.slug}">
+  const standardModes = modes.filter(m => !NICHE_MODES.has(m.name));
+  const nicheModes = modes.filter(m => NICHE_MODES.has(m.name));
+  const standardCount = maps.filter(m => !NICHE_MODES.has(m.mode)).length;
+  const nicheCount = maps.length - standardCount;
+
+  const chip = (m, extra = "") => `  <button class="mode-chip${extra}" data-mode="${m.slug}">
     ${m.icon ? `<img src="/mode-icons/${m.icon}" alt="" width="18" height="18" loading="lazy" decoding="async">` : ""}
     ${esc(m.name)} <span class="count">${m.count}</span>
-  </button>`).join("\n")}
+  </button>`;
+
+  const chips = `<div class="mode-chips" id="modeChips">
+  <button class="mode-chip active" data-mode="all">All <span class="count">${standardCount}</span></button>
+${standardModes.map(m => chip(m)).join("\n")}
+  <button class="mode-chip" id="nicheToggle" aria-expanded="false"
+          title="Limited-time and event modes">More modes <span class="count">${nicheModes.length}</span></button>
+${nicheModes.map(m => chip(m, " niche-chip")).join("\n")}
 </div>`;
 
   const cards = maps.map(m => {
     const conf = CONFIDENCE[m.confidence] ?? CONFIDENCE.none;
     const modeMeta = modes.find(x => x.name === m.mode);
     return `  <a class="map-card" href="/maps/${m.slug}/" data-mode="${m.modeSlug}"
+     data-niche="${NICHE_MODES.has(m.mode) ? "1" : "0"}"
      data-name="${esc(m.name.toLowerCase())}">
     <img src="${m.image}" alt="" loading="lazy" decoding="async">
     <div class="map-card-body">
@@ -219,17 +242,21 @@ ${cards}
   const scripts = `<script>
 (function () {
   var input = document.getElementById('mapSearch');
-  var chips = [].slice.call(document.querySelectorAll('.mode-chip'));
+  var chips = [].slice.call(document.querySelectorAll('.mode-chip[data-mode]'));
   var cards = [].slice.call(document.querySelectorAll('.map-card'));
   var empty = document.querySelector('.search-empty');
+  var nicheToggle = document.getElementById('nicheToggle');
   var mode = 'all';
 
   function apply(updateUrl) {
     var q = input.value.trim().toLowerCase();
     var shown = 0;
     cards.forEach(function (c) {
-      var hit = (mode === 'all' || c.dataset.mode === mode) &&
-                (!q || c.dataset.name.indexOf(q) !== -1);
+      var modeHit = mode === 'all' ? (q ? true : c.dataset.niche === '0')
+                                   : c.dataset.mode === mode;
+      // In the All view, niche maps stay hidden while browsing but join
+      // the results as soon as the user searches by name.
+      var hit = modeHit && (!q || c.dataset.name.indexOf(q) !== -1);
       c.style.display = hit ? '' : 'none';
       if (hit) shown++;
     });
@@ -241,6 +268,18 @@ ${cards}
       history.replaceState(null, '', url);
     }
   }
+
+  function expandNiche(open) {
+    document.getElementById('modeChips').classList.toggle('niche-open', open);
+    if (nicheToggle) {
+      nicheToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      nicheToggle.classList.toggle('active', open);
+    }
+  }
+
+  if (nicheToggle) nicheToggle.addEventListener('click', function () {
+    expandNiche(!document.getElementById('modeChips').classList.contains('niche-open'));
+  });
 
   chips.forEach(function (chip) {
     chip.addEventListener('click', function () {
@@ -257,9 +296,13 @@ ${cards}
   if (q0) input.value = q0;
   if (m0) {
     var chip = chips.filter(function (c) { return c.dataset.mode === m0; })[0];
-    if (chip) { mode = m0; chips.forEach(function (c) { c.classList.toggle('active', c === chip); }); }
+    if (chip) {
+      mode = m0;
+      chips.forEach(function (c) { c.classList.toggle('active', c === chip); });
+      if (chip.classList.contains('niche-chip')) expandNiche(true);
+    }
   }
-  if (m0 || q0) apply(false);
+  apply(false);
 })();
 </script>`;
 
@@ -337,6 +380,9 @@ section h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.07em; text-
 .mode-chip:hover { background: var(--surface-hi); color: var(--text); }
 .mode-chip.active { border-color: var(--gold); background: rgba(255,214,10,0.1); color: var(--gold); }
 .mode-chip.active .count { color: rgba(255,214,10,0.6); }
+.niche-chip { display: none; }
+.mode-chips.niche-open .niche-chip { display: inline-flex; }
+#nicheToggle { border-style: dashed; }
 
 /* map grid */
 .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 0.8rem; }

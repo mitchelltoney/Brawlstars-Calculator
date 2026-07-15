@@ -62,6 +62,9 @@ section h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.07em; text-
 .mode-chip:hover { background: var(--surface-hi); color: var(--text); }
 .mode-chip.active { border-color: var(--gold); background: rgba(255,214,10,0.1); color: var(--gold); }
 .mode-chip.active .count { color: rgba(255,214,10,0.6); }
+.niche-chip { display: none; }
+.mode-chips.niche-open .niche-chip { display: inline-flex; }
+#nicheToggle { border-style: dashed; }
 
 /* map grid */
 .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 0.8rem; }
