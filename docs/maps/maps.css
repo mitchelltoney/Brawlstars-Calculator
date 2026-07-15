@@ -1,0 +1,119 @@
+/* Generated with docs/maps/ pages by scripts/generate-map-pages.mjs.
+ * Edit the generator, not this file. */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0c0c10;
+  --surface: rgba(255,255,255,0.045);
+  --surface-hi: rgba(255,255,255,0.075);
+  --border: rgba(255,255,255,0.07);
+  --border-hi: rgba(255,255,255,0.14);
+  --gold: #ffd60a;
+  --text: #f5f5f7;
+  --text-2: rgba(245,245,247,0.48);
+  --text-3: rgba(245,245,247,0.28);
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 1.25rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse 70% 40% at 15% 0%, rgba(255,214,10,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 50% at 85% 100%, rgba(80,80,220,0.06) 0%, transparent 100%),
+    var(--bg);
+  background-attachment: fixed;
+}
+.site-nav { width: 100%; max-width: 1080px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2.25rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.55rem; font-family: 'Brawl Stars', sans-serif; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+.brand img { display: block; }
+.nav-links { display: flex; align-items: center; gap: 1rem; }
+.nav-quiet { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color 0.15s ease; }
+.nav-quiet:hover { color: var(--text); }
+.nav-active { color: var(--gold); }
+.nav-cta { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.82rem; font-weight: 700; white-space: nowrap; padding: 0.5rem 1.05rem; border-radius: 100px; color: var(--gold); text-decoration: none; background: rgba(255,214,10,0.08); border: 1px solid rgba(255,214,10,0.35); transition: background 0.15s ease, border-color 0.15s ease; }
+.nav-cta:hover { background: rgba(255,214,10,0.14); border-color: rgba(255,214,10,0.55); }
+.crumbs { width: 100%; max-width: 1080px; font-size: 0.78rem; color: var(--text-3); margin-bottom: 1.75rem; }
+.crumbs a { color: var(--text-2); text-decoration: none; }
+.crumbs a:hover { color: var(--text); }
+header { text-align: center; margin-bottom: 2rem; max-width: 640px; }
+h1 { font-family: 'Brawl Stars', sans-serif; font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.12; margin-bottom: 0.5rem;
+  background: linear-gradient(160deg, #ffffff 30%, rgba(255,255,255,0.6) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.subtitle { font-size: 0.92rem; color: var(--text-2); line-height: 1.55; text-wrap: balance; }
+main, .maps-main { width: 100%; max-width: 1080px; display: flex; flex-direction: column; gap: 1.5rem; }
+main { max-width: 760px; gap: 2rem; }
+section h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.9rem; }
+.note { font-size: 0.92rem; color: var(--text-2); line-height: 1.6; }
+.note a { color: var(--text); }
+
+/* search + chips */
+.page-search { display: flex; justify-content: center; }
+.page-search input { width: 100%; max-width: 460px; background: var(--surface); border: 1px solid var(--border-hi); border-radius: 100px; color: var(--text); font-family: inherit; font-size: 1rem; padding: 0.7rem 1.2rem; outline: none; transition: border-color 0.15s ease; }
+.page-search input::placeholder { color: var(--text-3); }
+.page-search input:focus { border-color: var(--gold); }
+.mode-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; }
+.mode-chip { display: inline-flex; align-items: center; gap: 0.35rem; font-family: inherit; font-size: 0.78rem; font-weight: 600; color: var(--text-2); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 0.35rem 0.75rem; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.mode-chip img { border-radius: 3px; }
+.mode-chip .count { font-size: 0.68rem; color: var(--text-3); }
+.mode-chip:hover { background: var(--surface-hi); color: var(--text); }
+.mode-chip.active { border-color: var(--gold); background: rgba(255,214,10,0.1); color: var(--gold); }
+.mode-chip.active .count { color: rgba(255,214,10,0.6); }
+
+/* map grid */
+.map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 0.8rem; }
+.map-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; text-decoration: none; color: var(--text); transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease; }
+.map-card:hover { border-color: var(--border-hi); background: var(--surface-hi); transform: translateY(-2px); }
+.map-card img { width: 100%; height: 150px; object-fit: cover; object-position: top; background: #101016; }
+.map-card-body { position: relative; padding: 0.6rem 0.75rem 0.7rem; }
+.map-card h3 { font-size: 0.88rem; line-height: 1.25; margin-bottom: 0.2rem; padding-right: 14px; }
+.map-card-mode { display: flex; align-items: center; gap: 0.3rem; font-size: 0.7rem; color: var(--text-3); }
+.conf-dot { position: absolute; top: 0.7rem; right: 0.7rem; width: 9px; height: 9px; border-radius: 50%; }
+.conf-high  { background: #4cd964; }
+.conf-med   { background: var(--gold); }
+.conf-low   { background: #ff9f43; }
+.conf-none  { background: rgba(245,245,247,0.22); }
+.search-empty { text-align: center; }
+
+/* per-map page */
+.map-header { display: flex; align-items: center; gap: 1.75rem; text-align: left; max-width: 760px; width: 100%; margin-bottom: 2rem; }
+.map-art { width: 220px; max-height: 300px; object-fit: contain; border-radius: 14px; background: #101016; border: 1px solid var(--border); }
+.map-head-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem; min-width: 0; }
+.map-head-text h1 { text-align: left; margin: 0; }
+.map-head-text .subtitle { text-align: left; }
+.mode-tag { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.74rem; font-weight: 600; color: var(--text-2); background: var(--surface); border: 1px solid var(--border-hi); border-radius: 100px; padding: 0.28rem 0.7rem; text-decoration: none; }
+.mode-tag:hover { color: var(--text); }
+.mode-tag img { border-radius: 3px; }
+.conf-badge { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; padding: 0.3rem 0.75rem; border-radius: 100px; color: #0c0c10; }
+p.conf-none { color: var(--text); background: rgba(255,91,91,0.25); }
+
+/* tiers */
+.counter-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+.counter-list li { display: flex; align-items: center; gap: 1rem; padding: 0.65rem 0.9rem; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; }
+.pick-chip-link { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; flex: 0 0 84px; text-decoration: none; color: var(--text); font-size: 0.75rem; font-weight: 600; text-align: center; }
+.pick-chip-link img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--surface); }
+.pick-chip-link:hover { color: var(--gold); }
+.counter-list .why { font-size: 0.88rem; color: var(--text-2); line-height: 1.55; min-width: 0; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+.no-data-block .note { max-width: 560px; }
+.cta { align-self: center; margin-top: 0.5rem; padding: 0.75rem 1.6rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.1); color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: background 0.15s ease; }
+.cta:hover { background: rgba(255,255,255,0.16); }
+
+footer { margin-top: 4rem; font-size: 0.7rem; color: var(--text-3); text-align: center; line-height: 1.7; max-width: 560px; }
+footer p + p { margin-top: 0.5rem; }
+footer a { color: var(--text-2); }
+footer a:hover { color: var(--text); }
+footer .disclaimer { font-size: 0.64rem; }
+
+@media (max-width: 640px) {
+  .nav-quiet { display: inline; } /* keep Maps/Counters reachable on mobile */
+  .brand span { display: none; }
+  .map-header { flex-direction: column; text-align: center; }
+  .map-head-text { align-items: center; }
+  .map-head-text h1, .map-head-text .subtitle { text-align: center; }
+  .map-art { width: 170px; }
+  .map-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}

@@ -18,6 +18,7 @@ import { counters, rarityOrder, dataUpdated } from "../docs/counters.js";
 import { matchupNotes } from "../docs/matchup-notes.js";
 import { reverseNotes } from "../docs/reverse-notes.js";
 import { loadoutIcons } from "../docs/loadout-icons.js";
+import { maps as siteMaps } from "../docs/map-data.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "docs", "counters");
@@ -71,6 +72,7 @@ function pageShell({ title, description, canonical, body, ogTitle, scripts = "" 
     <span>Brawl Calculator</span>
   </a>
   <div class="nav-links">
+    <a class="nav-quiet" href="/maps/">Maps</a>
     <a class="nav-quiet" href="/counters/">All brawlers</a>
     <a class="nav-cta" href="/">Open Calculator</a>
   </div>
@@ -497,7 +499,9 @@ function sitemap() {
   const urls = [
     { loc: `${SITE}/`, priority: "0.9", changefreq: "weekly" },
     { loc: `${SITE}/counters/`, priority: "0.7", changefreq: "weekly" },
+    { loc: `${SITE}/maps/`, priority: "0.7", changefreq: "weekly" },
     ...roster.map(n => ({ loc: `${SITE}/counters/${slug(n)}/`, priority: "0.6", changefreq: "monthly" })),
+    ...siteMaps.map(m => ({ loc: `${SITE}/maps/${m.slug}/`, priority: "0.5", changefreq: "monthly" })),
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 
 import { counters, rarityOrder, dataUpdated } from "../docs/counters.js";
 import { matchupNotes } from "../docs/matchup-notes.js";
+import { maps as siteMaps } from "../docs/map-data.js";
 
 const DOCS = join(dirname(fileURLToPath(import.meta.url)), "..", "docs");
 const roster = Object.keys(counters);
@@ -89,6 +90,36 @@ test("matchup notes only reference real (defender, counter) pairs", () => {
       assert.equal(typeof note, "string");
       assert.ok(note.length >= 20 && note.length <= 200, `${d} <- ${c}: note length ${note.length}`);
     }
+  }
+});
+
+test("map data: unique slugs, roster-valid picks/bans, generated pages in sync", () => {
+  const slugs = siteMaps.map(m => m.slug);
+  assert.equal(new Set(slugs).size, slugs.length, "duplicate map slugs");
+  for (const m of siteMaps) {
+    assert.ok(["high", "medium", "low", "none"].includes(m.confidence), `${m.slug}: confidence`);
+    const names = [
+      ...(m.picks?.S ?? []).map(p => p.name),
+      ...(m.picks?.A ?? []),
+      ...(m.picks?.B ?? []),
+      ...(m.bans ?? []).map(b => b.name),
+    ];
+    for (const n of names) {
+      assert.ok(n in counters, `${m.slug}: non-roster brawler "${n}"`);
+    }
+    if (!m.ranked) assert.equal((m.bans ?? []).length, 0, `${m.slug}: bans on non-ranked map`);
+    // Generated page exists — run npm run generate:maps after data changes.
+    assert.ok(
+      existsSync(join(DOCS, "maps", m.slug, "index.html")),
+      `missing generated page for map ${m.slug} — run npm run generate:maps`
+    );
+  }
+  // No stale generated map dirs.
+  const dirs = readdirSync(join(DOCS, "maps"), { withFileTypes: true })
+    .filter(d => d.isDirectory()).map(d => d.name);
+  const expected = new Set(slugs);
+  for (const d of dirs) {
+    assert.ok(expected.has(d), `stale generated map dir: docs/maps/${d}`);
   }
 });
 

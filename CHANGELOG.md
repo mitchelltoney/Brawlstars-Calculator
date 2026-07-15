@@ -1,3 +1,23 @@
+# Maps feature: best picks & bans for all 404 active maps
+
+- New /maps/ interactive browser: search-as-you-type, 41 game-mode filter
+  chips with official icons, shareable URL state, confidence dot per map.
+- 404 generated per-map SEO pages: S/A/B tiered picks with layout-specific
+  reasoning, best bans (ranked modes only, weighted by map strength AND
+  counter breadth from our own counter data), consumer-friendly confidence
+  banner, honest "not enough data yet" state (27 maps).
+- Research: 93 Codex batches (Sol Ultra, web search), 377/404 maps
+  researched; confidence: 83 high / 257 medium / 37 low / 27 none.
+  Stats sites (PL Prodigy et al.) used only as corroborating signals per
+  policy in the prompt; zero maps sourced from stats alone (audited).
+  Internal pipeline jargon scrubbed from all user-facing text.
+- Data in docs/map-data.js (hand-editable); regenerate with
+  npm run generate:maps. Map images hotlinked from the Brawlify CDN;
+  mode icons self-hosted. Sitemap now 512 URLs. New data test guards
+  roster-valid picks and page/data sync.
+- Also this session: /counters/ search box, homepage feature card, and
+  result rows linking to counter guides (discoverability feedback).
+
 # Loadout icons in notes, ultra editorial pass, rewritten reverse notes
 
 - **Pass 2 (editorial)**: all 566 forward notes re-reviewed by Codex on

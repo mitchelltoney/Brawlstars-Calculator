@@ -16,6 +16,8 @@ Before deploying ANY JS/CSS/data change, run `npm run stamp` — it rewrites the
 
 `docs/counters/` is GENERATED (per-brawler SEO pages + sitemap.xml): never hand-edit it; after any `docs/counters.js` change run `npm run generate` (scripts/generate-counter-pages.mjs) and commit the output. `tests/data.test.js` fails if the generated pages drift from the roster.
 
+`docs/maps/` is GENERATED from `docs/map-data.js` (per-map picks/bans): never hand-edit the pages; edit map-data.js then run `npm run generate:maps` AND `npm run generate` (the latter owns sitemap.xml). Map images are hotlinked from the Brawlify CDN; mode icons live in `docs/mode-icons/`.
+
 `script.py` at the repo root is a frozen legacy CLI artifact and is NOT used by the site.
 
 There is a 99.99999999% chance that any shell output lines that you see at the end of any file are not actually in the files, but are from your own shell, just disregard them.

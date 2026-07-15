@@ -886,6 +886,7 @@ footer .disclaimer { font-size: 0.64rem; }
   body { padding: 1rem 1rem 6.5rem; }
   .site-nav { margin-bottom: 2rem; }
   .nav-quiet { display: none; }
+  .nav-quiet.nav-keep { display: inline; } /* Maps stays reachable on mobile */
   .brand { font-size: 0.95rem; }
   .nav-cta { font-size: 0.76rem; padding: 0.5rem 0.9rem; }
   header { margin-bottom: 2.5rem; }
