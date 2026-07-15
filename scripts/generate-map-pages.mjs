@@ -35,6 +35,21 @@ const NICHE_MODES = new Set([
   "Trio Wipeout", "Trio Gem Grab",
 ]);
 
+// Display order for modes (chips and the All-view card grid): iconic and
+// popular modes first, Showdowns kept sequential, everything else after,
+// collapsed niche modes last.
+const MODE_ORDER = [
+  "Brawl Ball", "Gem Grab", "Bounty", "Hot Zone", "Knockout", "Heist",
+  "Solo Showdown", "Duo Showdown", "Trio Showdown",
+  "Wipeout", "Duels", "Brawl Hockey", "Basket Brawl", "Brawl Arena",
+  "Brawl Ball 5v5", "Gem Grab 5v5", "Knockout 5v5", "Wipeout 5v5",
+];
+function modeRank(name) {
+  const i = MODE_ORDER.indexOf(name);
+  if (i !== -1) return i;
+  return MODE_ORDER.length + (NICHE_MODES.has(name) ? 100 : 0);
+}
+
 const CONFIDENCE = {
   high:   { label: "Strong data",        blurb: "Backed by multiple competitive sources.",              cls: "conf-high" },
   medium: { label: "Decent data",        blurb: "Based on limited competitive sources.",                cls: "conf-med" },
@@ -222,8 +237,9 @@ function mapsIndex() {
   const canonical = `${SITE}/maps/`;
   const researched = maps.filter(m => m.confidence !== "none").length;
 
-  const standardModes = modes.filter(m => !NICHE_MODES.has(m.name));
-  const nicheModes = modes.filter(m => NICHE_MODES.has(m.name));
+  const byRank = (a, b) => modeRank(a.name) - modeRank(b.name) || b.count - a.count;
+  const standardModes = modes.filter(m => !NICHE_MODES.has(m.name)).sort(byRank);
+  const nicheModes = modes.filter(m => NICHE_MODES.has(m.name)).sort(byRank);
   const standardCount = maps.filter(m => !NICHE_MODES.has(m.mode)).length;
   const nicheCount = maps.length - standardCount;
 
@@ -240,7 +256,10 @@ ${standardModes.map(m => chip(m)).join("\n")}
 ${nicheModes.map(m => chip(m, " niche-chip")).join("\n")}
 </div>`;
 
-  const cards = maps.map(m => {
+  const orderedMaps = [...maps].sort((a, b) =>
+    modeRank(a.mode) - modeRank(b.mode) || a.name.localeCompare(b.name));
+
+  const cards = orderedMaps.map(m => {
     const conf = CONFIDENCE[m.confidence] ?? CONFIDENCE.none;
     const modeMeta = modes.find(x => x.name === m.mode);
     return `  <a class="map-card" href="/maps/${m.slug}/" data-mode="${m.modeSlug}"
