@@ -8,8 +8,8 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-07-15.2";
-import { matchupNotes } from "./matchup-notes.js?v=2026-07-15.2";
+} from "./calculate.js?v=2026-07-15.3";
+import { matchupNotes } from "./matchup-notes.js?v=2026-07-15.3";
 
 const freshnessEl = document.getElementById("dataFreshness");
 if (freshnessEl) freshnessEl.textContent = dataUpdated;
@@ -468,6 +468,29 @@ function renderResults({ scroll = false } = {}) {
     note.className = "ban-note";
     note.textContent = `${hiddenByBans} banned counter${hiddenByBans === 1 ? "" : "s"} hidden from results.`;
     outputEl.appendChild(note);
+  }
+
+  // Shareable link to the current picks (the URL already carries ?p=).
+  if (data.results.length) {
+    const wrap = document.createElement("div");
+    wrap.className = "share-wrap";
+    const share = document.createElement("button");
+    share.type = "button";
+    share.className = "share-link";
+    share.textContent = "Copy link to these picks";
+    share.addEventListener("click", async () => {
+      try {
+        if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
+          await navigator.share({ title: "Brawl Stars counterpicks", url: location.href });
+          return;
+        }
+        await navigator.clipboard.writeText(location.href);
+        share.textContent = "Link copied";
+        setTimeout(() => { share.textContent = "Copy link to these picks"; }, 1600);
+      } catch { /* user dismissed the share sheet */ }
+    });
+    wrap.appendChild(share);
+    outputEl.appendChild(wrap);
   }
 
   if (scroll && outputEl.firstChild) {

@@ -130,7 +130,7 @@ function brawlerPage(name) {
     ? `The best counters to ${name} in Brawl Stars ranked: ${direct.slice(0, 3).join(", ")}${direct.length > 3 ? " and more" : ""}. Hand-curated counter data, updated ${dataUpdated}.`
     : `${name} is brand new to Brawl Stars — curated counter data is coming with the next update. See who ${name} counters and try the counterpick calculator.`;
 
-  const jsonLd = {
+  const jsonLd = [{
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
@@ -138,7 +138,39 @@ function brawlerPage(name) {
       { "@type": "ListItem", position: 2, name: "Counters", item: `${SITE}/counters/` },
       { "@type": "ListItem", position: 3, name: `${name} Counters`, item: canonical },
     ],
-  };
+  }];
+  if (direct.length) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: `Best counters to ${name} in Brawl Stars`,
+      itemListElement: direct.map((c, i) =>
+        ({ "@type": "ListItem", position: i + 1, name: c, url: `${SITE}/counters/${slug(c)}/` })),
+    });
+  }
+
+  // "Strong maps" cross-links, computed from the maps research: ranked-mode
+  // maps (high/medium confidence) where this brawler sits in S or A tier.
+  const strongMaps = siteMaps
+    .filter(m => m.ranked && (m.confidence === "high" || m.confidence === "medium"))
+    .map(m => {
+      const inS = (m.picks.S ?? []).some(p => p.name === name);
+      const inA = !inS && (m.picks.A ?? []).includes(name);
+      return inS || inA ? { m, score: (inS ? 2 : 1) + (m.confidence === "high" ? 0.5 : 0) } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6)
+    .map(x => x.m);
+
+  const strongMapsSection = strongMaps.length
+    ? `<section>
+  <h2>${esc(name)} shines on these maps</h2>
+  <div class="chip-row map-links">
+${strongMaps.map(m => `    <a class="map-link" href="/maps/${m.slug}/">${esc(m.name)} <span>${esc(m.mode)}</span></a>`).join("\n")}
+  </div>
+</section>`
+    : "";
 
   // With matchup notes: a vertical list (icon + name + why). Without: the
   // compact card grid.
@@ -210,6 +242,7 @@ ${JSON.stringify(jsonLd)}
 ${countersSection}
 ${classesSection}
 ${beatsSection}
+${strongMapsSection}
 <a class="cta" href="/?p=${encodeURIComponent(name)}">Countering a full enemy team? Open the calculator</a>
 </main>`;
 
@@ -458,6 +491,23 @@ section h2 {
 .search-empty { text-align: center; }
 .note { font-size: 0.9rem; color: var(--text-2); line-height: 1.6; }
 .classes { font-size: 0.85rem; color: var(--text-2); }
+.map-links { gap: 0.5rem; }
+.map-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 100px;
+  padding: 0.4rem 0.9rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.map-link span { font-size: 0.68rem; color: var(--text-3); font-weight: 500; }
+.map-link:hover { border-color: var(--gold); color: var(--gold); }
 .chip {
   display: inline-block;
   padding: 0.2rem 0.7rem;

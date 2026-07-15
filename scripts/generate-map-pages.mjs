@@ -167,7 +167,31 @@ ${m.bans.map(b => `  <li>
   </ul>
 </section>` : ""}`;
 
-  const body = `${nav("maps")}
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Brawl Calculator", item: `${SITE}/` },
+        { "@type": "ListItem", position: 2, name: "Maps", item: `${SITE}/maps/` },
+        { "@type": "ListItem", position: 3, name: m.name, item: canonical },
+      ],
+    },
+  ];
+  if (m.confidence !== "none" && sNames.length) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: `Best brawlers for ${m.name} (${m.mode})`,
+      itemListElement: [...sNames, ...(m.picks.A ?? []), ...(m.picks.B ?? [])]
+        .map((n, i) => ({ "@type": "ListItem", position: i + 1, name: n, url: `${SITE}/counters/${brawlerSlug(n)}/` })),
+    });
+  }
+
+  const body = `<script type="application/ld+json">
+${JSON.stringify(jsonLd)}
+</script>
+${nav("maps")}
 <nav class="crumbs"><a href="/">Calculator</a> › <a href="/maps/">Maps</a> › <span>${esc(m.name)}</span></nav>
 <header class="map-header">
   <img class="map-art" src="${m.image}" alt="${esc(m.name)} map layout" loading="eager" decoding="async">

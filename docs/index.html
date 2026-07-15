@@ -37,10 +37,10 @@
   }
 </script>
 <link rel="preload" href="fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script src="loader.js?v=2026-07-15.2"></script>
-<script type="module" src="app.js?v=2026-07-15.2"></script>
-<link rel="stylesheet" href="styles.css?v=2026-07-15.2">
-<link rel="stylesheet" href="index.css?v=2026-07-15.2">
+<script src="loader.js?v=2026-07-15.3"></script>
+<script type="module" src="app.js?v=2026-07-15.3"></script>
+<link rel="stylesheet" href="styles.css?v=2026-07-15.3">
+<link rel="stylesheet" href="index.css?v=2026-07-15.3">
 </head>
 <body>
 
@@ -107,21 +107,36 @@
   </p>
   <div id="output"></div>
 
-  <a class="feature-card" href="counters/">
-    <div class="feature-icons">
-      <img src="icons/edgar.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
-      <img src="icons/piper.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
-      <img src="icons/frank.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
-      <img src="icons/mortis.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
-      <img src="icons/damian.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
-      <img src="icons/chester.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
-    </div>
-    <div class="feature-text">
-      <h3>Counters by Brawler</h3>
-      <p>Every brawler's full counter guide: who beats them, who they beat, and why each matchup works.</p>
-    </div>
-    <span class="feature-go">Browse all 105</span>
-  </a>
+  <div class="feature-cards">
+    <a class="feature-card" href="counters/">
+      <div class="feature-icons">
+        <img src="icons/edgar.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
+        <img src="icons/piper.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
+        <img src="icons/frank.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
+        <img src="icons/mortis.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
+        <img src="icons/damian.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
+        <img src="icons/chester.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
+      </div>
+      <div class="feature-text">
+        <h3>Counters by Brawler</h3>
+        <p>Every brawler's full counter guide: who beats them, who they beat, and why each matchup works.</p>
+      </div>
+      <span class="feature-go">Browse all 105</span>
+    </a>
+    <a class="feature-card" href="maps/">
+      <div class="feature-icons feature-icons-modes">
+        <img src="mode-icons/gem-grab.webp" alt="" width="34" height="31" loading="lazy" decoding="async">
+        <img src="mode-icons/brawl-ball.webp" alt="" width="34" height="31" loading="lazy" decoding="async">
+        <img src="mode-icons/knockout.webp" alt="" width="34" height="31" loading="lazy" decoding="async">
+        <img src="mode-icons/hot-zone.webp" alt="" width="34" height="31" loading="lazy" decoding="async">
+      </div>
+      <div class="feature-text">
+        <h3>Best Brawlers by Map</h3>
+        <p>Tiered picks and the smartest bans for every map, researched from competitive play.</p>
+      </div>
+      <span class="feature-go">Browse maps</span>
+    </a>
+  </div>
   <div id="widthHandle" class="width-handle" role="slider" tabindex="0"
        aria-label="Layout width" aria-valuemin="720" aria-valuenow="1280"
        title="Drag to adjust layout width (double-click to reset)"></div>

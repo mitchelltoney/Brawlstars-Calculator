@@ -188,6 +188,23 @@ section h2 {
 .search-empty { text-align: center; }
 .note { font-size: 0.9rem; color: var(--text-2); line-height: 1.6; }
 .classes { font-size: 0.85rem; color: var(--text-2); }
+.map-links { gap: 0.5rem; }
+.map-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 100px;
+  padding: 0.4rem 0.9rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.map-link span { font-size: 0.68rem; color: var(--text-3); font-weight: 500; }
+.map-link:hover { border-color: var(--gold); color: var(--gold); }
 .chip {
   display: inline-block;
   padding: 0.2rem 0.7rem;

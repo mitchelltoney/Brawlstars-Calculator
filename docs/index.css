@@ -497,13 +497,18 @@ h1 {
 }
 #go:active { transform: scale(0.97); }
 
-/* ── Counters-by-brawler feature card ── */
+/* ── Feature cards (counters + maps) ── */
+.feature-cards {
+  display: flex;
+  gap: 1rem;
+  max-width: 980px;
+  margin: 2.5rem auto 0;
+}
 .feature-card {
   display: flex;
+  flex: 1;
   align-items: center;
   gap: 1.25rem;
-  margin: 2.5rem auto 0;
-  max-width: 640px;
   padding: 1.1rem 1.4rem;
   background: rgba(255,214,10,0.05);
   border: 1px solid rgba(255,214,10,0.25);
@@ -553,6 +558,16 @@ h1 {
   border: 1px solid rgba(255,214,10,0.35);
   border-radius: 100px;
   white-space: nowrap;
+}
+.feature-icons-modes { gap: 0.3rem; }
+.feature-icons-modes img {
+  border: none;
+  border-radius: 0;
+  margin-left: 0;
+  object-fit: contain;
+}
+@media (max-width: 900px) {
+  .feature-cards { flex-direction: column; max-width: 640px; }
 }
 @media (max-width: 640px) {
   .feature-card { flex-direction: column; text-align: center; gap: 0.8rem; }
@@ -691,6 +706,23 @@ h1 {
   color: var(--text-3);
   padding: 0.25rem 0;
 }
+
+.share-wrap { display: flex; justify-content: center; padding: 0.5rem 0; }
+.share-link {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 100px;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+.share-link:hover { color: var(--gold); border-color: var(--gold); }
 
 /* overlap accent rows */
 .row.overlap-double { border-color: rgba(255,214,10,0.22); }
