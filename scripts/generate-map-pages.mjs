@@ -215,7 +215,7 @@ ${nicheModes.map(m => chip(m, " niche-chip")).join("\n")}
     <div class="map-card-body">
       <h3>${esc(m.name)}</h3>
       <p class="map-card-mode">
-        ${modeMeta?.icon ? `<img src="/mode-icons/${modeMeta.icon}" alt="" width="15" height="15" loading="lazy" decoding="async">` : ""}
+        ${modeMeta?.icon ? `<img src="/mode-icons/${modeMeta.icon}" alt="" width="22" height="22" loading="lazy" decoding="async">` : ""}
         ${esc(m.mode)}
       </p>
       <span class="conf-dot ${conf.cls}" title="${esc(conf.label)}: ${esc(conf.blurb)}"></span>
@@ -394,7 +394,7 @@ section h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.07em; text-
 .map-card-body { position: relative; padding: 0.6rem 0.75rem 0.7rem; }
 .map-card h3 { font-size: 0.88rem; line-height: 1.25; margin-bottom: 0.2rem; padding-right: 14px; }
 .map-card-mode { display: flex; align-items: center; gap: 0.3rem; font-size: 0.7rem; color: var(--text-3); }
-.map-card-mode img { width: 15px; height: 15px; border-radius: 3px; }
+.map-card-mode img { width: 22px; height: 22px; border-radius: 4px; }
 .conf-dot { position: absolute; top: 0.7rem; right: 0.7rem; width: 9px; height: 9px; border-radius: 50%; }
 .conf-high  { background: #4cd964; }
 .conf-med   { background: var(--gold); }
