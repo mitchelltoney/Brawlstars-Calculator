@@ -2,7 +2,7 @@
 // (registry from the Brawlify API; picks/bans via directed research).
 // Hand-edit freely; regenerate pages with npm run generate:maps afterwards.
 
-export const mapsUpdated = "July 2026";
+export const mapsUpdated = "October 2026";
 
 export const modes = [
  {
@@ -10,7 +10,7 @@ export const modes = [
   "slug": "knockout",
   "color": "#fd9b0e",
   "icon": "knockout.webp",
-  "count": 25,
+  "count": 26,
   "ranked": true
  },
  {
@@ -18,7 +18,7 @@ export const modes = [
   "slug": "gem-grab",
   "color": "#d852ff",
   "icon": "gem-grab.webp",
-  "count": 24,
+  "count": 25,
   "ranked": true
  },
  {
@@ -26,7 +26,7 @@ export const modes = [
   "slug": "brawl-ball",
   "color": "#9ab1fd",
   "icon": "brawl-ball.webp",
-  "count": 23,
+  "count": 25,
   "ranked": true
  },
  {
@@ -42,7 +42,7 @@ export const modes = [
   "slug": "hot-zone",
   "color": "#ff4343",
   "icon": "hot-zone.webp",
-  "count": 19,
+  "count": 20,
   "ranked": true
  },
  {
@@ -50,7 +50,7 @@ export const modes = [
   "slug": "bounty",
   "color": "#24d6ff",
   "icon": "bounty.webp",
-  "count": 15,
+  "count": 16,
   "ranked": true
  },
  {
@@ -299,14 +299,6 @@ export const modes = [
   "color": "#24d6ff",
   "icon": "trio-wipeout.webp",
   "count": 4,
-  "ranked": false
- },
- {
-  "name": "Hawkins Hunt",
-  "slug": "hawkins-hunt",
-  "color": "#7ffb50",
-  "icon": "hawkins-hunt.webp",
-  "count": 3,
   "ranked": false
  },
  {
@@ -1678,6 +1670,77 @@ export const maps = [
    {
     "name": "Najia",
     "why": "Strong current map results and steerable poison deny both bush safety and regeneration."
+   }
+  ]
+ },
+ {
+  "slug": "alchemy",
+  "name": "Alchemy",
+  "mode": "Bounty",
+  "modeSlug": "bounty",
+  "image": "https://cdn.brawlify.com/maps/regular/15001336.png",
+  "environment": "Ghostmetro",
+  "ranked": true,
+  "confidence": "medium",
+  "summary": "An open Bounty map with no permanent walls, where golden fences block movement but not shots, so long sightlines, sustain and fast divers decide stars.",
+  "picks": {
+   "S": [
+    {
+     "name": "Wendy",
+     "why": "Shields on herself and teammates blunt the long-range poke that decides trades in the open lanes."
+    },
+    {
+     "name": "Amber",
+     "why": "Her flames melt the breakable cover and edge bushes, leaving enemies nowhere solid to stand."
+    },
+    {
+     "name": "Bolt",
+     "why": "The open center lets him build speed fast, then dive fragile marksmen and steal the blue star."
+    },
+    {
+     "name": "Gus",
+     "why": "Spirit heals and ally shields keep teammates healthy through long poke trades, protecting star leads."
+    },
+    {
+     "name": "Piper",
+     "why": "Long clear rows and edge bushes suit Ambush shots, and with no permanent walls targets have nowhere to hide."
+    }
+   ],
+   "A": [
+    "Vince",
+    "Pierce",
+    "Cosmo",
+    "Nani",
+    "Starr Nova"
+   ],
+   "B": [
+    "Pearl",
+    "Mandy",
+    "Najia",
+    "Mina",
+    "Jae-Yong"
+   ]
+  },
+  "bans": [
+   {
+    "name": "Wendy",
+    "why": "Her shields soak up the long-range poke this map is built on, so even trades rarely go your way."
+   },
+   {
+    "name": "Amber",
+    "why": "With no permanent walls to block her line of fire, she controls space and farms stars safely."
+   },
+   {
+    "name": "Bolt",
+    "why": "The top Bounty pick right now, and the open rows let him build speed and hunt fragile marksmen."
+   },
+   {
+    "name": "Gus",
+    "why": "His heals and ally shields keep his team ahead in long poke trades, protecting star leads all game."
+   },
+   {
+    "name": "Vince",
+    "why": "Brand-new and posting top results here; his long shots and marks turn every exposed target into a star."
    }
   ]
  },
@@ -3594,6 +3657,148 @@ export const maps = [
    {
     "name": "Stu",
     "why": "Short lanes enable dash pressure, and nineteen-counter breadth creates premium last-pick value."
+   }
+  ]
+ },
+ {
+  "slug": "in-demand",
+  "name": "In Demand",
+  "mode": "Brawl Ball",
+  "modeSlug": "brawl-ball",
+  "image": "https://cdn.brawlify.com/maps/regular/15001330.png",
+  "environment": "Bbarena",
+  "ranked": true,
+  "confidence": "medium",
+  "summary": "An open Brawl Ball pitch of short scattered walls, sparse bush and fenced spawn fronts, where midfield control, shields and durable carriers win.",
+  "picks": {
+   "S": [
+    {
+     "name": "Amber",
+     "why": "Long flame streams cover the open midfield and burn defenders out of the small bush tufts near goal."
+    },
+    {
+     "name": "Wendy",
+     "why": "Shields on carriers and teammates make open-field pushes past the short wall pieces hard to stop."
+    },
+    {
+     "name": "Ash",
+     "why": "Few walls to kite around, so his health and growing Rage overpower midfield fights for the ball."
+    },
+    {
+     "name": "Shade",
+     "why": "Wall phasing slips past the scattered wall pieces and fenced spawn fronts to flank exposed defenders."
+    },
+    {
+     "name": "Vince",
+     "why": "Long, fast-reloading coffee shots control the open midfield, and marked defenders fall before goal."
+    }
+   ],
+   "A": [
+    "Gus",
+    "Starr Nova",
+    "Ollie",
+    "Maisie",
+    "Damian"
+   ],
+   "B": [
+    "Cosmo",
+    "Trunk",
+    "Bolt",
+    "El Primo",
+    "Charlie"
+   ]
+  },
+  "bans": [
+   {
+    "name": "Amber",
+    "why": "One of the strongest Brawl Ball picks right now, and her fire controls a midfield few teams can contest."
+   },
+   {
+    "name": "Wendy",
+    "why": "Shielded ball pushes are very hard to stop on a pitch with this little cover to fight from."
+   },
+   {
+    "name": "Shade",
+    "why": "Walls barely slow him, so defenders get flanked from any angle, and he wins Brawl Ball at a top rate."
+   },
+   {
+    "name": "Vince",
+    "why": "Brand-new and topping this map; his marked targets go down too fast for most defenses to hold."
+   },
+   {
+    "name": "Ash",
+    "why": "Hard to stop once enraged, and the open midfield gives kiting picks few walls to hide behind."
+   }
+  ]
+ },
+ {
+  "slug": "pump-it-up",
+  "name": "Pump It Up",
+  "mode": "Brawl Ball",
+  "modeSlug": "brawl-ball",
+  "image": "https://cdn.brawlify.com/maps/regular/15001331.png",
+  "environment": "Bbarena",
+  "ranked": true,
+  "confidence": "medium",
+  "summary": "A walled Brawl Ball map with long bush corridors beside each goal and wall-lined lanes, rewarding bush control, shields and close-lane brawlers.",
+  "picks": {
+   "S": [
+    {
+     "name": "Amber",
+     "why": "Flames sweep the long bush corridors beside each goal, flushing out hidden defenders and carriers."
+    },
+    {
+     "name": "Shade",
+     "why": "Phases through the long wall lines to flank goal defenders and catch carriers hiding in the bush corridors."
+    },
+    {
+     "name": "Wendy",
+     "why": "Her shield generator lets the team push through the wall-lined lanes and hold narrow goal approaches."
+    },
+    {
+     "name": "Ash",
+     "why": "Wall-lined lanes force close fights, where his health and building Rage win the ball back."
+    },
+    {
+     "name": "Gus",
+     "why": "Spirit heals and ally shields keep pushers alive through the bush-lined lanes toward goal."
+    }
+   ],
+   "A": [
+    "Damian",
+    "Starr Nova",
+    "Cosmo",
+    "Maisie",
+    "Nori"
+   ],
+   "B": [
+    "Bolt",
+    "Pearl",
+    "Trunk",
+    "Charlie",
+    "Pam"
+   ]
+  },
+  "bans": [
+   {
+    "name": "Amber",
+    "why": "Her fire owns the bush corridors and lanes, so few drafts can approach the goal safely."
+   },
+   {
+    "name": "Wendy",
+    "why": "Shielded pushes through the narrow walled lanes are very hard to stop without heavy burst."
+   },
+   {
+    "name": "Ash",
+    "why": "Once enraged he bullies every close lane fight, and few picks can kite him between these walls."
+   },
+   {
+    "name": "Shade",
+    "why": "Phases through the long wall lines to flank goal defenders, and he stays a top Brawl Ball pick."
+   },
+   {
+    "name": "Gus",
+    "why": "His spirit heals and ally shields keep pushers alive in every lane, and he fits almost any team."
    }
   ]
  },
@@ -8671,6 +8876,77 @@ export const maps = [
   ]
  },
  {
+  "slug": "dungeon-train",
+  "name": "Dungeon Train",
+  "mode": "Gem Grab",
+  "modeSlug": "gem-grab",
+  "image": "https://cdn.brawlify.com/maps/regular/15001332.png",
+  "environment": "Hub",
+  "ranked": true,
+  "confidence": "low",
+  "summary": "An open mine inside a ring of rail track, with almost no hard cover and huge side bushes, where shields, healing and speed decide gem control.",
+  "picks": {
+   "S": [
+    {
+     "name": "Wendy",
+     "why": "Her shield generator protects the gem carrier inside the open track ring, where almost no walls exist."
+    },
+    {
+     "name": "Gus",
+     "why": "Spirit heals and ally shields keep the carrier alive in the wide-open mine with little cover nearby."
+    },
+    {
+     "name": "Amber",
+     "why": "Wide flames burn through the huge side bushes and deny the open mine to enemy collectors."
+    },
+    {
+     "name": "Bolt",
+     "why": "Clear rows and the open track ring let him hit top speed quickly, then crash onto exposed carriers."
+    },
+    {
+     "name": "Ash",
+     "why": "With few walls to kite around, his health and Rage dominate close fights over the gem mine."
+    }
+   ],
+   "A": [
+    "Cosmo",
+    "Pam",
+    "Vince",
+    "Starr Nova",
+    "Bo"
+   ],
+   "B": [
+    "Damian",
+    "Finx",
+    "Mina",
+    "Max",
+    "Clancy"
+   ]
+  },
+  "bans": [
+   {
+    "name": "Wendy",
+    "why": "Shielded carriers in the open ring are very hard to burst down before the countdown ends."
+   },
+   {
+    "name": "Bolt",
+    "why": "Clear lanes let him reach full speed at will and pick off carriers before support can react."
+   },
+   {
+    "name": "Amber",
+    "why": "Her fire clears the side bushes and holds the mine, removing most safe gem-collecting routes."
+   },
+   {
+    "name": "Gus",
+    "why": "His heals and shields stretch every mine fight, and he fits into almost any strong Gem Grab team."
+   },
+   {
+    "name": "Ash",
+    "why": "Few walls stand between him and the mine, so stopping an enraged Ash takes heavy, focused damage."
+   }
+  ]
+ },
+ {
   "slug": "arctic-ambush",
   "name": "Arctic Ambush",
   "mode": "Gem Grab 5v5",
@@ -8863,57 +9139,6 @@ export const maps = [
     "Mortis",
     "Janet"
    ]
-  },
-  "bans": []
- },
- {
-  "slug": "boss-tech-tara",
-  "name": "Boss Tech Tara",
-  "mode": "Hawkins Hunt",
-  "modeSlug": "hawkins-hunt",
-  "image": "https://cdn.brawlify.com/maps/regular/15001254.png",
-  "environment": "Katanakingdomnn2islandshowdown",
-  "ranked": false,
-  "confidence": "none",
-  "summary": "Boss Tech Tara has not entered live rotation, so not enough competitive data exists yet.",
-  "picks": {
-   "S": [],
-   "A": [],
-   "B": []
-  },
-  "bans": []
- },
- {
-  "slug": "cyberboss-brock",
-  "name": "Cyberboss Brock",
-  "mode": "Hawkins Hunt",
-  "modeSlug": "hawkins-hunt",
-  "image": "https://cdn.brawlify.com/maps/regular/15001256.png",
-  "environment": "Katanakingdomnn2islandshowdown",
-  "ranked": false,
-  "confidence": "none",
-  "summary": "Cyberboss Brock has not entered live rotation, so not enough competitive data exists yet.",
-  "picks": {
-   "S": [],
-   "A": [],
-   "B": []
-  },
-  "bans": []
- },
- {
-  "slug": "nano-nori",
-  "name": "Nano Nori",
-  "mode": "Hawkins Hunt",
-  "modeSlug": "hawkins-hunt",
-  "image": "https://cdn.brawlify.com/maps/regular/15001263.png",
-  "environment": "Katanakingdomnn2islandshowdown",
-  "ranked": false,
-  "confidence": "none",
-  "summary": "Not enough competitive data exists yet for Nano Nori, which has no recorded live map sample or established pick meta.",
-  "picks": {
-   "S": [],
-   "A": [],
-   "B": []
   },
   "bans": []
  },
@@ -11587,6 +11812,77 @@ export const maps = [
   ]
  },
  {
+  "slug": "tread-carefully",
+  "name": "Tread Carefully",
+  "mode": "Hot Zone",
+  "modeSlug": "hot-zone",
+  "image": "https://cdn.brawlify.com/maps/regular/15001329.png",
+  "environment": "Hub",
+  "ranked": true,
+  "confidence": "medium",
+  "summary": "A wall-free Hot Zone map where every hedge, crate and mailbox breaks, so long bush strips, sustain and fire control decide both zones.",
+  "picks": {
+   "S": [
+    {
+     "name": "Amber",
+     "why": "Flames sweep the long bush strips, and with no permanent walls defenders cannot hide from her fire on the zones."
+    },
+    {
+     "name": "Wendy",
+     "why": "Planet Protector shields the whole team inside a zone, replacing the cover that breakable hedges cannot provide."
+    },
+    {
+     "name": "Ash",
+     "why": "Zone brawls build Rage fast, and his durability wins close fights once the breakable hedges are shot away."
+    },
+    {
+     "name": "Juju",
+     "why": "Elementalist turns the long bush strips into invisible firing spots for lobs and Gris-Gris pressure on the zone."
+    },
+    {
+     "name": "Gus",
+     "why": "Spirit heals and ally shields keep zone holders standing in open ground after the hedges are destroyed."
+    }
+   ],
+   "A": [
+    "Cosmo",
+    "Shade",
+    "Trunk",
+    "Damian",
+    "Chuck"
+   ],
+   "B": [
+    "Vince",
+    "Finx",
+    "Starr Nova",
+    "Draco",
+    "Nori"
+   ]
+  },
+  "bans": [
+   {
+    "name": "Amber",
+    "why": "Her fire owns both zones and the bush strips, and the map has no solid wall to fight her from."
+   },
+   {
+    "name": "Wendy",
+    "why": "Shielded zone holds are very hard to break without dedicated burst, and she wins this map across the board."
+   },
+   {
+    "name": "Juju",
+    "why": "Invisible in the long bushes and lobbing from safety, she is hard to find and harder to punish."
+   },
+   {
+    "name": "Ash",
+    "why": "Once enraged he bullies every close zone fight, and few picks can kite him after the hedges fall."
+   },
+   {
+    "name": "Gus",
+    "why": "His heals and ally shields stretch every zone fight, and he slots into almost any winning team here."
+   }
+  ]
+ },
+ {
   "slug": "a-ballad-about-minced-cutlets",
   "name": "A Ballad About Minced Cutlets",
   "mode": "Knockout",
@@ -13338,6 +13634,77 @@ export const maps = [
    {
     "name": "Damian",
     "why": "Top July bruiser whose wall tools and burst dominate the clustered side approaches."
+   }
+  ]
+ },
+ {
+  "slug": "stroke-of-luck",
+  "name": "Stroke Of Luck",
+  "mode": "Knockout",
+  "modeSlug": "knockout",
+  "image": "https://cdn.brawlify.com/maps/regular/15001333.png",
+  "environment": "Ghostmetro",
+  "ranked": true,
+  "confidence": "medium",
+  "summary": "A bushy Knockout map split by a central bush column, where most walls are breakable blocks, rewarding shields, steady poke and wall-phasing flanks.",
+  "picks": {
+   "S": [
+    {
+     "name": "Wendy",
+     "why": "Shields win long no-respawn trades, and she can cross the small pools to escape or reposition."
+    },
+    {
+     "name": "Vince",
+     "why": "Long coffee shots win trades through the clear rows, and marked targets fall before reaching cover."
+    },
+    {
+     "name": "Shade",
+     "why": "Phases through the breakable block walls to reach backliners hiding behind the central bush column."
+    },
+    {
+     "name": "Pearl",
+     "why": "Banked heat turns slow poke wars around the breakable blocks and benches into decisive burst trades."
+    },
+    {
+     "name": "Ollie",
+     "why": "All Eyez On Me hypnotizes bush campers up close, and his dash Super dives defenders behind block walls."
+    }
+   ],
+   "A": [
+    "Rosa",
+    "Ash",
+    "Gus",
+    "Buster",
+    "Cosmo"
+   ],
+   "B": [
+    "Doug",
+    "Amber",
+    "Trunk",
+    "Sprout",
+    "Brock"
+   ]
+  },
+  "bans": [
+   {
+    "name": "Wendy",
+    "why": "Her shields swing every no-respawn round, and she can slip across water when a fight turns."
+   },
+   {
+    "name": "Vince",
+    "why": "Topping this map early; his marked targets drop too fast to retreat behind the breakable cover."
+   },
+   {
+    "name": "Shade",
+    "why": "Walls cannot stop him, so backliners have no safe spot on a map built from breakable blocks."
+   },
+   {
+    "name": "Pearl",
+    "why": "Her banked heat bursts punish anyone peeking from cover, and rushing her through open rows is costly."
+   },
+   {
+    "name": "Brock",
+    "why": "Rockets blow away the breakable blocks and benches, leaving his targets exposed for the rest of the round."
    }
   ]
  },

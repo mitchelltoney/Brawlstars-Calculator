@@ -8,8 +8,8 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-07-15.3";
-import { matchupNotes } from "./matchup-notes.js?v=2026-07-15.3";
+} from "./calculate.js?v=2026-10-29";
+import { matchupNotes } from "./matchup-notes.js?v=2026-10-29";
 
 const freshnessEl = document.getElementById("dataFreshness");
 if (freshnessEl) freshnessEl.textContent = dataUpdated;

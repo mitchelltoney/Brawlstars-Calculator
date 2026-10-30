@@ -1,3 +1,35 @@
+# October 2026 data update: Wendy, Cosmo, Vince + Sept 16 patch recheck
+
+- **New brawlers** (roster 105 → 108): Wendy (Mythic Support), Cosmo
+  (Mythic Controller), Vince (Mythic Damage Dealer, released Oct 19).
+  Own counter lists, class weaknesses, notes both ways, icons, rarity slot
+  after Starr Nova. Confidence: Wendy/Cosmo medium, Vince low (not in
+  Ranked until Nov 5; trophy-only data).
+  - Wendy added as a counter to Shelly, Nita, Crow, Bo, Poco. Vince to
+    Berry, Barley, Nita.
+  - Cosmo is on no other brawler's list: he is strong on trophy ladder but
+    D tier in Ranked, and the site recommends Ranked-strong picks.
+- **Sept 16 balance patch** (official notes: 9 nerfs, 9 buffs) rechecked
+  for all 18 brawlers: own lists re-ranked toward the current Ranked meta,
+  13 pairs removed where the patch or data broke the matchup, 75 pairs
+  added, 6 notes rewritten for changed mechanics (Shade's Jump Scare, Chuck
+  rework, Willow/Larry reload). Biggest mover: Juju (now top meta).
+- **Not yet covered** (deferred to the full refresh): the Aug 4 nerfs
+  (Crow, Griff, Starr Nova, Damian, Max, Bolt, 8bit, Surge) and the broad
+  Sept 1 Update 69 pass (~36 brawlers, Chuck rework).
+- **Maps**: 6 new layouts in Ranked modes (Tread Carefully, In Demand,
+  Pump It Up, Dungeon Train, Stroke Of Luck, Alchemy); Hawkins Hunt
+  (3 maps) removed after rotating out. Sitemap regenerated.
+- 12 new inline star power/gadget icons. Four names (Green Grenade, Hot
+  Coffee, Gonna Need A Bigger Net, A Starr Is Born) stay text-only until
+  Brawlify publishes frameless art.
+- **Search/social image**: new square (1200²) and wide (1200×630) share
+  images, the original Chester art composited untouched over a procedural
+  sunburst; wide card is the og/twitter image on every page, both declared
+  in the homepage JSON-LD. Old text card `og-image.jpg` removed.
+- Research: 7 parallel research workers (English + Spanish queries),
+  Ranked tier consensus from 9 lists; stat sites used as corroboration.
+
 # Maps feature: best picks & bans for all 404 active maps
 
 - New /maps/ interactive browser: search-as-you-type, 41 game-mode filter

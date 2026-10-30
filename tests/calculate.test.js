@@ -28,7 +28,7 @@ test("calculate returns the documented object shape", () => {
 });
 
 test("rosters are consistent and cover the same set of brawlers", () => {
-  const EXPECTED = 105;
+  const EXPECTED = 108;
   assert.equal(brawlersAlphabetical.length, EXPECTED);
   assert.equal(rarityOrder.length, EXPECTED);
   assert.equal(new Set(brawlersAlphabetical).size, EXPECTED);
@@ -42,7 +42,7 @@ test("single-brawler matchup returns that brawler's direct counters in order", (
   const out = calculate(["Shelly", "", ""]);
   assert.equal(out.results.length, 1);
   assert.equal(out.results[0].brawler, "Shelly");
-  assert.deepEqual(out.results[0].counters, ["Squeak", "Carl", "Piper", "Stu", "Nita", "Spike", "Penny"]);
+  assert.deepEqual(out.results[0].counters, ["Wendy", "Squeak", "Carl", "Piper", "Stu", "Nita", "Spike", "Penny"]);
   assert.deepEqual(out.results[0].classes, ["Thrower"]);
   assert.deepEqual(out.doubleOverlaps, []);
   assert.deepEqual(out.tripleOverlaps, []);

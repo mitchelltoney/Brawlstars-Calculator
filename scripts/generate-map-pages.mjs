@@ -27,7 +27,7 @@ const brawlerSlug = n => n.toLowerCase().replace(/[\s.'-]+/g, "-");
 // index and their cards hide from the default All view (still searchable
 // and directly linkable). Confirmed with the site owner 2026-07-15.
 const NICHE_MODES = new Set([
-  "Present Plunder", "Love Bombing", "Hawkins Hunt", "Combat Cooking",
+  "Present Plunder", "Love Bombing", "Combat Cooking",
   "Food Fight", "Paint Brawl", "Spirit Wars", "Token Run", "Shadow Smash",
   "Super Ball", "Volley Brawl", "Dodgebrawl", "Subway Run", "Soul Collector",
   "Safe Blast", "Mecha Guard", "Upside Showdown", "Duo Mega Boss",
@@ -86,11 +86,11 @@ function pageShell({ title, description, canonical, body, scripts = "" }) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${SITE}/og-image.jpg">
+<meta property="og:image" content="${SITE}/share-wide.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
-<meta name="twitter:image" content="${SITE}/og-image.jpg">
+<meta name="twitter:image" content="${SITE}/share-wide.jpg">
 <link rel="icon" type="image/x-icon" href="/chester-favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">

@@ -94,11 +94,11 @@ function pageShell({ title, description, canonical, body, ogTitle, scripts = "" 
 <meta property="og:title" content="${esc(ogTitle ?? title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${SITE}/og-image.jpg">
+<meta property="og:image" content="${SITE}/share-wide.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(ogTitle ?? title)}">
 <meta name="twitter:description" content="${esc(description)}">
-<meta name="twitter:image" content="${SITE}/og-image.jpg">
+<meta name="twitter:image" content="${SITE}/share-wide.jpg">
 <link rel="icon" type="image/x-icon" href="/chester-favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
