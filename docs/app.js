@@ -8,11 +8,54 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-10-29";
-import { matchupNotes } from "./matchup-notes.js?v=2026-10-29";
+} from "./calculate.js?v=2026-10-30";
+import { matchupNotes } from "./matchup-notes.js?v=2026-10-30";
+import { pickLang, translate, translateClass, formatMonthYear } from "./i18n.js?v=2026-10-30";
 
-const freshnessEl = document.getElementById("dataFreshness");
-if (freshnessEl) freshnessEl.textContent = dataUpdated;
+// ── Language ───────────────────────────────────────────────────────────────
+// ?lang= (one visit) beats the saved EN/ES toggle, which beats the browser's
+// languages. Static text is tagged in the HTML with data-i18n (textContent),
+// data-i18n-html (innerHTML) or data-i18n-attr="attr:key,attr:key".
+
+const LANG_KEY = "lang";
+let lang = pickLang({
+  param: new URLSearchParams(window.location.search).get("lang"),
+  stored: (() => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } })(),
+  preferred: navigator.languages && navigator.languages.length ? navigator.languages : navigator.language,
+});
+
+function t(key, vars) {
+  return translate(lang, key, vars);
+}
+
+function applyStaticStrings() {
+  document.documentElement.lang = lang;
+  document.title = t("pageTitle");
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach(el => {
+    el.innerHTML = t(el.dataset.i18nHtml);
+  });
+  document.querySelectorAll("[data-i18n-attr]").forEach(el => {
+    for (const pair of el.dataset.i18nAttr.split(",")) {
+      const [attr, key] = pair.split(":");
+      el.setAttribute(attr.trim(), t(key.trim()));
+    }
+  });
+  const source = document.getElementById("footerSource");
+  if (source) source.innerHTML = t("footerSourceHtml", { date: formatMonthYear(dataUpdated, lang) });
+  const browseAll = document.getElementById("featureCountersGo");
+  if (browseAll) browseAll.textContent = t("featureCountersGo", { n: rarityOrder.length });
+  // The inline feedback-form script in index.html reads these.
+  const submit = document.getElementById("feedbackSubmit");
+  if (submit) Object.assign(submit.dataset, { idle: t("fbSubmit"), sending: t("fbSending"), error: t("fbError") });
+  document.querySelectorAll(".lang-toggle button").forEach(btn => {
+    btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
+  });
+}
+
+applyStaticStrings();
 
 const grid = document.getElementById("iconGrid");
 const picks = [];
@@ -65,11 +108,16 @@ function buildGrid(list) {
 buildGrid(currentList);
 
 const sortBtn = document.getElementById("sortToggle");
+
+function updateSortLabel() {
+  if (sortBtn) sortBtn.textContent = t(currentList === brawlersAlphabetical ? "sortAlpha" : "sortRarity");
+}
+
 if (sortBtn) {
-  sortBtn.textContent = "Rarity";
+  updateSortLabel();
   sortBtn.addEventListener("click", () => {
     currentList = currentList === brawlersAlphabetical ? rarityOrder : brawlersAlphabetical;
-    sortBtn.textContent = currentList === brawlersAlphabetical ? "Alphabetical" : "Rarity";
+    updateSortLabel();
     buildGrid(currentList);
   });
 }
@@ -114,7 +162,7 @@ const banToggle = document.getElementById("banToggle");
 
 function updateBanToggle() {
   if (!banToggle) return;
-  banToggle.textContent = bans.size ? `Bans (${bans.size})` : "Bans";
+  banToggle.textContent = bans.size ? t("bansCount", { n: bans.size }) : t("bans");
   banToggle.classList.toggle("active", banMode);
   banToggle.setAttribute("aria-pressed", banMode ? "true" : "false");
 }
@@ -134,6 +182,8 @@ function toggleBan(name) {
   updateBanToggle();
   if (hasCalculated) renderResults({ scroll: false });
 }
+
+updateBanToggle();
 
 const banHint = document.getElementById("banHint");
 
@@ -196,7 +246,7 @@ function renderTray() {
     const rm = document.createElement("button");
     rm.type = "button";
     rm.className = "chip-remove";
-    rm.setAttribute("aria-label", `Remove ${name}`);
+    rm.setAttribute("aria-label", t("removePick", { name }));
     rm.textContent = "✕";
     rm.addEventListener("click", () => applyPicks(picks.filter(p => p !== name)));
     chip.append(img, label, rm);
@@ -208,7 +258,7 @@ function renderTray() {
   const clear = document.createElement("button");
   clear.type = "button";
   clear.className = "chip-clear";
-  clear.textContent = "Clear";
+  clear.textContent = t("clearPicks");
   clear.addEventListener("click", () => applyPicks([]));
   trayEl.append(count, clear);
 }
@@ -413,7 +463,7 @@ function renderResults({ scroll = false } = {}) {
 
     const label = document.createElement("h3");
     label.innerHTML =
-      `<a href="counters/${pageSlug(group.brawler)}/" title="${group.brawler}'s full counter guide">${group.brawler}</a><br>Counters:`;
+      `<a href="counters/${pageSlug(group.brawler)}/" title="${t("guideLinkTitle", { name: group.brawler })}">${group.brawler}</a><br>${t("countersLabel")}`;
     row.appendChild(label);
 
     const body = document.createElement("div");
@@ -429,9 +479,7 @@ function renderResults({ scroll = false } = {}) {
     } else {
       const note = document.createElement("p");
       note.className = "no-data";
-      note.textContent = group.counters.length
-        ? `All of ${group.brawler}'s counters are banned.`
-        : `${group.brawler} is brand new — no curated counter data yet. It will be added with the next data update.`;
+      note.textContent = t(group.counters.length ? "allCountersBanned" : "noCounterData", { name: group.brawler });
       cards.appendChild(note);
     }
     body.appendChild(cards);
@@ -439,7 +487,7 @@ function renderResults({ scroll = false } = {}) {
     if (group.classes.length) {
       const cls = document.createElement("p");
       cls.className = "class-note";
-      cls.textContent = "Also weak to: " + group.classes.join(", ");
+      cls.textContent = t("alsoWeakTo", { list: group.classes.map(c => translateClass(lang, c)).join(", ") });
       body.appendChild(cls);
     }
 
@@ -447,26 +495,26 @@ function renderResults({ scroll = false } = {}) {
     outputEl.appendChild(row);
   });
 
-  function renderOverlap(title, list, cls) {
+  function renderOverlap(titleKey, list, cls) {
     const visible = list.filter(n => !bans.has(n));
     hiddenByBans += list.length - visible.length;
     if (!visible.length) return;
     const row = document.createElement("div"); row.className = `row ${cls}`;
     const label = document.createElement("h3");
-    label.innerHTML = title.replace(" ", "<br>");
+    label.innerHTML = t(titleKey);
     row.appendChild(label);
     const g = document.createElement("div"); g.className = "output-grid";
     visible.forEach(n => g.appendChild(makeCard(n)));
     row.appendChild(g);
     outputEl.appendChild(row);
   }
-  renderOverlap("Double Overlaps:", data.doubleOverlaps, "overlap-double");
-  renderOverlap("Triple Overlaps:", data.tripleOverlaps, "overlap-triple");
+  renderOverlap("doubleOverlapsHtml", data.doubleOverlaps, "overlap-double");
+  renderOverlap("tripleOverlapsHtml", data.tripleOverlaps, "overlap-triple");
 
   if (hiddenByBans > 0) {
     const note = document.createElement("p");
     note.className = "ban-note";
-    note.textContent = `${hiddenByBans} banned counter${hiddenByBans === 1 ? "" : "s"} hidden from results.`;
+    note.textContent = t(hiddenByBans === 1 ? "banNoteOne" : "banNoteOther", { n: hiddenByBans });
     outputEl.appendChild(note);
   }
 
@@ -477,16 +525,16 @@ function renderResults({ scroll = false } = {}) {
     const share = document.createElement("button");
     share.type = "button";
     share.className = "share-link";
-    share.textContent = "Copy link to these picks";
+    share.textContent = t("shareLink");
     share.addEventListener("click", async () => {
       try {
         if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
-          await navigator.share({ title: "Brawl Stars counterpicks", url: location.href });
+          await navigator.share({ title: t("shareTitle"), url: location.href });
           return;
         }
         await navigator.clipboard.writeText(location.href);
-        share.textContent = "Link copied";
-        setTimeout(() => { share.textContent = "Copy link to these picks"; }, 1600);
+        share.textContent = t("shareCopied");
+        setTimeout(() => { share.textContent = t("shareLink"); }, 1600);
       } catch { /* user dismissed the share sheet */ }
     });
     wrap.appendChild(share);
@@ -515,6 +563,31 @@ document.addEventListener("keydown", e => {
       t.closest('input, textarea, select, button, a, [role="button"], .modal-backdrop')) return;
   e.preventDefault();
   runCalc();
+});
+
+// ── EN/ES toggle ───────────────────────────────────────────────────────────
+
+function setLang(next) {
+  const changed = next !== lang;
+  lang = next;
+  // Save even when unchanged: tapping the language a ?lang= link already
+  // showed is still an explicit choice.
+  try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+  const url = new URL(window.location.href);
+  if (url.searchParams.has("lang")) {
+    url.searchParams.delete("lang");
+    history.replaceState(null, "", url);
+  }
+  if (!changed) return;
+  applyStaticStrings();
+  updateSortLabel();
+  updateBanToggle();
+  renderTray();
+  if (hasCalculated) renderResults({ scroll: false });
+}
+
+document.querySelectorAll(".lang-toggle button").forEach(btn => {
+  btn.addEventListener("click", () => setLang(btn.dataset.lang));
 });
 
 // ── Deep links: restore picks from ?p=Name,Name and show results ──────────

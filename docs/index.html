@@ -41,10 +41,10 @@
   }
 </script>
 <link rel="preload" href="fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script src="loader.js?v=2026-10-29"></script>
-<script type="module" src="app.js?v=2026-10-29"></script>
-<link rel="stylesheet" href="styles.css?v=2026-10-29">
-<link rel="stylesheet" href="index.css?v=2026-10-29">
+<script src="loader.js?v=2026-10-30"></script>
+<script type="module" src="app.js?v=2026-10-30"></script>
+<link rel="stylesheet" href="styles.css?v=2026-10-30">
+<link rel="stylesheet" href="index.css?v=2026-10-30">
 </head>
 <body>
 
@@ -60,32 +60,41 @@
     <span>Brawl Calculator</span>
   </a>
   <div class="nav-links">
-    <a class="nav-quiet nav-keep" href="maps/">Maps</a>
-    <a class="nav-quiet" href="classic.html">Classic view</a>
-    <a class="nav-cta" href="counters/">Counters by Brawler</a>
+    <a class="nav-quiet nav-keep" href="maps/" data-i18n="navMaps">Maps</a>
+    <a class="nav-quiet" href="classic.html" data-i18n="navClassic">Classic view</a>
+    <a class="nav-cta" href="counters/" data-i18n="navCounters">Counters by Brawler</a>
+    <div class="lang-toggle lang-nav" role="group" aria-label="Language" data-i18n-attr="aria-label:langToggleLabel">
+      <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="es" lang="es" aria-pressed="false">ES</button>
+    </div>
   </div>
 </nav>
 
 <header>
-  <h1>Brawler Counterpick<br>Calculator</h1>
-  <p class="subtitle">Click on the brawlers your opponents have picked, the results will show which brawlers counter them so you can make the best pick.</p>
+  <div class="lang-toggle lang-header" role="group" aria-label="Language" data-i18n-attr="aria-label:langToggleLabel">
+    <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+    <button type="button" data-lang="es" lang="es" aria-pressed="false">ES</button>
+  </div>
+  <h1 data-i18n-html="heroTitleHtml">Brawler Counterpick<br>Calculator</h1>
+  <p class="subtitle" data-i18n="heroSubtitle">Click on the brawlers your opponents have picked, the results will show which brawlers counter them so you can make the best pick.</p>
 </header>
 
 <div class="content">
   <div class="picker-header">
-    <div class="size-picker" aria-label="Icon size">
-      <button class="size-btn" data-size="small"  title="Small icons" ><span class="swatch"></span></button>
-      <button class="size-btn active" data-size="medium" title="Medium icons"><span class="swatch"></span></button>
-      <button class="size-btn" data-size="large"  title="Large icons" ><span class="swatch"></span></button>
+    <div class="size-picker" aria-label="Icon size" data-i18n-attr="aria-label:iconSize">
+      <button class="size-btn" data-size="small"  title="Small icons"  data-i18n-attr="title:iconSmall"><span class="swatch"></span></button>
+      <button class="size-btn active" data-size="medium" title="Medium icons" data-i18n-attr="title:iconMedium"><span class="swatch"></span></button>
+      <button class="size-btn" data-size="large"  title="Large icons"  data-i18n-attr="title:iconLarge"><span class="swatch"></span></button>
     </div>
-    <h2>Pick up to three brawlers</h2>
+    <h2 data-i18n="pickHeading">Pick up to three brawlers</h2>
     <div class="picker-actions">
       <button id="banToggle" aria-pressed="false"
-              title="Ban mode: tap brawlers to mark them banned — they're hidden from results">Bans</button>
+              title="Ban mode: tap brawlers to mark them banned — they're hidden from results"
+              data-i18n-attr="title:banTitle">Bans</button>
       <button id="sortToggle">Rarity</button>
     </div>
   </div>
-  <p id="banHint" class="ban-hint" hidden>
+  <p id="banHint" class="ban-hint" hidden data-i18n-html="banHintHtml">
     Ban mode is on — tap brawlers to mark them banned; they'll be hidden from results.
     Tap <strong>Bans</strong> again to finish.
   </p>
@@ -94,19 +103,20 @@
       <input id="nameAdd" type="text"
              placeholder="Add a brawler by name…"
              aria-label="Add a brawler by name"
+             data-i18n-attr="placeholder:nameAddPlaceholder,aria-label:nameAddLabel"
              autocomplete="off" autocapitalize="off" spellcheck="false"
              role="combobox" aria-autocomplete="list"
              aria-expanded="false" aria-controls="nameSuggestions">
       <ul id="nameSuggestions" class="name-suggestions" role="listbox" hidden></ul>
     </div>
-    <button type="button" id="nameAddBtn">Add</button>
+    <button type="button" id="nameAddBtn" data-i18n="nameAddBtn">Add</button>
   </div>
   <div id="iconGrid" class="icon-grid"></div>
   <div id="pickTray" class="pick-tray" aria-live="polite" hidden></div>
   <div class="go-wrap">
-    <button id="go">Calculate</button>
+    <button id="go" data-i18n="calculate">Calculate</button>
   </div>
-  <p id="calcHint" class="calc-hint" role="status" hidden>
+  <p id="calcHint" class="calc-hint" role="status" hidden data-i18n="calcHint">
     Select at least one brawler first — tap an icon above or type a name.
   </p>
   <div id="output"></div>
@@ -122,10 +132,10 @@
         <img src="icons/chester.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
       </div>
       <div class="feature-text">
-        <h3>Counters by Brawler</h3>
-        <p>Every brawler's full counter guide: who beats them, who they beat, and why each matchup works.</p>
+        <h3 data-i18n="featureCountersTitle">Counters by Brawler</h3>
+        <p data-i18n="featureCountersText">Every brawler's full counter guide: who beats them, who they beat, and why each matchup works.</p>
       </div>
-      <span class="feature-go">Browse all 108</span>
+      <span class="feature-go" id="featureCountersGo">Browse all 108</span>
     </a>
     <a class="feature-card" href="maps/">
       <div class="feature-icons feature-icons-modes">
@@ -135,52 +145,53 @@
         <img src="mode-icons/hot-zone.webp" alt="" width="34" height="31" loading="lazy" decoding="async">
       </div>
       <div class="feature-text">
-        <h3>Best Brawlers by Map</h3>
-        <p>Tiered picks and the smartest bans for every map, researched from competitive play.</p>
+        <h3 data-i18n="featureMapsTitle">Best Brawlers by Map</h3>
+        <p data-i18n="featureMapsText">Tiered picks and the smartest bans for every map, researched from competitive play.</p>
       </div>
-      <span class="feature-go">Browse maps</span>
+      <span class="feature-go" data-i18n="featureMapsGo">Browse maps</span>
     </a>
   </div>
   <div id="widthHandle" class="width-handle" role="slider" tabindex="0"
        aria-label="Layout width" aria-valuemin="720" aria-valuenow="1280"
-       title="Drag to adjust layout width (double-click to reset)"></div>
+       title="Drag to adjust layout width (double-click to reset)"
+       data-i18n-attr="aria-label:widthHandleLabel,title:widthHandleTitle"></div>
 </div>
 
 <footer>
-  <p>Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated <span id="dataFreshness">October 2026</span></p>
-  <p><a href="counters/">Browse counters brawler-by-brawler</a> · <a href="classic.html">Classic view</a></p>
-  <p class="disclaimer">This material is unofficial and is not endorsed by Supercell. For more information
+  <p id="footerSource">Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated <span id="dataFreshness">October 2026</span></p>
+  <p><a href="counters/" data-i18n="footerBrowse">Browse counters brawler-by-brawler</a> · <a href="classic.html" data-i18n="navClassic">Classic view</a></p>
+  <p class="disclaimer" data-i18n-html="disclaimerHtml">This material is unofficial and is not endorsed by Supercell. For more information
     see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
 </footer>
 
-<button class="feedback-btn" id="feedbackOpen">Feedback</button>
+<button class="feedback-btn" id="feedbackOpen" data-i18n="feedbackOpen">Feedback</button>
 
-<div class="modal-backdrop" id="feedbackBackdrop" role="dialog" aria-modal="true" aria-label="Feedback">
+<div class="modal-backdrop" id="feedbackBackdrop" role="dialog" aria-modal="true" aria-label="Feedback" data-i18n-attr="aria-label:feedbackOpen">
   <div class="modal">
     <div class="modal-header">
-      <h3>Send Feedback</h3>
-      <button class="modal-close" id="feedbackClose" aria-label="Close">✕</button>
+      <h3 data-i18n="feedbackHeading">Send Feedback</h3>
+      <button class="modal-close" id="feedbackClose" aria-label="Close" data-i18n-attr="aria-label:close">✕</button>
     </div>
     <form id="feedbackForm" action="https://formspree.io/f/xzdorbyl" method="POST">
-      <label for="fbType">Type</label>
+      <label for="fbType" data-i18n="fbType">Type</label>
       <select id="fbType" name="type" required>
-        <option value="" disabled selected>Select a type…</option>
-        <option value="suggestion">Suggestion</option>
-        <option value="bug">Bug report</option>
-        <option value="data">Wrong counter data</option>
-        <option value="other">Other</option>
+        <option value="" disabled selected data-i18n="fbTypePlaceholder">Select a type…</option>
+        <option value="suggestion" data-i18n="fbSuggestion">Suggestion</option>
+        <option value="bug" data-i18n="fbBug">Bug report</option>
+        <option value="data" data-i18n="fbData">Wrong counter data</option>
+        <option value="other" data-i18n="fbOther">Other</option>
       </select>
 
-      <label for="fbMessage">Message</label>
-      <textarea id="fbMessage" name="message" placeholder="What's on your mind?" required></textarea>
+      <label for="fbMessage" data-i18n="fbMessage">Message</label>
+      <textarea id="fbMessage" name="message" placeholder="What's on your mind?" required data-i18n-attr="placeholder:fbMessagePlaceholder"></textarea>
 
-      <label for="fbEmail">Email <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional — if you want a reply)</span></label>
-      <input type="email" id="fbEmail" name="email" placeholder="you@example.com">
+      <label for="fbEmail"><span data-i18n="fbEmail">Email</span> <span style="font-weight:400;text-transform:none;letter-spacing:0" data-i18n="fbEmailOptional">(optional — if you want a reply)</span></label>
+      <input type="email" id="fbEmail" name="email" placeholder="you@example.com" data-i18n-attr="placeholder:fbEmailPlaceholder">
 
-      <button type="submit" class="modal-submit" id="feedbackSubmit">Send Feedback</button>
+      <button type="submit" class="modal-submit" id="feedbackSubmit" data-i18n="fbSubmit">Send Feedback</button>
     </form>
     <div class="modal-success" id="feedbackSuccess">
-      <p>Thanks for the feedback!<br>It helps make the calculator better.</p>
+      <p data-i18n-html="fbThanksHtml">Thanks for the feedback!<br>It helps make the calculator better.</p>
     </div>
   </div>
 </div>
@@ -304,7 +315,7 @@
   form.addEventListener('submit', async e => {
     e.preventDefault();
     submit.disabled = true;
-    submit.textContent = 'Sending…';
+    submit.textContent = submit.dataset.sending || 'Sending…';
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -320,8 +331,8 @@
       }
     } catch {
       submit.disabled = false;
-      submit.textContent = 'Send Feedback';
-      alert('Something went wrong — please try again.');
+      submit.textContent = submit.dataset.idle || 'Send Feedback';
+      alert(submit.dataset.error || 'Something went wrong — please try again.');
     }
   });
 
@@ -330,7 +341,7 @@
     form.style.display = '';
     success.style.display = 'none';
     submit.disabled = false;
-    submit.textContent = 'Send Feedback';
+    submit.textContent = submit.dataset.idle || 'Send Feedback';
   });
 })();
 </script>

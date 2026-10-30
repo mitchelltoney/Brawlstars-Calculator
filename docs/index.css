@@ -98,6 +98,38 @@ body {
   transform: translateY(-1px);
 }
 
+/* ── EN/ES toggle ──
+ * Two copies in the markup: .lang-nav sits in the nav on desktop; the nav is
+ * already full at phone width, so .lang-header takes over above the title. */
+.lang-toggle {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 100px;
+  border: 1px solid var(--border-hi);
+  background: var(--surface);
+}
+.lang-toggle button {
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.6rem;
+  border: 0;
+  border-radius: 100px;
+  background: none;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.lang-toggle button:hover { color: var(--text); }
+.lang-toggle button[aria-pressed="true"] {
+  color: var(--gold);
+  background: rgba(255,214,10,0.12);
+}
+.lang-header { display: none; }
+
 /* ── Header ── */
 header {
   text-align: center;
@@ -921,6 +953,8 @@ footer .disclaimer { font-size: 0.64rem; }
   .nav-quiet.nav-keep { display: inline; } /* Maps stays reachable on mobile */
   .brand { font-size: 0.95rem; }
   .nav-cta { font-size: 0.76rem; padding: 0.5rem 0.9rem; }
+  .lang-nav { display: none; }
+  .lang-header { display: inline-flex; margin-bottom: 1.1rem; }
   header { margin-bottom: 2.5rem; }
   h1 { font-size: 1.9rem; }
   .icon-grid { gap: 0.35rem; }

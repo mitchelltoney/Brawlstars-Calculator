@@ -27,10 +27,10 @@ content="Quickly calculate and find the best Brawl Stars ranked counter-picks. C
     "url": "https://brawlcalculator.com/"
   }
   </script>
-<script src="loader.js?v=2026-10-29"></script>
-<script type="module" src="app.js?v=2026-10-29"></script>
-<link rel="stylesheet" href="styles.css?v=2026-10-29">
-<link rel="stylesheet" href="legacy.css?v=2026-10-29">
+<script src="loader.js?v=2026-10-30"></script>
+<script type="module" src="app.js?v=2026-10-30"></script>
+<link rel="stylesheet" href="styles.css?v=2026-10-30">
+<link rel="stylesheet" href="legacy.css?v=2026-10-30">
 <style>
 html, body { min-height: 100vh; margin: 0; }
 
@@ -42,6 +42,7 @@ html, body { min-height: 100vh; margin: 0; }
   }
 }
 
+.footer a { color: inherit; }
 .counter-card img { background: #545454; }
 .subject-icon    { background: #545454; }
 
@@ -108,26 +109,26 @@ html, body { min-height: 100vh; margin: 0; }
   <p>This is the Brawler Counterpick Calculator. Select up to three brawlers and click Go to see your counters.</p>
 </noscript>
 <div class="card">
-  <h1>Brawler Counterpick Calculator</h1>
-  <p style="margin-top:-0.5rem;font-size:1.1rem;opacity:.85">
+  <h1 data-i18n="classicTitle">Brawler Counterpick Calculator</h1>
+  <p style="margin-top:-0.5rem;font-size:1.1rem;opacity:.85" data-i18n="heroSubtitle">
     Click on the brawlers your opponents have picked, the results will show which brawlers counter them so you can make the best pick.
   </p>
 
   <div class="controls">
     <button style="margin:0rem 0rem 0rem 2rem" id="sortToggle" class="sort-toggle">Alphabetical</button>
-    <h2 style="margin:0rem 0 1rem">Pick up to three brawlers</h2>
+    <h2 style="margin:0rem 0 1rem" data-i18n="pickHeading">Pick up to three brawlers</h2>
   </div>
   <div id="iconGrid" class="icon-grid"></div>
 
-  <button id="go" style="margin-top:0.5rem">Go</button>
+  <button id="go" style="margin-top:0.5rem" data-i18n="classicGo">Go</button>
 
   <div id="output" class="output-grid"></div>
   <p class="footer">
-    Counterpicks determined primarily from <strong>SpenLC</strong> ranking data.
-    &nbsp;·&nbsp; <a href="/" style="color:inherit;opacity:.7;text-decoration:underline">New UI</a>
+    <span data-i18n-html="classicSourceHtml">Counterpicks determined primarily from <strong>SpenLC</strong> ranking data.</span>
+    &nbsp;·&nbsp; <a href="/" style="color:inherit;opacity:.7;text-decoration:underline" data-i18n="classicNewUi">New UI</a>
     <br><br>
-    This material is unofficial and is not endorsed by Supercell. For more information see
-    <a href="https://supercell.com/en/fan-content-policy/" rel="noopener" style="color:inherit">Supercell's Fan Content Policy</a>.
+    <span data-i18n-html="disclaimerHtml">This material is unofficial and is not endorsed by Supercell. For more information see
+    <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</span>
   </p>
 </div>
 </body>
