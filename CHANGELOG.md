@@ -1,3 +1,33 @@
+# November 2026 data refresh: Aug 4 + Sept 1 patches, checked against Nov 3
+
+- **Scope**: the 29 brawlers changed by patches the October update deferred.
+  Aug 4 nerfs: Crow, Griff, Starr Nova, Damian, Max, Bolt, 8bit, Surge.
+  Sept 1 (Update 69): Jae-Yong, Bea, Ziggy, Jacky, Jessie, Janet, Maisie,
+  Bo, Eve, Buster, Tara, Melodie, Lola, Leon, Dynamike, Hank, Clancy, Ash,
+  Lumi, Rico, Ruffs. The 18 brawlers rechecked for Sept 16 were skipped.
+- **Lists**: 37 changed (29 own lists + 8 where a patched brawler appears
+  as a counter); 47 pairs added, 25 removed, every new pair with a forward
+  and a reverse note. 5 notes rewritten for changed mechanics (Bolt/Charlie:
+  Unstoppaball immunity is now brief; Hank/Dynamike: a stun bursts his
+  bubble; Tara/Bibi: Super Shadows now have 4,000 HP).
+- **Nov 3 patch check**: the research predated the Nov 3 balance patch, so
+  every placement it touched was rechecked against a week of post-patch
+  Ranked data (DraftMeta) and a fresh tier consensus. Post-nerf Shade was
+  dropped from 7 planned additions (kept low on Dynamike), Gus from Janet,
+  Amber from Max and Leon, Barley from Hank, Melodie from Dynamike; Wendy,
+  Gus and Amber moved to the bottom of existing spots on Crow, Bo, Max and
+  Lola. Provisional: recheck once more post-patch data exists.
+- **Sourcing**: stat-only candidates held back (14, including Wendy on Bea,
+  Jessie, Janet, Maisie and Eve). Several additions rest on NamuWiki
+  matchup sections (Korean community wiki, Oct 2026) plus stat sites.
+  Research: 5 parallel workers (English + Spanish), 2 verification passes,
+  Ranked tier consensus before and after Nov 3.
+- **Not covered**: the rest of the Nov 3 patch (27 brawlers) and the new
+  brawlers Thunder Frogs, Rey and Ruby.
+- Freshness stamp → November 2026; pages and sitemap regenerated; cache
+  stamps bumped to 2026-11-10.1. Two overlap test fixtures moved from Squeak
+  (no longer on Jessie's list) to Nani (Penny + Mandy).
+
 # October 2026 data update: Wendy, Cosmo, Vince + Sept 16 patch recheck
 
 - **New brawlers** (roster 105 → 108): Wendy (Mythic Support), Cosmo

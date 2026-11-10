@@ -102,12 +102,12 @@ test("empty and blank inputs are ignored; fewer than 3 real picks works", () => 
 });
 
 test("doubleOverlaps: two picks sharing a direct counter list it once", () => {
-  // Penny and Jessie both have Squeak as a direct counter.
-  assert.ok(counters["Penny"].direct.includes("Squeak"));
-  assert.ok(counters["Jessie"].direct.includes("Squeak"));
-  const out = calculate(["Penny", "Jessie", ""]);
-  assert.ok(out.doubleOverlaps.includes("Squeak"));
-  assert.equal(out.doubleOverlaps.filter(x => x === "Squeak").length, 1);
+  // Penny and Mandy both have Nani as a direct counter.
+  assert.ok(counters["Penny"].direct.includes("Nani"));
+  assert.ok(counters["Mandy"].direct.includes("Nani"));
+  const out = calculate(["Penny", "Mandy", ""]);
+  assert.ok(out.doubleOverlaps.includes("Nani"));
+  assert.equal(out.doubleOverlaps.filter(x => x === "Nani").length, 1);
   assert.deepEqual(out.tripleOverlaps, []);
 });
 
@@ -123,7 +123,7 @@ test("tripleOverlaps: three picks sharing a direct counter list it in triples", 
 
 test("REGRESSION: picks sharing only a class do not leak class tokens into overlaps", () => {
   // Penny, Jessie, and Mandy all have the Thrower class but their only shared
-  // direct counter is Squeak (Penny+Jessie). Under the original Python
+  // direct counter is Nani (Penny+Mandy). Under the original Python
   // implementation, "T>Thrower" itself appeared as a triple overlap and
   // rendered as a broken image card.
   const out = calculate(["Penny", "Jessie", "Mandy"]);
@@ -136,8 +136,8 @@ test("REGRESSION: picks sharing only a class do not leak class tokens into overl
     // Stronger: nothing in overlaps should start with "T>".
     assert.equal(arr.filter(x => x.startsWith("T>")).length, 0);
   }
-  // The legitimate direct overlap (Squeak from Penny+Jessie) should still surface.
-  assert.ok(out.doubleOverlaps.includes("Squeak"));
+  // The legitimate direct overlap (Nani from Penny+Mandy) should still surface.
+  assert.ok(out.doubleOverlaps.includes("Nani"));
 });
 
 test("results.counters contains only real brawler names (no class tokens)", () => {

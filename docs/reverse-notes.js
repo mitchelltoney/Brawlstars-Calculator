@@ -21,6 +21,7 @@ export const reverseNotes = {
     "Gus": "Melts Gus through Spooky's shield with sustained flames, and burning Fire Fluid denies the spots where his spirits land.",
     "Lily": "Keeps Lily outside attack range, then punishes her forced point-blank teleport with Dancing Flames.",
     "Lola": "Pierces Lola and her Ego in one sustained flame stream, denying the clone's value as a shield.",
+    "Maisie": "Burns Maisie with a continuous flame stream that is easier to land than her single accelerating rockets, winning sustained trades.",
     "Poco": "Burns through Poco's healing with a continuous flame stream, while lingering oil punishes allies grouping for his waves.",
     "Shade": "Burns Shade down with sustained flames during its approach, and Dancing Flames punishes the point-blank range it needs.",
     "Sirius": "Burns Sirius and his clustered Shadows in the same piercing flame stream, dismantling the protective swarm.",
@@ -46,6 +47,8 @@ export const reverseNotes = {
     "Lumi": "Lobs lingering puddles over walls around Lumi, denying space while cover blocks her forward-thrown morning stars.",
     "Maisie": "Pressures Maisie over walls and blankets approaches with lingering puddles, denying clean lines for her slow-starting rockets.",
     "Najia": "Outlasts Najia's poison with Medical Use, healing on every artillery throw while pressuring her over walls.",
+    "Rico": "Lobs lingering puddles into the wall pockets Rico uses for bounce angles, flushing him out of cover his ricochets cannot defend.",
+    "Ruffs": "Lobs bottles over Ruffs's walls and sandbags, letting lingering puddles chip his low health where Take Cover offers no protection.",
     "Willow": "Outlasts Willow's delayed poison with Medical Use, restoring health on every throw throughout their artillery exchanges."
   },
   "Bea": {
@@ -53,14 +56,15 @@ export const reverseNotes = {
     "Gray": "Outranges Gray's narrow Finger Pistol, landing wider shots and Supercharged follow-ups to control the long-range exchange.",
     "Jae-Yong": "Outranges Jae-Yong, landing high-damage shots before he closes enough distance for his piercing attacks to connect.",
     "Lola": "Outranges Lola and cycles normal and Supercharged shots to disrupt her firing lane before the Ego establishes crossfire.",
+    "Lumi": "Picks at Lumi from beyond morning-star reach, turning each landed hit into a Supercharged follow-up before she can advance.",
     "Meeple": "Outranges Meeple and converts opening hits into Supercharged follow-ups before their wall-piercing zone can control cover."
   },
   "Belle": {
-    "8bit": "Stops 8bit from sustaining boosted fire by using Grounded to block his reloads after a mark.",
     "Amber": "Attacks Amber beyond her reach, then Grounded interrupts the reload cycle she needs for sustained flame pressure.",
     "Byron": "Matches Byron's range with heavier Electro-Bolts, then uses Grounded to stop the reloads he needs to poke or heal.",
     "Clancy": "Pressures Clancy beyond his reach and reloads faster, denying the repeated hits that advance his stages.",
     "Colt": "Out-trades Colt at maximum range as Positive Feedback absorbs damage from later bullets in each volley.",
+    "Crow": "Pressures Crow from beyond dagger range with reliable Electro-Bolts, punishing his low health before poison tags pile up.",
     "Damian": "Kites Damian beyond punching range, landing Electro-Bolts before he can close the distance.",
     "Gale": "Pokes Gale from beyond his snowballs, then marks him to amplify every follow-up hit.",
     "Gene": "Outranges Gene's full-damage projectile and punishes healing clusters by bouncing Electro-Bolts between nearby allies.",
@@ -73,7 +77,9 @@ export const reverseNotes = {
     "Maisie": "Outranges Maisie and uses Positive Feedback to absorb damage during open-lane trades before Shockwave threatens.",
     "Najia": "Breaks Najia's single-ammo cycle with Grounded, blocking the reload needed for another snake or extended Super.",
     "RT": "Chains Electro-Bolts between RT's head and stationary split legs, then uses Grounded to stop his reload after a mark.",
-    "Stu": "Pressures Stu beyond his fireworks' reach, forcing risky approaches before he can start chaining dashes."
+    "Stu": "Pressures Stu beyond his fireworks' reach, forcing risky approaches before he can start chaining dashes.",
+    "Surge": "Pressures Surge from beyond his opening range with reliable Electro-Bolts, keeping him low before his upgrades come online.",
+    "Tara": "Outranges Tara, then chains Electro-Bolts between her and nearby Shadows so every summon adds to the damage."
   },
   "Bibi": {
     "Cosmo": "Charges through Cosmo's weak close-range orbit with tank health, using Home Run speed to close in and Batting Stance to shield the approach.",
@@ -82,6 +88,8 @@ export const reverseNotes = {
     "Tick": "Crosses Tick's delayed minefield with high health and fast movement, then overwhelms his low health up close."
   },
   "Bo": {
+    "Charlie": "Catches Charlie and her Spiders in exploding arrow volleys, while hidden mines knock her back whenever she pushes forward.",
+    "Leon": "Mines the routes Leon must take to ambush, and Snare A Bear stuns him on contact before his point-blank blades connect.",
     "Lola": "Catches Lola and her Ego in the same exploding arrows while mines restrict the lanes supporting their sustained fire.",
     "Pearl": "Controls Pearl's advance with hidden mines, using Snare A Bear to stun her before she unloads heated cookies.",
     "Penny": "Breaks the walls protecting Penny and her cannon with mines, exposing both to sustained arrow pressure.",
@@ -146,7 +154,7 @@ export const reverseNotes = {
     "Spike": "Outlasts Spike's chip damage and punishes his low health with pickaxe hits on both travel paths."
   },
   "Charlie": {
-    "Bolt": "Cocoons Bolt mid-charge, halting his approach despite the crowd-control immunity from his Super.",
+    "Bolt": "Cocoons Bolt mid-charge after Unstoppaball's brief immunity ends, stopping his approach before a full-speed collision connects.",
     "Chester": "Sends Spiders into Chester's bells, absorbing his multi-projectile burst before the summons pressure him up close.",
     "Colette": "Uses Spiders to absorb Colette's non-piercing shots, then cocoons her before her charge completes its return hit.",
     "Crow": "Forces Crow to spend repeated ammo clearing Spiders before his daggers can pressure her directly.",
@@ -180,7 +188,6 @@ export const reverseNotes = {
     "Dynamike": "Dashes onto Dynamike from a nearby Post before his delayed sticks land, using Ghost Train to cut straight through his walls."
   },
   "Clancy": {
-    "Byron": "Turns Byron's repeated frontline healing into upgrade progress, then breaks through his gradual sustain with stronger volleys.",
     "Chuck": "Uses Chuck's fixed Post destinations as reliable upgrade fuel, building enough firepower to pressure his large health pool.",
     "Darryl": "Converts Darryl's large health pool into upgrades, then catches his straight-line roll-ins with dense projectile volleys.",
     "Doug": "Stays beyond Doug's circular attack while harvesting his high health for tokens that strengthen later volleys.",
@@ -191,11 +198,14 @@ export const reverseNotes = {
   "Colette": {
     "Bolt": "Uses percentage-based shots to punish Bolt's huge health pool before he builds enough speed for dangerous collisions.",
     "Bonnie": "Turns Bonnie's durable cannon form against her, using percentage-based shots to deal heavier opening damage.",
+    "Buster": "Chunks Buster's tank health with percentage-based shots from long range, holding fire until his Montage shield fades.",
     "Damian": "Turns Damian's durability against him because every shot scales with his remaining health instead of treating it as protection.",
     "Dynamike": "Uses projectile speed and reach to keep Dynamike moving in exposed lanes, reducing the trading value of his slow-fusing throws.",
     "El Primo": "Turns El Primo's huge health pool against him with percentage-based shots, then uses Push It to carry him out of punch range.",
     "Fang": "Softens Fang during his approach with health-scaled fire, saving Push It to reset distance when he commits.",
     "Frank": "Punishes Frank's massive health with scaling fire, while Push It can disrupt his Super and line up both charge passes.",
+    "Hank": "Chunks Hank's large health pool with percentage-based shots, staying far beyond the reach of his charged Balloon Blast.",
+    "Jacky": "Turns Jacky's large health pool against her with percentage-based shots fired from far beyond her short attack radius.",
     "Meeple": "Breaks Meeple's wall-centered positioning with Push It, then maintains pressure from beyond their effective range using health-scaled fire.",
     "Meg": "Makes Meg's high-health Mecha a liability by dealing percentage-based damage that erases its usual durability advantage.",
     "Nita": "Removes Nita's main pressure source from beyond her reach because her summoned bear receives reliable fixed damage.",
@@ -212,19 +222,14 @@ export const reverseNotes = {
     "Kenji": "Uses Shadow Realm isolation against Kenji to lock his Super and gadgets, then stays beyond the reach of his alternating attacks.",
     "Kit": "Turns Kit's team-oriented role into a weakness by forcing him to fight alone inside the Shadow Realm.",
     "Meg": "Prevents Meg from rebuilding her Mecha inside the Shadow Realm, giving repeated two-shot bursts time to exhaust each form.",
-    "Melodie": "Forces Melodie into a stripped-down close-range duel, since the Shadow Realm clears her orbiting notes and weakens her dive.",
-    "Ruffs": "Pulls Ruffs away from his team, using close-range mushroom fire to exploit his low health throughout the Shadow Realm duel."
+    "Melodie": "Forces Melodie into a stripped-down close-range duel, since the Shadow Realm clears her orbiting notes and weakens her dive."
   },
   "Crow": {
     "Colette": "Restricts Colette's movement with Slowing Toxin, creating room to avoid her round-trip Super while poison reduces her recovery.",
-    "Larry": "Evades Larry's delayed blasts, maintaining poison to suppress his retreat healing and punish each attempt to attack from cover.",
-    "Leon": "Keeps tabs on invisible Leon through poison damage, and Extra Toxic reduces the danger of an ensuing melee ambush.",
-    "Mandy": "Slips past Mandy's narrow projectiles with quick movement, while lingering poison prevents recovery before the next ranged duel.",
-    "Max": "Neutralizes Max's movement advantage with Slowing Toxin and keeps poison ticking to delay regeneration between engagements.",
-    "Mortis": "Stays beyond Mortis's dash reach, then uses Slowing Toxin to disrupt attack chains and hinder his escape.",
-    "Starr Nova": "Keeps Starr Nova under ranged poison, limiting her healing and using Extra Toxic to soften close-quarters damage."
+    "Mortis": "Stays beyond Mortis's dash reach, then uses Slowing Toxin to disrupt attack chains and hinder his escape."
   },
   "Damian": {
+    "Bolt": "Traps Bolt inside a mosh pit whose speaker walls kill his momentum, then stops each charge with a heavy punch before he speeds up.",
     "Starr Nova": "Survives Starr Nova's close-range combo through superior durability, creating time to punish her before sword-form recovery takes hold.",
     "Vince": "Turns Vince's poke into Super charge with a huge health pool, then leaps in with a mosh pit he has no dash or knockback to escape."
   },
@@ -241,12 +246,13 @@ export const reverseNotes = {
     "Nani": "Closes on Nani with a roll, then uses Tar Barrel to keep her trapped within shotgun range.",
     "Sprout": "Rolls across Sprout's firing lane, then uses follow-up protection to weather Seed Bombs and launch a point-blank assault.",
     "Squeak": "Turns Squeak's delayed detonation pattern against him, using post-roll protection to survive nearby blasts and establish shotgun range.",
-    "Tara": "Rolls through Tara's card volleys and exploits her slow reload, using tank durability to win the ensuing point-blank exchange.",
     "Tick": "Rolls through Tick's mines under follow-up damage reduction, then punishes his low health with point-blank shotgun fire."
   },
   "Doug": {
     "Alli": "Outlasts Alli's short-range dash pressure as Self Service restores health throughout every close-quarters exchange.",
+    "Buster": "Hits Buster with area Snack Attacks that Montage cannot reflect, healing through Lens Flare trades with Self Service.",
     "Edgar": "Uses Self Service to outheal Edgar's point-blank damage, while revival turns his committed all-in into a risky trade.",
+    "Melodie": "Soaks Melodie's orbiting-note dives with high health, splashing her at close range while Self Service heals him through the burst.",
     "Nori": "Outlasts Nori's dive at close range, healing through every exchange as Self Service restores health with each Snack Attack.",
     "Shade": "Turns Shade's forced close-range hugs into a healing race, with Self Service restoring health on every Snack Attack."
   },
@@ -256,7 +262,8 @@ export const reverseNotes = {
     "Trunk": "Pokes Trunk beyond the spin's reach with Lance Stab's damaging tip, then finishes the engagement through sustained fire breath."
   },
   "Dynamike": {
-    "Hank": "Bombards Hank's predictable approach, while Satchel Charge interrupts Balloon Blast before he can release it.",
+    "8bit": "Bombards slow-moving 8bit and his Damage Booster from behind walls, where neither his beams nor Extra Credits can answer.",
+    "Hank": "Bombards Hank's predictable approach, and Satchel Charge's stun bursts his charging Balloon Blast early, before it can reach Dynamike.",
     "Lumi": "Punishes Lumi from behind walls with burst damage that her forward-thrown morning stars cannot answer."
   },
   "Edgar": {
@@ -274,16 +281,22 @@ export const reverseNotes = {
   },
   "El Primo": {
     "Bibi": "Outlasts Bibi up close, then uses his Super to reengage after her charged swing knocks him away.",
+    "Bolt": "Stops Bolt's charge with Suplex Supplement, throwing him to erase his built-up speed, then out-brawls him with rapid punches.",
     "Buster": "Overwhelms Buster in sustained melee with faster-reloading punches, using a leap to erase his range advantage.",
     "Fang": "Outlasts Fang's melee combo, then overwhelms his slower kick sequence with faster-reloading punches.",
     "Finx": "Jumps directly onto Finx, bypassing Time Warp's projectile slowdown and overwhelming him with close-range punches.",
     "Frank": "Punishes Frank's stationary windups at point-blank range, while Suplex Supplement cancels his Super before more punches follow.",
+    "Hank": "Outlasts Hank up close, landing fast-reloading punches throughout each slow Balloon Blast charge he builds.",
+    "Jacky": "Wins the point-blank tank duel against Jacky with fast-reloading punches that her slower Groundbreaker cycle cannot match.",
     "Juju": "Leaps over wall cover to reach Juju, converting her artillery advantage into a close-range fight his durability favors.",
     "Kenji": "Outlasts Kenji at close range, where rapid punches overwhelm the healing built into his alternating attacks.",
     "Trunk": "Out-damages Trunk at close range, while Suplex Supplement interrupts the delayed spin before it connects."
   },
   "Emz": {
+    "Ash": "Melts Ash with lingering spray from outside his broom reach, using Friendzoner to shove him back whenever his Rage-fueled rush arrives.",
+    "Buster": "Stays beyond Buster's Lens Flare cone, stacking lingering spray on his large health pool from the edge of her reach.",
     "Chester": "Stacks hairspray damage as Chester approaches, then uses Friendzoner to push him back into the lingering cloud.",
+    "Jacky": "Keeps Jacky outside her short attack radius with lingering spray, then uses Friendzoner to push her back when she closes.",
     "Leon": "Controls Leon's approach with broad spray damage, then uses Friendzoner to push him beyond his blades' maximum-damage range.",
     "Piper": "Punishes Piper whenever cover shortens the lane, stacking spray damage where her shots lose much of their power.",
     "Poco": "Overwhelms Poco's healing with stacking spray damage when his nearby teammates group inside the same cloud.",
@@ -292,9 +305,10 @@ export const reverseNotes = {
     "Wendy": "Blankets Wendy's grouped team in lingering hairspray, letting Bad Karma's ramping damage wear down her shields and generator together."
   },
   "Eve": {
+    "Bea": "Swarms Bea's single-ammo attack with hatchlings, forcing wasted stings while staggered egg volleys chip Bea's low health.",
+    "Crow": "Swarms Crow with hatchlings that latch on and drain his low health, punishing wherever his jump lands with egg volleys.",
     "Gene": "Stays beyond Gene's full-damage range while hatchlings consume his slow-loading shots and intercept his pull.",
-    "Glowy": "Controls Glowy from beyond beam range while hatchlings strain his single-target damage and apply poison pressure.",
-    "Najia": "Forces Najia to spend her single ammo on disposable hatchlings, whose defeats cannot activate Poisonous Protector."
+    "Glowy": "Controls Glowy from beyond beam range while hatchlings strain his single-target damage and apply poison pressure."
   },
   "Finx": {
     "Gigi": "Pressures Gigi beyond spin range, then rewinds to his prior position with replenished ammo as she commits to her delayed teleport."
@@ -307,7 +321,6 @@ export const reverseNotes = {
     "Gus": "Drags Gus into hammer range, where superior durability and heavy swings overwhelm his limited health.",
     "Hank": "Soaks Hank's charged Balloon Blast up close, then delivers heavy swings before his next attack finishes charging.",
     "Jacky": "Uses Active Noise Canceling to resist Jacky's pull and wins the ensuing brawl through a larger health pool.",
-    "Janet": "Walks through Janet's focused shots, using superior durability to reach her before hammer swings force a retreat.",
     "Jessie": "Strikes Jessie and Scrappy together with broad hammer waves, wearing down the turret before she can repair it.",
     "Kenji": "Turns Kenji's close-range commitments against him, surviving sustained attacks before answering with heavy area damage.",
     "Rico": "After soaking Rico's bullet pressure, uses Irresistible Attraction to drag him from bounce lanes into hammer range.",
@@ -353,7 +366,6 @@ export const reverseNotes = {
     "Fang": "Punishes Fang's committed dives with dense coin volleys that concentrate into heavy burst at point-blank range.",
     "Frank": "Outranges Frank with coin volleys, then turns his forced approach into concentrated point-blank burst.",
     "Nani": "Overwhelms Nani's Return To Sender with multi-coin volleys, preserving most of the burst after only one coin reflects.",
-    "Ruffs": "Bursts down Ruffs at midrange while Piggy Bank removes the walls that amplify his bouncing laser pressure.",
     "Sam": "Bursts down Sam at close range, where wide coin volleys and the returning Super punish every approach."
   },
   "Grom": {
@@ -373,6 +385,9 @@ export const reverseNotes = {
     "RT": "Outlasts RT's ranged chip through spirit healing, with Health Bonanza strengthening recovery between marked follow-up shots.",
     "Vince": "Outranges Vince and absorbs his marked follow-up shots with Spooky's shield, while spirit healing undoes his single-target poke."
   },
+  "Hank": {
+    "Gigi": "Out-tanks Gigi's spinning chip, then bursts a charged Balloon Blast around himself when she spins in close."
+  },
   "Jacky": {
     "Buster": "Reaches Buster through Montage's directional shield, then makes Counter Crush return part of his close-range damage.",
     "Buzz": "Absorbs Buzz's five-hit assault at close quarters while Counter Crush converts each impact into retaliatory damage.",
@@ -383,7 +398,8 @@ export const reverseNotes = {
     "Moe": "Shrugs off Moe's repeated bounces during long trades because Hardy Hard Hat reduces the damage of each connection.",
     "Mortis": "Meets Mortis's dashes with superior durability, letting Counter Crush retaliate before he can retreat.",
     "Sandy": "Pressures Sandy through cover with wall-penetrating area attacks while her durability absorbs his weaker blasts.",
-    "Shade": "Hits Shade through protective terrain and survives the close-range exchanges its limited reach forces."
+    "Shade": "Hits Shade through protective terrain and survives the close-range exchanges its limited reach forces.",
+    "Tick": "Crosses Tick's minefield as Hardy Hard Hat trims every blast, then pounds his low health with Groundbreaker up close."
   },
   "Jae-Yong": {
     "Pierce": "Outmaneuvers Pierce's linear fire, then recovers from his early poke by changing into Party Mode."
@@ -394,17 +410,20 @@ export const reverseNotes = {
     "Eve": "Threads focused soundwaves through Eve and her hatchlings, removing the swarm without surrendering offensive momentum.",
     "Frank": "Pressures Frank beyond hammer reach, with jetpack flight denying both his windup attack and stunning Super.",
     "Gale": "Lands concentrated damage on Gale from maximum distance, where his spreading snowballs connect only sparsely.",
+    "Jessie": "Drops Jessie in three focused shots to win direct duels, then flies over Scrappy with her jetpack and bombs the turret from above.",
     "Sam": "Keeps Sam chasing beyond punching distance and vaults across walls with Backstage Pass when he reaches her.",
     "Sandy": "Builds focused damage on Sandy before his shorter-ranged pebble bursts can threaten retaliation.",
     "Tara": "Maintains a range edge over Tara, clears lined-up Shadows, and lifts away from Gravity's pull."
   },
   "Jessie": {
+    "Charlie": "Bounces Shock Rifle orbs off Charlie's Spiders into her, while Scrappy keeps up pressure through any Cocoon.",
     "Colette": "Diverts Colette's single-target fire into Scrappy, then restores the turret with Energize to prolong her ammo burden.",
     "Otis": "Sustains Scrappy with Energize so Otis must repeatedly spend non-piercing volleys before contesting her equal range.",
     "Pam": "Chains one projectile across Pam and her healing station, turning their shared position into simultaneous damage.",
     "Pearl": "Interposes Scrappy against Pearl's heated volleys, draining the resource she needs for a stronger burst.",
     "Piper": "Taxes Piper's slow reload by adding Scrappy, while Energize restores the turret between her sniper rounds.",
-    "Poco": "Spreads bouncing damage across Poco's clustered team while Scrappy adds another threat his group healing must cover."
+    "Poco": "Spreads bouncing damage across Poco's clustered team while Scrappy adds another threat his group healing must cover.",
+    "Tara": "Bounces Shock Rifle orbs between Tara and her summoned Shadows, turning every extra body she adds into another chain target."
   },
   "Juju": {
     "Charlie": "Bombards Charlie's Spiders from behind cover and forces her yo-yo to divide attention with Gris-Gris.",
@@ -423,8 +442,6 @@ export const reverseNotes = {
     "Berry": "Traverses Berry's damaging puddle zones with dashes, then exploits his slow reload and low health in melee.",
     "Dynamike": "Escapes Dynamike's delayed blast zones with dashes, then overwhelms his low health through rapid alternating attacks.",
     "Grom": "Reaches Grom through his delayed blasts with dash-slash attacks, then recovers from recent damage while denying him point-blank safety.",
-    "Jacky": "Survives Jacky's close-range pressure by recovering recent damage, then dashes away between exchanges.",
-    "Janet": "Dashes through Janet's attack-focusing window, then sustains close-range pressure by healing from repeated slashes.",
     "Kit": "Outlasts Kit in close-range trades by recovering from his opening burst with Hosomaki Healing.",
     "Larry": "Threads between Larry's delayed blasts, reaches melee range, and recovers from recent damage suffered during the approach.",
     "Lou": "Sidesteps Lou's linear volleys with repeated dashes, then sustains pressure through healing at close range.",
@@ -452,9 +469,6 @@ export const reverseNotes = {
     "Sandy": "Dislodges Sandy from protected positions using longer-ranged blasts over walls as Lawrie threatens from another direction.",
     "Willow": "Punishes Willow with consecutive explosions while Lawrie makes her split her lobbed curses between both twins."
   },
-  "Leon": {
-    "Bo": "Approaches Bo invisibly past his ranged control, then uses Invisiheal to sustain point-blank pressure."
-  },
   "Lily": {
     "Lou": "Uses Vanish to cross Lou's firing lane and burst him before he can build freeze.",
     "Meeple": "Uses Vanish to cross Meeple's range, reappearing point-blank before homing shots can control her approach.",
@@ -466,6 +480,7 @@ export const reverseNotes = {
     "Meg": "Outranges Meg's Mecha and doubles long-range pressure with the Ego, winning sustained trades before Meg closes."
   },
   "Lou": {
+    "Bolt": "Freezes Bolt with stacking snow cones, resetting his built-up speed so his collisions never reach full damage.",
     "Byron": "Freezes Byron with rapid volleys, disrupting his attack rhythm before damage-over-time darts establish sustained pressure.",
     "Draco": "Repeatedly freezes Draco to disrupt sustained pressure while Hypothermia steadily reduces his damage.",
     "Meeple": "Outranges Meeple and stacks freeze until a stun lands while Hypothermia reduces their return damage.",
@@ -480,16 +495,20 @@ export const reverseNotes = {
     "Sirius": "Controls Sirius and clustered Shadows inside a freezing zone, where Supercool accelerates buildup across the group."
   },
   "Lumi": {
-    "Ash": "Uses Half-Time to slow Ash with recalled morning stars, denying his Rage-fueled close-range pressure.",
     "Bull": "Slows Bull with recalled morning stars, repeatedly breaking the close contact his tank pressure requires.",
     "El Primo": "Outranges El Primo's punches with morning stars, then slows him on their recall to prevent another approach.",
     "Frank": "Punishes Frank's stationary windups by throwing both morning stars past him and striking again as they return.",
     "Pam": "Pierces Pam and her healing turret on both throw and recall, punishing the stationary positioning her sustain requires."
   },
+  "Maisie": {
+    "Buzz": "Hits Buzz hard with heavy rockets as he closes, then knocks him back out of five-hit range with Shockwave."
+  },
   "Mandy": {
     "Bolt": "Outranges Bolt while Focused, then Caramelize slows his speed buildup whenever crowd-control immunity is inactive.",
     "Brock": "Outranges Brock while Focused, landing faster candies before his slower rockets can threaten the firing position.",
-    "Rico": "Outranges Rico while Focused, then Cookie Crumbs pierces his wall cover before bouncing shots create pressure."
+    "Crow": "Holds Focused range against Crow, chunking his low health with heavy candy shots long before his poisoned daggers connect.",
+    "Rico": "Outranges Rico while Focused, then Cookie Crumbs pierces his wall cover before bouncing shots create pressure.",
+    "Surge": "Denies Surge his first upgrade from Focused range, keeping him hidden instead of charging his Super along her long sightlines."
   },
   "Max": {
     "Angelo": "Weaves around Angelo's charged shots with superior speed while constant movement accelerates reloads and sustains the chase.",
@@ -515,17 +534,21 @@ export const reverseNotes = {
     "Amber": "Jumps over Amber's flame stream to land beside her, stealing the ammo her continuous fire needs with Monkey Business.",
     "Barley": "Leaps across walls and Barley's slow bottle arcs, reaching melee distance to exploit his low health.",
     "Belle": "Leaps over Belle's long sightlines to land beside her, stealing ammo with Monkey Business before she can mark him.",
+    "Bo": "Leaps over Bo's hidden mines and arrow spread to land beside him, using Monkey Business to steal the ammo he needs.",
     "Chuck": "Hops across Chuck's Post dash lanes to land on him directly, using Monkey Business to steal the ammo he needs to trade.",
     "Cosmo": "Leaps over Cosmo's orbiting planets while invulnerable, then Monkey Business steals ammo that his slow reload struggles to replace.",
     "Dynamike": "Crosses Dynamike's delayed blasts in mid-jump and lands close enough to eliminate him before a counterattack develops.",
     "Grom": "Bypasses Grom's delayed explosives by jumping, lands beside him, and overwhelms his unreliable point-blank defense.",
+    "Jessie": "Leaps over Scrappy to land beside Jessie, then steals the ammo she needs to fight back with Monkey Business.",
     "Sprout": "Crosses Sprout's Seed Bombs and Hedge barriers by jumping, then drains ammo to suppress the thrower's response.",
     "Tick": "Clears Tick's mine pattern during an invulnerable jump, landing beside him to overwhelm his low health with rapid melee attacks.",
-    "Willow": "Leaps over Willow's lobbed curses to land beside her, stealing ammo with Monkey Business before her mind-control Super lands."
+    "Willow": "Leaps over Willow's lobbed curses to land beside her, stealing ammo with Monkey Business before her mind-control Super lands.",
+    "Ziggy": "Leaps out of Ziggy's delayed strike zones mid-jump, landing beside him to burst his low health before the next strike."
   },
   "Mortis": {
     "Barley": "Slips between Barley's slow bottle arcs with dashes and punishes his low health before another throw becomes available.",
     "Berry": "Skirts Berry's persistent puddles with dashes, then exploits his low health during the lengthy reload between cones.",
+    "Bo": "Dashes through gaps in Bo's minefield and around his arrow spread, punishing him once his ammo is spent zoning.",
     "Cosmo": "Dashes between Cosmo's spreading planets to reach point-blank range, punishing his slow reload before another volley is ready.",
     "Dynamike": "Cuts across Dynamike's timed explosions with dashes and reaches melee range, punishing his low health before a retaliatory throw is possible.",
     "Emz": "Enters the dead zone inside Emz's spray with a dash, limiting each cloud to one hit before closing the duel.",
@@ -576,6 +599,7 @@ export const reverseNotes = {
   "Nori": {
     "Chuck": "Roots Chuck with Gonna Need A Bigger Net before he dashes between Posts, then wins the close-range duel that follows.",
     "Cosmo": "Roots Cosmo with Gonna Need A Bigger Net and dives in close, where his planets deal minimum damage and his slow reload leaves him exposed.",
+    "Jessie": "Casts his fishing rod to pull himself onto Jessie, dashing past Scrappy, then slashes her at close range where she cannot escape.",
     "Juju": "Chases Juju down with His Mothers Son speed bursts and roots her with Gonna Need A Bigger Net before Gris-Gris arrives."
   },
   "Ollie": {
@@ -584,7 +608,6 @@ export const reverseNotes = {
   },
   "Otis": {
     "Darryl": "Keeps Darryl outside shotgun range, then silences his post-roll burst before he can fire.",
-    "Dynamike": "Out-pokes Dynamike with long-range ink, then silences his attacks and Satchel Charge after he leaves cover.",
     "Edgar": "Silences Edgar on landing, denying his punches and their healing during the duel.",
     "Fang": "Silences Fang during his dive, preventing attacks and follow-up Supers while sustained ink volleys finish him.",
     "Mortis": "Silences Mortis at close range, preventing chained dashes and leaving weakened targets beyond his reach.",
@@ -641,7 +664,12 @@ export const reverseNotes = {
     "Rico": "Controls open sightlines beyond Rico's reach and resets the gap with Auto Aimer whenever he advances.",
     "Shelly": "Maintains a lane beyond Shelly's shotgun reach and answers every close approach with Auto Aimer knockback.",
     "Spike": "Capitalizes on Spike's low health beyond cactus-grenade range, landing maximum-damage shots before he controls the lane.",
-    "Starr Nova": "Zones Starr Nova outside hair-burst range, using Auto Aimer to break her sword-form momentum up close."
+    "Starr Nova": "Zones Starr Nova outside hair-burst range, using Auto Aimer to break her sword-form momentum up close.",
+    "Surge": "Punishes early-stage Surge from far beyond his reach, forcing him to hide before he can charge the upgrades that extend his range.",
+    "Griff": "Picks off Griff from beyond his coin range, where his widening cone cannot connect fully and her long shots hit hardest.",
+    "Jae-Yong": "Outranges Jae-Yong's piercing shots, landing maximum-damage hits whenever he steps forward to line up Party Mode heals.",
+    "Tara": "Outranges Tara's card spread, landing maximum-damage shots during her slow reload before Gravity can be charged.",
+    "Clancy": "Picks off Clancy from beyond paintball range with maximum-damage shots, starving him of the tokens his later stages need."
   },
   "Poco": {
     "Lola": "Keeps his team healthy while broad attacks pass through Lola's Ego, striking both and denying the clone's cover.",
@@ -670,8 +698,6 @@ export const reverseNotes = {
   "Rosa": {
     "Ash": "Absorbs Ash's Rage-fueled damage with her Super, then wins the close-range exchange with continued punches.",
     "Buster": "Uses her Super to blunt Buster's Lens Flare, then exploits her faster reload to keep punches coming at close range.",
-    "Crow": "Endures Crow's poison and close-range dagger burst behind her Super, creating enough time to connect repeated punches.",
-    "Hank": "Shields against Hank's Balloon Blast at point-blank range, then overwhelms him with rapid punches.",
     "Jacky": "Reduces Jacky's Groundbreaker damage with her Super, then keeps punching until the extended close-range exchange swings in her favor.",
     "Wendy": "Absorbs Wendy's modest damage behind her damage-reducing Super, then wins the close-range trade with rapid punches."
   },
@@ -694,6 +720,7 @@ export const reverseNotes = {
   "Shade": {
     "Brock": "Slips through walls in Incorporeal Form to reach Brock, punishing him with hugs whenever Rocket Laces is down.",
     "Cosmo": "Slips through walls in Incorporeal Form to reach Cosmo, then hugs him at close range where his orbiting planets deal minimum damage.",
+    "Dynamike": "Slips through Dynamike's protective walls in Incorporeal Form and hugs him at close range, where his delayed sticks cannot keep up.",
     "Juju": "Hits Juju through her protective walls, then closes in Incorporeal Form as Hardened Hoodie reduces her incoming damage.",
     "Meg": "Phases past Meg's Mecha pressure through walls, punishing her fragile base form with center hugs before a remount.",
     "Mina": "Bypasses Mina's projectile wall with cover-piercing attacks while Hardened Hoodie reduces her close-range combo damage.",
@@ -709,12 +736,10 @@ export const reverseNotes = {
     "El Primo": "Punishes El Primo's need to stay close, shredding his health before Super knockback pushes him beyond punching range.",
     "Fang": "Bursts Fang at point-blank range and interrupts his follow-up kicks with Super knockback.",
     "Kaze": "Overpowers Kaze at close range, then knocks her back before she can chain another strike.",
-    "Leon": "Punishes Leon's close-range ambush with shotgun burst, then Shell Shock slows his escape.",
     "Lily": "Punishes every Lily teleport with point-blank shotgun damage and Super knockback before she can continue attacking.",
     "Moe": "Punishes Moe's Driller approach with shotgun pressure, then uses Shell Shock to slow his immediate retreat.",
     "Mortis": "Bursts Mortis at shotgun range, then Shell Shock slows his retreat before he can dash away.",
     "Nori": "Bursts Nori at close range, then uses Shell Shock to stop him from disengaging.",
-    "Rico": "Reaches Rico with Fast Forward, reloads completely, then overwhelms his low health with concentrated shotgun damage.",
     "Rosa": "Overpowers Rosa up close with shotgun bursts and repeated Super knockbacks that break her punching rhythm."
   },
   "Sirius": {
@@ -725,7 +750,6 @@ export const reverseNotes = {
     "Pierce": "Swarms Pierce with summoned Shadows that drop no shells, absorbing his single-target shots and starving his reload."
   },
   "Spike": {
-    "Crow": "Catches Crow's evasive movement with Curveball spikes, turning reliable hits into heavy pressure against his low health.",
     "Meeple": "Pressures Meeple around cover with split spikes while Life Plant absorbs their single-projectile attacks.",
     "Nani": "Lets Life Plant absorb Nani's focused shots and heal nearby teammates when destroyed.",
     "Shelly": "Keeps Shelly outside shotgun range, landing split spikes before she can deliver concentrated close-range damage.",
@@ -736,13 +760,15 @@ export const reverseNotes = {
     "Amber": "Blocks Amber's flame stream with Hedge walls and bombards her over cover with Seed Bombs she cannot answer.",
     "Bea": "Lobs Seed Bombs over cover and raises Hedge walls, denying Bea the straight lanes her shots require.",
     "Byron": "Bombards Byron from behind cover while Hedge walls obstruct the straight firing angles his narrow darts require.",
+    "Eve": "Bombards Eve over the walls she hides behind with Seed Bombs, then raises Hedge walls that block her straight egg volleys.",
+    "Maisie": "Lobs Seed Bombs over cover that Maisie's straight rockets cannot cross, then raises Hedge walls to block her firing lanes.",
+    "Rico": "Bombards Rico over the walls he relies on, landing Seed Bombs without line of sight while his ricochets need exact angles to answer.",
     "Rosa": "Outranges Rosa's punches with arcing Seed Bombs, then blocks her approach with Hedge walls she cannot quickly bypass.",
     "Ruffs": "Bombards Ruffs over walls, exploiting his low health and driving him away from the sandbags anchoring his position."
   },
   "Squeak": {
     "8bit": "Bombards 8bit's Damage Booster position with delayed blasts, driving him outside the boosted area.",
     "Janet": "Seeds Janet's firing angles with timed blasts, while Residue slows her movement before each focused shot.",
-    "Jessie": "Catches Jessie and Scrappy in overlapping delayed blasts, preventing her turret from holding a fixed lane.",
     "Meeple": "Hits Meeple through cover with Sticky Blomb explosions, while Residue slows their escape from the blast area.",
     "Penny": "Fills Penny's cannon position with timed blasts, pressuring her alongside it and breaking the setup her artillery depends on.",
     "Shelly": "Controls space beyond Shelly's shotgun reach with timed blasts, and Residue hinders her push into close range.",
@@ -770,14 +796,12 @@ export const reverseNotes = {
     "Shelly": "Maintains distance from Shelly's shotgun with chained Super dashes, while Gaso-Heal repairs damage from occasional hits."
   },
   "Surge": {
-    "Ash": "Uses upgraded speed and reach against Ash, reserving Super knockback for his Rage-driven close-range advances.",
     "Bibi": "Keeps Bibi outside bat range and answers each delayed swing or advance with a jumping Super that dodges and repels her.",
     "Buzz": "Interrupts Buzz's grapple with an invulnerable Super jump, knocking him away before his close-range burst starts.",
     "Carl": "Meets Carl's spinning dive with close-range burst and Super knockback, turning his committed attack against him.",
     "Cordelius": "Finishes Cordelius in three shots during Shadow Realm duels, ending the fight before his reload advantage develops.",
     "Edgar": "Readies Super knockback for Edgar's landing, interrupting his healing punches before following with ranged shots.",
     "Ollie": "Checks Ollie's dives with Super knockback, then leverages later speed and range upgrades against repeat attempts.",
-    "Ruffs": "Uses upgraded mobility to catch Ruffs and Super jumps over sandbag cover to exploit his low health.",
     "Sam": "Knocks Sam out of close-range dives with Super, then relies on upgraded speed and reach to preserve separation."
   },
   "Tara": {

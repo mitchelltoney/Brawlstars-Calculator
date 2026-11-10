@@ -21,6 +21,7 @@ export const reverseNotes = {
     "Gus": "Derrite a Gus a través del escudo de Spooky con llamas sostenidas, y el Fire Fluid ardiendo le niega los puntos donde aterrizan sus espíritus.",
     "Lily": "Mantiene a Lily fuera de su alcance de ataque y luego castiga su teletransporte forzado a quemarropa con Dancing Flames.",
     "Lola": "Atraviesa a Lola y a su Ego en un solo chorro sostenido de llamas, negando el valor del clon como escudo.",
+    "Maisie": "Quema a Maisie con un chorro continuo de llamas, más fácil de acertar que sus cohetes únicos que aceleran, ganando los intercambios sostenidos.",
     "Poco": "Quema la curación de Poco con un chorro continuo de llamas, mientras el aceite persistente castiga a los aliados que se agrupan para sus ondas.",
     "Shade": "Quema a Shade con llamas sostenidas durante su acercamiento, y Dancing Flames castiga el rango a quemarropa que necesita.",
     "Sirius": "Quema a Sirius y a sus Shadows agrupadas en el mismo chorro perforante de llamas, desmantelando el enjambre protector.",
@@ -46,6 +47,8 @@ export const reverseNotes = {
     "Lumi": "Lanza charcos persistentes por encima de los muros alrededor de Lumi, negándole espacio mientras la cobertura bloquea sus estrellas matutinas lanzadas hacia delante.",
     "Maisie": "Presiona a Maisie por encima de los muros y cubre sus aproximaciones con charcos persistentes, negándole líneas limpias para sus cohetes de arranque lento.",
     "Najia": "Aguanta el veneno de Najia con Medical Use, curándose con cada lanzamiento de artillería mientras la presiona por encima de los muros.",
+    "Rico": "Lanza charcos persistentes a los huecos de los muros que Rico usa para sus ángulos de rebote, sacándolo de una cobertura que sus rebotes no pueden defender.",
+    "Ruffs": "Lanza botellas por encima de los muros y sacos de arena de Ruffs, dejando que los charcos persistentes desgasten su poca vida donde Take Cover no ofrece protección.",
     "Willow": "Aguanta el veneno retardado de Willow con Medical Use, recuperando vida con cada lanzamiento durante todos sus intercambios de artillería."
   },
   "Bea": {
@@ -53,14 +56,15 @@ export const reverseNotes = {
     "Gray": "Supera el alcance del estrecho Finger Pistol de Gray, conectando disparos más anchos y remates con súper para dominar el intercambio a larga distancia.",
     "Jae-Yong": "Supera el alcance de Jae-Yong, conectando disparos de gran daño antes de que él se acerque lo suficiente para que sus ataques que atraviesan lleguen a impactar.",
     "Lola": "Supera el alcance de Lola y alterna disparos normales y con súper para romper su línea de tiro antes de que el Ego establezca fuego cruzado.",
+    "Lumi": "Hostiga a Lumi desde fuera del alcance de las estrellas de la mañana, convirtiendo cada impacto en un disparo Supercharged de seguimiento antes de que pueda avanzar.",
     "Meeple": "Supera el alcance de Meeple y convierte los primeros impactos en remates con súper antes de que su zona que atraviesa muros pueda controlar la cobertura."
   },
   "Belle": {
-    "8bit": "Impide que 8bit mantenga su fuego potenciado usando Grounded para bloquear sus recargas tras marcarlo.",
     "Amber": "Ataca a Amber fuera de su alcance, y luego Grounded interrumpe el ciclo de recarga que necesita para mantener la presión de sus llamas.",
     "Byron": "Iguala el alcance de Byron con Electro-Bolts más pesados, y luego usa Grounded para detener las recargas que él necesita para hostigar o curar.",
     "Clancy": "Presiona a Clancy fuera de su alcance y recarga más rápido, negándole los impactos repetidos que hacen avanzar sus etapas.",
     "Colt": "Gana el intercambio a Colt a máxima distancia mientras Positive Feedback absorbe el daño de las últimas balas de cada ráfaga.",
+    "Crow": "Presiona a Crow desde fuera del alcance de sus dagas con Electro-Bolts fiables, castigando su poca vida antes de que se acumulen las marcas de veneno.",
     "Damian": "Mantiene a Damian a raya fuera del alcance de sus puñetazos, conectando Electro-Bolts antes de que pueda cerrar la distancia.",
     "Gale": "Hostiga a Gale desde fuera del alcance de sus bolas de nieve, y luego lo marca para amplificar cada impacto posterior.",
     "Gene": "Supera el alcance del proyectil de daño completo de Gene y castiga a los grupos que se curan haciendo rebotar Electro-Bolts entre aliados cercanos.",
@@ -73,7 +77,9 @@ export const reverseNotes = {
     "Maisie": "Supera el alcance de Maisie y usa Positive Feedback para absorber daño en los intercambios en línea abierta antes de que Shockwave sea una amenaza.",
     "Najia": "Rompe el ciclo de munición única de Najia con Grounded, bloqueando la recarga que necesita para otra serpiente o un súper prolongado.",
     "RT": "Encadena Electro-Bolts entre la cabeza de RT y sus piernas divididas inmóviles, y luego usa Grounded para detener su recarga tras marcarlo.",
-    "Stu": "Presiona a Stu fuera del alcance de sus fuegos artificiales, forzando aproximaciones arriesgadas antes de que pueda empezar a encadenar embestidas."
+    "Stu": "Presiona a Stu fuera del alcance de sus fuegos artificiales, forzando aproximaciones arriesgadas antes de que pueda empezar a encadenar embestidas.",
+    "Surge": "Presiona a Surge desde fuera de su alcance inicial con Electro-Bolts fiables, manteniéndolo con poca vida antes de que sus mejoras entren en juego.",
+    "Tara": "Supera en alcance a Tara, y luego encadena Electro-Bolts entre ella y las Shadows cercanas para que cada invocación sume daño."
   },
   "Bibi": {
     "Cosmo": "Embiste a través de la débil órbita de corto alcance de Cosmo con su vida de tanque, usando la velocidad de Home Run para acercarse y Batting Stance para proteger la aproximación.",
@@ -82,6 +88,8 @@ export const reverseNotes = {
     "Tick": "Cruza el campo de minas retardado de Tick con mucha vida y movimiento rápido, y luego aplasta su poca vida de cerca."
   },
   "Bo": {
+    "Charlie": "Atrapa a Charlie y sus Spiders en salvas de flechas explosivas, mientras las minas ocultas la empujan hacia atrás cada vez que avanza.",
+    "Leon": "Mina las rutas que Leon debe tomar para emboscar, y Snare A Bear lo aturde al contacto antes de que sus cuchillas a quemarropa conecten.",
     "Lola": "Atrapa a Lola y a su Ego en las mismas flechas explosivas mientras las minas restringen las líneas que sostienen su fuego continuo.",
     "Pearl": "Controla el avance de Pearl con minas ocultas, usando Snare A Bear para aturdirla antes de que descargue sus galletas calientes.",
     "Penny": "Rompe con minas los muros que protegen a Penny y su cañón, exponiendo a ambos a una presión sostenida de flechas.",
@@ -146,7 +154,7 @@ export const reverseNotes = {
     "Spike": "Aguanta el daño de desgaste de Spike y castiga su poca vida con golpes de pico en ambas trayectorias."
   },
   "Charlie": {
-    "Bolt": "Envuelve a Bolt en un capullo en plena carga, deteniendo su aproximación a pesar de la inmunidad al control de masas de su súper.",
+    "Bolt": "Envuelve a Bolt en un capullo en plena carga cuando termina la breve inmunidad de Unstoppaball, deteniendo su avance antes de que conecte una colisión a toda velocidad.",
     "Chester": "Envía Spiders contra las campanas de Chester, absorbiendo su ráfaga de múltiples proyectiles antes de que las invocaciones lo presionen de cerca.",
     "Colette": "Usa Spiders para absorber los disparos de Colette que no atraviesan, y luego la envuelve en un capullo antes de que su carga complete el golpe de regreso.",
     "Crow": "Obliga a Crow a gastar munición repetidamente en eliminar Spiders antes de que sus dagas puedan presionarla directamente.",
@@ -180,7 +188,6 @@ export const reverseNotes = {
     "Dynamike": "Se lanza sobre Dynamike desde un Post cercano antes de que caigan sus dinamitas retardadas, usando Ghost Train para atravesar directamente sus muros."
   },
   "Clancy": {
-    "Byron": "Convierte la curación repetida de Byron en primera línea en progreso de mejora, y luego rompe su sustento gradual con ráfagas más fuertes.",
     "Chuck": "Usa los destinos fijos de Post de Chuck como combustible fiable de mejora, acumulando suficiente potencia de fuego para presionar su gran reserva de vida.",
     "Darryl": "Convierte la gran reserva de vida de Darryl en mejoras, y luego atrapa sus embestidas rodantes en línea recta con ráfagas densas de proyectiles.",
     "Doug": "Se mantiene fuera del ataque circular de Doug mientras recolecta su mucha vida en fichas que refuerzan las ráfagas posteriores.",
@@ -191,11 +198,14 @@ export const reverseNotes = {
   "Colette": {
     "Bolt": "Usa disparos basados en porcentajes para castigar la enorme reserva de vida de Bolt antes de que acumule la velocidad suficiente para colisiones peligrosas.",
     "Bonnie": "Vuelve en contra de Bonnie su resistente forma de cañón, usando disparos basados en porcentajes para infligir más daño inicial.",
+    "Buster": "Arranca grandes trozos de la vida de tanque de Buster con disparos basados en porcentaje desde larga distancia, reteniendo el fuego hasta que se disipa su escudo de Montage.",
     "Damian": "Vuelve la resistencia de Damian en su contra porque cada disparo escala con su vida restante en lugar de tratarla como protección.",
     "Dynamike": "Usa la velocidad y el alcance de los proyectiles para mantener a Dynamike moviéndose por líneas expuestas, reduciendo el valor de intercambio de sus lanzamientos de mecha lenta.",
     "El Primo": "Vuelve en contra de El Primo su enorme reserva de vida con disparos basados en porcentajes, y luego usa Push It para sacarlo del alcance de sus puñetazos.",
     "Fang": "Debilita a Fang durante su aproximación con fuego que escala con la vida, guardando Push It para reiniciar la distancia cuando se comprometa.",
     "Frank": "Castiga la enorme vida de Frank con fuego escalable, mientras Push It puede interrumpir su súper y alinear ambos pases de su carga.",
+    "Hank": "Arranca grandes trozos de la enorme reserva de vida de Hank con disparos basados en porcentaje, manteniéndose muy lejos del alcance de su Balloon Blast cargada.",
+    "Jacky": "Vuelve la enorme reserva de vida de Jacky en su contra con disparos basados en porcentaje hechos desde muy lejos de su corto radio de ataque.",
     "Meeple": "Rompe el posicionamiento de Meeple centrado en los muros con Push It, y luego mantiene la presión desde fuera de su alcance efectivo con fuego que escala con la vida.",
     "Meg": "Convierte el Mecha de mucha vida de Meg en un lastre infligiendo daño basado en porcentajes que borra su habitual ventaja de resistencia.",
     "Nita": "Elimina la principal fuente de presión de Nita desde fuera de su alcance porque su oso invocado recibe daño fijo fiable.",
@@ -212,19 +222,14 @@ export const reverseNotes = {
     "Kenji": "Usa el aislamiento del Shadow Realm contra Kenji para bloquear su súper y sus gadgets, y luego se mantiene fuera del alcance de sus ataques alternados.",
     "Kit": "Vuelve el rol orientado al equipo de Kit en una debilidad obligándolo a pelear solo dentro del Shadow Realm.",
     "Meg": "Impide que Meg reconstruya su Mecha dentro del Shadow Realm, dando tiempo a ráfagas repetidas de dos disparos para agotar cada forma.",
-    "Melodie": "Obliga a Melodie a un duelo cercano sin adornos, ya que el Shadow Realm borra sus notas orbitales y debilita su ataque.",
-    "Ruffs": "Aleja a Ruffs de su equipo, usando el fuego de hongos a corta distancia para aprovechar su poca vida durante el duelo en el Shadow Realm."
+    "Melodie": "Obliga a Melodie a un duelo cercano sin adornos, ya que el Shadow Realm borra sus notas orbitales y debilita su ataque."
   },
   "Crow": {
     "Colette": "Restringe el movimiento de Colette con Slowing Toxin, creando espacio para evitar su súper de ida y vuelta mientras el veneno reduce su recuperación.",
-    "Larry": "Esquiva las explosiones retardadas de Larry, manteniendo el veneno para frenar su curación al retirarse y castigar cada intento de atacar desde la cobertura.",
-    "Leon": "Sigue la pista de Leon invisible mediante el daño del veneno, y Extra Toxic reduce el peligro de una emboscada cuerpo a cuerpo posterior.",
-    "Mandy": "Esquiva los estrechos proyectiles de Mandy con movimiento rápido, mientras el veneno persistente impide su recuperación antes del siguiente duelo a distancia.",
-    "Max": "Neutraliza la ventaja de movimiento de Max con Slowing Toxin y mantiene el veneno activo para retrasar su regeneración entre enfrentamientos.",
-    "Mortis": "Se mantiene fuera del alcance del dash de Mortis, y luego usa Slowing Toxin para interrumpir sus cadenas de ataques y dificultar su huida.",
-    "Starr Nova": "Mantiene a Starr Nova bajo veneno a distancia, limitando su curación y usando Extra Toxic para suavizar el daño en combate cercano."
+    "Mortis": "Se mantiene fuera del alcance del dash de Mortis, y luego usa Slowing Toxin para interrumpir sus cadenas de ataques y dificultar su huida."
   },
   "Damian": {
+    "Bolt": "Atrapa a Bolt en un mosh pit cuyos muros de altavoces matan su impulso, y luego detiene cada carga con un puñetazo pesado antes de que acelere.",
     "Starr Nova": "Sobrevive al combo a corta distancia de Starr Nova gracias a su resistencia superior, ganando tiempo para castigarla antes de que se asiente la recuperación de su forma de espada.",
     "Vince": "Convierte el hostigamiento de Vince en carga de súper con una enorme reserva de vida, y luego se lanza con un mosh pit del que Vince no tiene dash ni empuje para escapar."
   },
@@ -241,12 +246,13 @@ export const reverseNotes = {
     "Nani": "Se acerca a Nani con una voltereta, y luego usa Tar Barrel para mantenerla atrapada dentro del alcance de la escopeta.",
     "Sprout": "Rueda a través de la línea de tiro de Sprout, y luego usa la protección posterior para soportar las Seed Bombs y lanzar un asalto a quemarropa.",
     "Squeak": "Vuelve en contra de Squeak su patrón de detonación retardada, usando la protección posterior a la voltereta para sobrevivir a las explosiones cercanas y establecer el alcance de escopeta.",
-    "Tara": "Rueda a través de las ráfagas de cartas de Tara y aprovecha su recarga lenta, usando su resistencia de tanque para ganar el intercambio a quemarropa.",
     "Tick": "Rueda a través de las minas de Tick con reducción de daño posterior, y luego castiga su poca vida con fuego de escopeta a quemarropa."
   },
   "Doug": {
     "Alli": "Aguanta la presión del dash de corto alcance de Alli mientras Self Service restaura vida durante cada intercambio cercano.",
+    "Buster": "Golpea a Buster con Snack Attacks de área que Montage no puede reflejar, curándose con Self Service durante los intercambios con Lens Flare.",
     "Edgar": "Usa Self Service para curarse más que el daño a quemarropa de Edgar, mientras la resurrección convierte su ataque total en un intercambio arriesgado.",
+    "Melodie": "Absorbe las embestidas de notas orbitales de Melodie con mucha vida, salpicándola de cerca mientras Self Service lo cura durante la ráfaga.",
     "Nori": "Aguanta el ataque de Nori a corta distancia, curándose en cada intercambio mientras Self Service restaura vida con cada Snack Attack.",
     "Shade": "Convierte los abrazos forzados a corta distancia de Shade en una carrera de curación, con Self Service restaurando vida en cada Snack Attack."
   },
@@ -256,7 +262,8 @@ export const reverseNotes = {
     "Trunk": "Hostiga a Trunk fuera del alcance de su giro con la punta dañina de Lance Stab, y luego termina el enfrentamiento con aliento de fuego sostenido."
   },
   "Dynamike": {
-    "Hank": "Bombardea la aproximación predecible de Hank, mientras Satchel Charge interrumpe Balloon Blast antes de que pueda soltarlo.",
+    "8bit": "Bombardea a 8bit, que se mueve despacio, y su Damage Booster desde detrás de los muros, donde ni sus rayos ni Extra Credits pueden responder.",
+    "Hank": "Bombardea el avance predecible de Hank, y el aturdimiento de Satchel Charge revienta su Balloon Blast en carga antes de tiempo, antes de que pueda alcanzar a Dynamike.",
     "Lumi": "Castiga a Lumi desde detrás de los muros con daño en ráfaga que sus estrellas matutinas lanzadas hacia delante no pueden responder."
   },
   "Edgar": {
@@ -274,16 +281,22 @@ export const reverseNotes = {
   },
   "El Primo": {
     "Bibi": "Aguanta a Bibi de cerca, y luego usa su súper para volver a entrar tras ser empujado por su golpe cargado.",
+    "Bolt": "Detiene la carga de Bolt con Suplex Supplement, lanzándolo para borrar su velocidad acumulada, y luego lo supera en el cuerpo a cuerpo con puñetazos rápidos.",
     "Buster": "Aplasta a Buster en un cuerpo a cuerpo prolongado con puñetazos de recarga más rápida, usando un salto para borrar su ventaja de alcance.",
     "Fang": "Aguanta el combo cuerpo a cuerpo de Fang, y luego aplasta su secuencia de patadas más lenta con puñetazos de recarga más rápida.",
     "Finx": "Salta directamente sobre Finx, eludiendo la ralentización de proyectiles de Time Warp y aplastándolo con puñetazos a corta distancia.",
     "Frank": "Castiga las preparaciones inmóviles de Frank a quemarropa, mientras Suplex Supplement cancela su súper antes de que lleguen más puñetazos.",
+    "Hank": "Aguanta más que Hank de cerca, acertando puñetazos de recarga rápida durante cada lenta carga de Balloon Blast que prepara.",
+    "Jacky": "Gana el duelo de tanques a quemarropa contra Jacky con puñetazos de recarga rápida que su ciclo más lento de Groundbreaker no puede igualar.",
     "Juju": "Salta por encima de la cobertura de muros para llegar a Juju, convirtiendo su ventaja de artillería en una pelea cercana que favorece su resistencia.",
     "Kenji": "Aguanta a Kenji a corta distancia, donde los puñetazos rápidos superan la curación integrada en sus ataques alternados.",
     "Trunk": "Supera en daño a Trunk a corta distancia, mientras Suplex Supplement interrumpe el giro retardado antes de que conecte."
   },
   "Emz": {
+    "Ash": "Derrite a Ash con rocío persistente desde fuera del alcance de su escoba, usando Friendzoner para empujarlo de vuelta cada vez que llega su embestida alimentada por Rage.",
+    "Buster": "Se mantiene fuera del cono de Lens Flare de Buster, acumulando rocío persistente sobre su enorme reserva de vida desde el límite de su alcance.",
     "Chester": "Acumula daño de laca mientras Chester se acerca, y luego usa Friendzoner para empujarlo de vuelta a la nube persistente.",
+    "Jacky": "Mantiene a Jacky fuera de su corto radio de ataque con rocío persistente, y luego usa Friendzoner para empujarla de vuelta cuando se acerca.",
     "Leon": "Controla la aproximación de Leon con daño amplio de laca, y luego usa Friendzoner para empujarlo más allá del alcance de máximo daño de sus cuchillas.",
     "Piper": "Castiga a Piper siempre que la cobertura acorta la línea, acumulando daño de laca donde sus disparos pierden gran parte de su potencia.",
     "Poco": "Supera la curación de Poco con daño de laca acumulativo cuando sus compañeros cercanos se agrupan dentro de la misma nube.",
@@ -292,9 +305,10 @@ export const reverseNotes = {
     "Wendy": "Cubre al equipo agrupado de Wendy con laca persistente, dejando que el daño creciente de Bad Karma desgaste sus escudos y su generador a la vez."
   },
   "Eve": {
+    "Bea": "Desborda el ataque de munición única de Bea con crías, forzando picotazos desperdiciados mientras las salvas escalonadas de huevos desgastan la poca vida de Bea.",
+    "Crow": "Acosa a Crow con crías que se le adhieren y drenan su poca vida, castigando con salvas de huevos donde aterriza su salto.",
     "Gene": "Se mantiene fuera del alcance de daño completo de Gene mientras las crías consumen sus disparos de carga lenta e interceptan su atracción.",
-    "Glowy": "Controla a Glowy desde fuera del alcance del rayo mientras las crías agotan su daño a objetivo único y aplican presión de veneno.",
-    "Najia": "Obliga a Najia a gastar su única munición en crías desechables, cuyas derrotas no pueden activar Poisonous Protector."
+    "Glowy": "Controla a Glowy desde fuera del alcance del rayo mientras las crías agotan su daño a objetivo único y aplican presión de veneno."
   },
   "Finx": {
     "Gigi": "Presiona a Gigi fuera del alcance de su giro, y luego retrocede a su posición anterior con la munición repuesta mientras ella se compromete con su teletransporte retardado."
@@ -307,7 +321,6 @@ export const reverseNotes = {
     "Gus": "Arrastra a Gus al alcance del martillo, donde la resistencia superior y los golpes pesados aplastan su poca vida.",
     "Hank": "Absorbe de cerca el Balloon Blast cargado de Hank, y luego asesta golpes pesados antes de que su siguiente ataque termine de cargarse.",
     "Jacky": "Usa Active Noise Canceling para resistir la atracción de Jacky y gana la pelea posterior gracias a una mayor reserva de vida.",
-    "Janet": "Atraviesa los disparos enfocados de Janet, usando su resistencia superior para alcanzarla antes de que los golpes de martillo la fuercen a retirarse.",
     "Jessie": "Golpea a Jessie y a Scrappy a la vez con amplias ondas de martillo, desgastando la torreta antes de que ella pueda repararla.",
     "Kenji": "Vuelve en contra de Kenji sus compromisos a corta distancia, sobreviviendo a ataques sostenidos antes de responder con pesado daño de área.",
     "Rico": "Tras absorber la presión de balas de Rico, usa Irresistible Attraction para arrastrarlo de las líneas de rebote al alcance del martillo.",
@@ -353,7 +366,6 @@ export const reverseNotes = {
     "Fang": "Castiga los ataques comprometidos de Fang con ráfagas densas de monedas que se concentran en un fuerte daño en ráfaga a quemarropa.",
     "Frank": "Supera en alcance a Frank con ráfagas de monedas y luego convierte su acercamiento forzado en daño en ráfaga concentrado a quemarropa.",
     "Nani": "Abruma el Return To Sender de Nani con ráfagas de varias monedas, conservando la mayor parte del daño en ráfaga después de que solo una moneda se refleje.",
-    "Ruffs": "Destruye a Ruffs a media distancia mientras Piggy Bank elimina los muros que amplifican la presión de su láser rebotante.",
     "Sam": "Destruye a Sam a corta distancia, donde las amplias ráfagas de monedas y el súper que regresa castigan cada acercamiento."
   },
   "Grom": {
@@ -373,6 +385,9 @@ export const reverseNotes = {
     "RT": "Aguanta más que el hostigamiento a distancia de RT gracias a la curación de los espíritus, con Health Bonanza reforzando la recuperación entre los disparos marcados de seguimiento.",
     "Vince": "Supera en alcance a Vince y absorbe sus disparos marcados de seguimiento con el escudo de Spooky, mientras la curación de los espíritus anula su hostigamiento a un solo objetivo."
   },
+  "Hank": {
+    "Gigi": "Aguanta el ataque giratorio de Gigi, y luego libera una Balloon Blast cargada a su alrededor cuando ella gira de cerca."
+  },
   "Jacky": {
     "Buster": "Llega hasta Buster atravesando el escudo direccional de Montage y luego hace que Counter Crush devuelva parte de su daño a corta distancia.",
     "Buzz": "Absorbe el asalto de cinco golpes de Buzz de cerca mientras Counter Crush convierte cada impacto en daño de represalia.",
@@ -383,7 +398,8 @@ export const reverseNotes = {
     "Moe": "Se sacude los rebotes repetidos de Moe durante largos intercambios porque Hardy Hard Hat reduce el daño de cada impacto.",
     "Mortis": "Recibe las embestidas de Mortis con una resistencia superior, dejando que Counter Crush tome represalias antes de que pueda retirarse.",
     "Sandy": "Presiona a Sandy a través de la cobertura con ataques de área que atraviesan muros mientras su resistencia absorbe sus explosiones más débiles.",
-    "Shade": "Golpea a Shade a través del terreno protector y sobrevive a los intercambios cercanos que su alcance limitado impone."
+    "Shade": "Golpea a Shade a través del terreno protector y sobrevive a los intercambios cercanos que su alcance limitado impone.",
+    "Tick": "Cruza el campo de minas de Tick mientras Hardy Hard Hat reduce cada explosión, y luego machaca su poca vida con Groundbreaker de cerca."
   },
   "Jae-Yong": {
     "Pierce": "Esquiva el fuego lineal de Pierce y luego se recupera de su hostigamiento inicial transformándose en Party Mode."
@@ -394,17 +410,20 @@ export const reverseNotes = {
     "Eve": "Hace pasar ondas sonoras concentradas a través de Eve y sus crías, eliminando el enjambre sin ceder impulso ofensivo.",
     "Frank": "Presiona a Frank fuera del alcance de su martillo, con el vuelo del jetpack negando tanto su ataque con carga como su súper aturdidor.",
     "Gale": "Inflige daño concentrado a Gale desde la máxima distancia, donde sus bolas de nieve dispersas apenas conectan.",
+    "Jessie": "Derriba a Jessie con tres disparos concentrados para ganar los duelos directos, y luego vuela con su jetpack por encima de Scrappy y bombardea la torreta desde arriba.",
     "Sam": "Mantiene a Sam persiguiéndola fuera de su distancia de puñetazos y salta muros con Backstage Pass cuando él la alcanza.",
     "Sandy": "Acumula daño concentrado sobre Sandy antes de que sus ráfagas de guijarros de menor alcance puedan amenazar con una represalia.",
     "Tara": "Mantiene ventaja de alcance sobre Tara, elimina las Shadows alineadas y se eleva para escapar de la atracción de Gravity."
   },
   "Jessie": {
+    "Charlie": "Rebota las esferas de Shock Rifle de los Spiders de Charlie hacia ella, mientras Scrappy mantiene la presión a través de cualquier Cocoon.",
     "Colette": "Desvía el fuego a un solo objetivo de Colette hacia Scrappy y luego restaura la torreta con Energize para prolongar su carga de munición.",
     "Otis": "Mantiene a Scrappy con Energize para que Otis tenga que gastar repetidamente ráfagas que no atraviesan antes de disputar su mismo alcance.",
     "Pam": "Encadena un proyectil entre Pam y su estación de curación, convirtiendo su posición compartida en daño simultáneo.",
     "Pearl": "Interpone a Scrappy ante las ráfagas calientes de Pearl, agotando el recurso que necesita para un daño en ráfaga mayor.",
     "Piper": "Castiga la recarga lenta de Piper añadiendo a Scrappy, mientras Energize restaura la torreta entre sus disparos de francotiradora.",
-    "Poco": "Reparte daño rebotante entre el equipo agrupado de Poco mientras Scrappy añade otra amenaza que su curación grupal debe cubrir."
+    "Poco": "Reparte daño rebotante entre el equipo agrupado de Poco mientras Scrappy añade otra amenaza que su curación grupal debe cubrir.",
+    "Tara": "Rebota las esferas de Shock Rifle entre Tara y sus Shadows invocadas, convirtiendo cada cuerpo extra que añade en otro objetivo de la cadena."
   },
   "Juju": {
     "Charlie": "Bombardea las Spiders de Charlie desde la cobertura y obliga a su yoyó a dividir la atención con Gris-Gris.",
@@ -423,8 +442,6 @@ export const reverseNotes = {
     "Berry": "Atraviesa las zonas de charcos dañinos de Berry con embestidas y luego aprovecha su recarga lenta y su poca vida en combate cuerpo a cuerpo.",
     "Dynamike": "Escapa de las zonas de explosión retardada de Dynamike con embestidas y luego abruma su poca vida con ataques rápidos alternados.",
     "Grom": "Llega hasta Grom a través de sus explosiones retardadas con ataques de embestida y tajo, y luego se recupera del daño reciente mientras le niega la seguridad a quemarropa.",
-    "Jacky": "Sobrevive a la presión cercana de Jacky recuperando el daño reciente y luego se aleja con embestidas entre intercambios.",
-    "Janet": "Embiste a través de la ventana de enfoque de ataque de Janet y luego sostiene la presión cercana curándose con tajos repetidos.",
     "Kit": "Aguanta más que Kit en intercambios cercanos recuperándose de su ráfaga inicial con Hosomaki Healing.",
     "Larry": "Se cuela entre las explosiones retardadas de Larry, llega al cuerpo a cuerpo y se recupera del daño reciente sufrido durante el acercamiento.",
     "Lou": "Esquiva las ráfagas lineales de Lou con embestidas repetidas y luego sostiene la presión curándose de cerca.",
@@ -452,9 +469,6 @@ export const reverseNotes = {
     "Sandy": "Desaloja a Sandy de posiciones protegidas usando explosiones de mayor alcance sobre los muros mientras Lawrie amenaza desde otra dirección.",
     "Willow": "Castiga a Willow con explosiones consecutivas mientras Lawrie la obliga a dividir sus maldiciones lanzadas entre ambos gemelos."
   },
-  "Leon": {
-    "Bo": "Se acerca a Bo de forma invisible esquivando su control a distancia y luego usa Invisiheal para sostener la presión a quemarropa."
-  },
   "Lily": {
     "Lou": "Usa Vanish para cruzar la línea de disparo de Lou y reventarlo antes de que pueda acumular congelación.",
     "Meeple": "Usa Vanish para cruzar el alcance de Meeple, reapareciendo a quemarropa antes de que los disparos teledirigidos puedan controlar su acercamiento.",
@@ -466,6 +480,7 @@ export const reverseNotes = {
     "Meg": "Supera en alcance al Mecha de Meg y duplica la presión a larga distancia con el Ego, ganando intercambios sostenidos antes de que Meg se acerque."
   },
   "Lou": {
+    "Bolt": "Congela a Bolt con conos de nieve acumulativos, reiniciando su velocidad acumulada para que sus colisiones nunca alcancen el daño máximo.",
     "Byron": "Congela a Byron con ráfagas rápidas, rompiendo su ritmo de ataque antes de que los dardos de daño con el tiempo establezcan presión sostenida.",
     "Draco": "Congela a Draco repetidamente para romper la presión sostenida mientras Hypothermia reduce su daño de forma constante.",
     "Meeple": "Supera en alcance a Meeple y acumula congelación hasta que un aturdimiento acierta mientras Hypothermia reduce su daño de respuesta.",
@@ -480,16 +495,20 @@ export const reverseNotes = {
     "Sirius": "Controla a Sirius y a las Shadows agrupadas dentro de una zona congelante, donde Supercool acelera la acumulación en todo el grupo."
   },
   "Lumi": {
-    "Ash": "Usa Half-Time para ralentizar a Ash con las estrellas matutinas recuperadas, negando su presión cercana alimentada por Rage.",
     "Bull": "Ralentiza a Bull con las estrellas matutinas recuperadas, rompiendo repetidamente el contacto cercano que necesita su presión de tanque.",
     "El Primo": "Supera en alcance los puñetazos de El Primo con las estrellas matutinas y luego lo ralentiza al recuperarlas para evitar otro acercamiento.",
     "Frank": "Castiga las cargas estacionarias de Frank lanzando ambas estrellas matutinas más allá de él y golpeando de nuevo cuando regresan.",
     "Pam": "Atraviesa a Pam y su torreta curativa tanto al lanzar como al recuperar, castigando el posicionamiento estacionario que requiere su sostenimiento."
   },
+  "Maisie": {
+    "Buzz": "Golpea fuerte a Buzz con cohetes pesados mientras se acerca, y luego lo empuja fuera del alcance de cinco golpes con Shockwave."
+  },
   "Mandy": {
     "Bolt": "Supera en alcance a Bolt mientras está en Focused, y luego Caramelize ralentiza su acumulación de velocidad cuando la inmunidad al control de masas está inactiva.",
     "Brock": "Supera en alcance a Brock mientras está en Focused, acertando caramelos más rápidos antes de que sus cohetes más lentos amenacen la posición de disparo.",
-    "Rico": "Supera en alcance a Rico mientras está en Focused, y luego Cookie Crumbs atraviesa su cobertura de muros antes de que los disparos rebotantes generen presión."
+    "Crow": "Mantiene el alcance de Focused contra Crow, arrancando trozos de su poca vida con pesados disparos de caramelo mucho antes de que sus dagas envenenadas conecten.",
+    "Rico": "Supera en alcance a Rico mientras está en Focused, y luego Cookie Crumbs atraviesa su cobertura de muros antes de que los disparos rebotantes generen presión.",
+    "Surge": "Le niega a Surge su primera mejora desde el alcance de Focused, manteniéndolo escondido en lugar de cargar su súper a lo largo de sus largas líneas de visión."
   },
   "Max": {
     "Angelo": "Esquiva los disparos cargados de Angelo con una velocidad superior mientras el movimiento constante acelera las recargas y sostiene la persecución.",
@@ -515,17 +534,21 @@ export const reverseNotes = {
     "Amber": "Salta sobre el chorro de llamas de Amber para caer a su lado, robando la munición que necesita su fuego continuo con Monkey Business.",
     "Barley": "Salta sobre muros y los lentos arcos de botellas de Barley, llegando al cuerpo a cuerpo para aprovechar su poca vida.",
     "Belle": "Salta sobre las largas líneas de visión de Belle para caer a su lado, robando munición con Monkey Business antes de que pueda marcarlo.",
+    "Bo": "Salta por encima de las minas ocultas de Bo y su abanico de flechas para caer a su lado, usando Monkey Business para robarle la munición que necesita.",
     "Chuck": "Brinca sobre las líneas de embestida de Post de Chuck para caer directamente sobre él, usando Monkey Business para robar la munición que necesita para intercambiar.",
     "Cosmo": "Salta sobre los planetas orbitales de Cosmo siendo invulnerable, y luego Monkey Business roba munición que su recarga lenta apenas logra reponer.",
     "Dynamike": "Cruza las explosiones retardadas de Dynamike a mitad de salto y aterriza lo bastante cerca para eliminarlo antes de que se desarrolle un contraataque.",
     "Grom": "Esquiva los explosivos retardados de Grom saltando, aterriza a su lado y abruma su poco fiable defensa a quemarropa.",
+    "Jessie": "Salta por encima de Scrappy para caer junto a Jessie, y luego le roba con Monkey Business la munición que necesita para defenderse.",
     "Sprout": "Cruza las Seed Bombs y las barreras de Hedge de Sprout saltando, y luego drena munición para suprimir la respuesta del lanzador.",
     "Tick": "Despeja el patrón de minas de Tick durante un salto invulnerable, aterrizando a su lado para abrumar su poca vida con rápidos ataques cuerpo a cuerpo.",
-    "Willow": "Salta sobre las maldiciones lanzadas de Willow para caer a su lado, robando munición con Monkey Business antes de que caiga su súper de control mental."
+    "Willow": "Salta sobre las maldiciones lanzadas de Willow para caer a su lado, robando munición con Monkey Business antes de que caiga su súper de control mental.",
+    "Ziggy": "Salta fuera de las zonas de impacto retardado de Ziggy en pleno salto, cayendo a su lado para reventar su poca vida antes del siguiente impacto."
   },
   "Mortis": {
     "Barley": "Se cuela entre los lentos arcos de botellas de Barley con embestidas y castiga su poca vida antes de que otro lanzamiento esté disponible.",
     "Berry": "Bordea los charcos persistentes de Berry con embestidas y luego aprovecha su poca vida durante la larga recarga entre conos.",
+    "Bo": "Se desliza por los huecos del campo de minas de Bo y rodea su abanico de flechas, castigándolo cuando gasta su munición controlando la zona.",
     "Cosmo": "Embiste entre los planetas dispersos de Cosmo para llegar a quemarropa, castigando su recarga lenta antes de que otra ráfaga esté lista.",
     "Dynamike": "Cruza las explosiones temporizadas de Dynamike con embestidas y llega al cuerpo a cuerpo, castigando su poca vida antes de que sea posible un lanzamiento de represalia.",
     "Emz": "Entra en la zona muerta dentro del rociado de Emz con una embestida, limitando cada nube a un solo golpe antes de cerrar el duelo.",
@@ -576,6 +599,7 @@ export const reverseNotes = {
   "Nori": {
     "Chuck": "Inmoviliza a Chuck con Gonna Need A Bigger Net antes de que embista entre los Posts y luego gana el duelo cercano que sigue.",
     "Cosmo": "Inmoviliza a Cosmo con Gonna Need A Bigger Net y se lanza de cerca, donde sus planetas infligen el daño mínimo y su recarga lenta lo deja expuesto.",
+    "Jessie": "Lanza su caña de pescar para impulsarse hacia Jessie, esquivando a Scrappy, y luego la tumba a tajos de cerca, donde no puede escapar.",
     "Juju": "Persigue a Juju con las ráfagas de velocidad de His Mothers Son y la inmoviliza con Gonna Need A Bigger Net antes de que llegue Gris-Gris."
   },
   "Ollie": {
@@ -584,7 +608,6 @@ export const reverseNotes = {
   },
   "Otis": {
     "Darryl": "Mantiene a Darryl fuera del alcance de su escopeta y luego silencia su ráfaga tras la voltereta antes de que pueda disparar.",
-    "Dynamike": "Hostiga a Dynamike con tinta de largo alcance y luego silencia sus ataques y Satchel Charge cuando sale de la cobertura.",
     "Edgar": "Silencia a Edgar al aterrizar, negando sus puñetazos y su curación durante el duelo.",
     "Fang": "Silencia a Fang durante su ataque lanzado, impidiendo ataques y súperes de seguimiento mientras las ráfagas sostenidas de tinta lo rematan.",
     "Mortis": "Silencia a Mortis a corta distancia, impidiendo embestidas encadenadas y dejando a los objetivos debilitados fuera de su alcance.",
@@ -641,7 +664,12 @@ export const reverseNotes = {
     "Rico": "Controla las líneas de visión abiertas fuera del alcance de Rico y restablece la distancia con Auto Aimer cada vez que él avanza.",
     "Shelly": "Mantiene una línea fuera del alcance de la escopeta de Shelly y responde a cada acercamiento con el empuje de Auto Aimer.",
     "Spike": "Aprovecha la poca vida de Spike fuera del alcance de las granadas de cactus, conectando disparos de daño máximo antes de que controle la línea.",
-    "Starr Nova": "Controla la zona de Starr Nova fuera del alcance de su ráfaga de cabello, usando Auto Aimer para cortar el impulso de su forma de espada de cerca."
+    "Starr Nova": "Controla la zona de Starr Nova fuera del alcance de su ráfaga de cabello, usando Auto Aimer para cortar el impulso de su forma de espada de cerca.",
+    "Surge": "Castiga a Surge en sus primeras etapas desde muy lejos de su alcance, obligándolo a esconderse antes de que pueda cargar las mejoras que amplían su alcance.",
+    "Griff": "Elimina a Griff desde fuera de su alcance de monedas, donde su cono que se ensancha no conecta por completo y los disparos largos de ella golpean más fuerte.",
+    "Jae-Yong": "Supera en alcance los disparos que atraviesan de Jae-Yong, acertando impactos de daño máximo cada vez que avanza para preparar las curaciones de Party Mode.",
+    "Tara": "Supera en alcance el abanico de cartas de Tara, acertando disparos de daño máximo durante su lenta recarga antes de que pueda cargar Gravity.",
+    "Clancy": "Elimina a Clancy desde fuera del alcance de las bolas de pintura con disparos de daño máximo, privándolo de las fichas que necesitan sus etapas posteriores."
   },
   "Poco": {
     "Lola": "Mantiene sana a su equipo mientras los ataques amplios atraviesan el Ego de Lola, golpeando a ambos y negando la cobertura al clon.",
@@ -670,8 +698,6 @@ export const reverseNotes = {
   "Rosa": {
     "Ash": "Absorbe el daño de Ash alimentado por su Rage con su súper y luego gana el intercambio a corta distancia con puñetazos continuos.",
     "Buster": "Usa su súper para amortiguar el Lens Flare de Buster y luego aprovecha su recarga más rápida para seguir conectando puñetazos de cerca.",
-    "Crow": "Aguanta el veneno de Crow y su ráfaga de dagas a corta distancia tras su súper, ganando tiempo suficiente para conectar puñetazos repetidos.",
-    "Hank": "Se protege del Balloon Blast de Hank a quemarropa y luego lo abruma con puñetazos rápidos.",
     "Jacky": "Reduce el daño del Groundbreaker de Jacky con su súper y sigue golpeando hasta que el intercambio prolongado a corta distancia se incline a su favor.",
     "Wendy": "Absorbe el daño modesto de Wendy tras su súper que reduce el daño y luego gana el intercambio a corta distancia con puñetazos rápidos."
   },
@@ -694,6 +720,7 @@ export const reverseNotes = {
   "Shade": {
     "Brock": "Se cuela por los muros en Incorporeal Form para llegar a Brock, castigándolo con abrazos cada vez que Rocket Laces está en enfriamiento.",
     "Cosmo": "Se cuela por los muros en Incorporeal Form para llegar a Cosmo y luego lo abraza de cerca, donde sus planetas orbitales hacen el daño mínimo.",
+    "Dynamike": "Se cuela por los muros protectores de Dynamike con Incorporeal Form y se le pega de cerca, donde sus bastones retardados no pueden seguirle el ritmo.",
     "Juju": "Golpea a Juju a través de sus muros protectores y luego se acerca en Incorporeal Form mientras Hardened Hoodie reduce el daño que recibe.",
     "Meg": "Atraviesa los muros esquivando la presión del Mecha de Meg, castigando su frágil forma base con abrazos al centro antes de que vuelva a montarse.",
     "Mina": "Sortea el muro de proyectiles de Mina con ataques que atraviesan la cobertura mientras Hardened Hoodie reduce el daño de su combo a corta distancia.",
@@ -709,12 +736,10 @@ export const reverseNotes = {
     "El Primo": "Castiga la necesidad de El Primo de mantenerse cerca, destrozando su vida antes de que el empuje del súper lo deje fuera del alcance de sus puñetazos.",
     "Fang": "Revienta a Fang a quemarropa e interrumpe sus patadas de seguimiento con el empuje del súper.",
     "Kaze": "Supera a Kaze a corta distancia y luego la empuja antes de que pueda encadenar otro golpe.",
-    "Leon": "Castiga la emboscada a corta distancia de Leon con una ráfaga de escopeta y luego Shell Shock ralentiza su huida.",
     "Lily": "Castiga cada teletransporte de Lily con daño de escopeta a quemarropa y el empuje del súper antes de que pueda seguir atacando.",
     "Moe": "Castiga el acercamiento del Driller de Moe con presión de escopeta y luego usa Shell Shock para ralentizar su retirada inmediata.",
     "Mortis": "Revienta a Mortis al alcance de la escopeta y luego Shell Shock ralentiza su retirada antes de que pueda escapar con una embestida.",
     "Nori": "Revienta a Nori de cerca y luego usa Shell Shock para impedir que se desenganche.",
-    "Rico": "Alcanza a Rico con Fast Forward, recarga por completo y luego abruma su poca vida con daño concentrado de escopeta.",
     "Rosa": "Supera a Rosa de cerca con ráfagas de escopeta y empujes repetidos del súper que rompen el ritmo de sus puñetazos."
   },
   "Sirius": {
@@ -725,7 +750,6 @@ export const reverseNotes = {
     "Pierce": "Enjambra a Pierce con Shadows invocadas que no sueltan perdigones, absorbiendo sus disparos a un solo objetivo y dejando sin recarga."
   },
   "Spike": {
-    "Crow": "Alcanza el movimiento evasivo de Crow con las espinas de Curveball, convirtiendo los impactos fiables en una presión pesada contra su poca vida.",
     "Meeple": "Presiona a Meeple alrededor de la cobertura con espinas divididas mientras Life Plant absorbe sus ataques de un solo proyectil.",
     "Nani": "Deja que Life Plant absorba los disparos concentrados de Nani y cure a los compañeros cercanos al ser destruida.",
     "Shelly": "Mantiene a Shelly fuera del alcance de la escopeta, conectando espinas divididas antes de que pueda infligir daño concentrado a corta distancia.",
@@ -736,13 +760,15 @@ export const reverseNotes = {
     "Amber": "Bloquea el chorro de llamas de Amber con muros de Hedge y la bombardea por encima de la cobertura con Seed Bombs a las que no puede responder.",
     "Bea": "Lanza Seed Bombs por encima de la cobertura y levanta muros de Hedge, negando a Bea las líneas rectas que necesitan sus disparos.",
     "Byron": "Bombardea a Byron desde detrás de la cobertura mientras los muros de Hedge obstruyen los ángulos de disparo rectos que necesitan sus dardos estrechos.",
+    "Eve": "Bombardea a Eve por encima de los muros tras los que se esconde con Seed Bombs, y luego levanta muros Hedge que bloquean sus salvas rectas de huevos.",
+    "Maisie": "Lanza Seed Bombs por encima de la cobertura que los cohetes rectos de Maisie no pueden cruzar, y luego levanta muros Hedge para bloquear sus líneas de disparo.",
+    "Rico": "Bombardea a Rico por encima de los muros en los que confía, acertando Seed Bombs sin línea de visión mientras sus rebotes necesitan ángulos exactos para responder.",
     "Rosa": "Supera el alcance de los puñetazos de Rosa con Seed Bombs en arco y luego bloquea su acercamiento con muros de Hedge que no puede sortear con rapidez.",
     "Ruffs": "Bombardea a Ruffs por encima de los muros, aprovechando su poca vida y alejándolo de los sacos de arena que anclan su posición."
   },
   "Squeak": {
     "8bit": "Bombardea la posición del Damage Booster de 8bit con explosiones retardadas, sacándolo del área potenciada.",
     "Janet": "Siembra los ángulos de disparo de Janet con explosiones temporizadas, mientras Residue ralentiza su movimiento antes de cada disparo concentrado.",
-    "Jessie": "Atrapa a Jessie y a Scrappy en explosiones retardadas superpuestas, impidiendo que su torreta mantenga una línea fija.",
     "Meeple": "Golpea a Meeple a través de la cobertura con las explosiones de Sticky Blomb, mientras Residue ralentiza su escape del área de la explosión.",
     "Penny": "Llena la posición del cañón de Penny con explosiones temporizadas, presionándola junto a él y rompiendo la preparación de la que depende su artillería.",
     "Shelly": "Controla el espacio fuera del alcance de la escopeta de Shelly con explosiones temporizadas, y Residue dificulta su avance a corta distancia.",
@@ -770,14 +796,12 @@ export const reverseNotes = {
     "Shelly": "Mantiene la distancia con la escopeta de Shelly mediante embestidas encadenadas del súper, mientras Gaso-Heal repara el daño de los impactos ocasionales."
   },
   "Surge": {
-    "Ash": "Usa la velocidad y el alcance mejorados contra Ash, reservando el empuje del súper para sus avances a corta distancia impulsados por su Rage.",
     "Bibi": "Mantiene a Bibi fuera del alcance del bate y responde a cada golpe retardado o avance con un súper saltarín que esquiva y la repele.",
     "Buzz": "Interrumpe el gancho de Buzz con un salto de súper invulnerable, empujándolo antes de que empiece su ráfaga a corta distancia.",
     "Carl": "Recibe el ataque giratorio de Carl con daño en ráfaga a corta distancia y el empuje del súper, volviendo en su contra su ataque comprometido.",
     "Cordelius": "Termina con Cordelius en tres disparos durante los duelos en Shadow Realm, acabando el combate antes de que se desarrolle su ventaja de recarga.",
     "Edgar": "Prepara el empuje del súper para el aterrizaje de Edgar, interrumpiendo sus puñetazos curativos antes de seguir con disparos a distancia.",
     "Ollie": "Frena los ataques de Ollie con el empuje del súper y luego aprovecha las mejoras posteriores de velocidad y alcance contra los intentos repetidos.",
-    "Ruffs": "Usa la movilidad mejorada para alcanzar a Ruffs y los saltos del súper por encima de la cobertura de sacos de arena para aprovechar su poca vida.",
     "Sam": "Empuja a Sam con el súper para sacarlo de sus ataques a corta distancia y luego se apoya en la velocidad y el alcance mejorados para mantener la separación."
   },
   "Tara": {

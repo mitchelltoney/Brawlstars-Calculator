@@ -12,7 +12,7 @@
 // the English each translation was made from, so an edited English sentence
 // shows up as stale instead of silently keeping an outdated translation.
 
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, statSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, join } from "node:path";
@@ -65,8 +65,9 @@ export function contentPaths(lang) {
   };
 }
 
+// mtime query: `merge` rewrites these files and re-reads them in-process.
 async function importIfExists(file) {
-  return existsSync(file) ? import(pathToFileURL(file).href) : {};
+  return existsSync(file) ? import(`${pathToFileURL(file).href}?m=${statSync(file).mtimeMs}`) : {};
 }
 
 // Translated content for one language, flattened to the same keys as

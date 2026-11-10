@@ -51,9 +51,12 @@ for (const lang of CONTENT_LANGS) {
     for (const [hl, href] of [["en", "/counters/8bit/"], ["es", "/es/counters/8bit/"], ["pt-BR", "/pt/counters/8bit/"], ["x-default", "/counters/8bit/"]]) {
       assert.ok(page.includes(`<link rel="alternate" hreflang="${hl}" href="https://brawlcalculator.com${href}">`), `hreflang ${hl}`);
     }
-    // A translated note renders (first sentence before any inline loadout icon).
-    const note = entries.get(`m|8bit|${counters["8bit"].direct[0]}`);
-    assert.ok(note && page.includes(note.split(/[,.]/)[0].replace(/&/g, "&amp;")), "translated matchup note on page");
+    // Every translated note renders (markup stripped: loadout names get icon spans).
+    const pageText = page.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\s+/g, " ");
+    for (const c of counters["8bit"].direct) {
+      const note = entries.get(`m|8bit|${c}`);
+      if (note) assert.ok(pageText.includes(note), `translated note for 8bit <- ${c} on page`);
+    }
 
     const mapPage = readFileSync(join(DOCS, lang, "maps", "brace-for-impact", "index.html"), "utf8");
     assert.ok(mapPage.includes(`<html lang="${HTML_LANG[lang]}">`));

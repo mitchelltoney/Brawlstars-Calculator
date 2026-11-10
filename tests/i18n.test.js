@@ -81,6 +81,21 @@ test("each language toggle offers every UI language, and each has an <html lang>
   for (const lang of LANGS) assert.ok(HTML_LANG[lang], `HTML_LANG.${lang}`);
 });
 
+test("homepage declares its ?lang= language versions (page head + sitemap)", () => {
+  const html = readFileSync(join(DOCS, "index.html"), "utf8");
+  const xml = readFileSync(join(DOCS, "sitemap.xml"), "utf8");
+  const versions = [["en", "/"], ["es", "/?lang=es"], ["pt-BR", "/?lang=pt"], ["x-default", "/"]];
+  for (const [hl, path] of versions) {
+    const href = `https://brawlcalculator.com${path}`;
+    assert.ok(html.includes(`<link rel="alternate" hreflang="${hl}" href="${href}" />`), `index.html hreflang ${hl}`);
+    assert.ok(xml.includes(`<xhtml:link rel="alternate" hreflang="${hl}" href="${href}"/>`), `sitemap hreflang ${hl}`);
+  }
+  for (const lang of LANGS) {
+    const loc = lang === "en" ? "https://brawlcalculator.com/" : `https://brawlcalculator.com/?lang=${lang}`;
+    assert.ok(xml.includes(`<loc>${loc}</loc>`), `sitemap entry ${loc}`);
+  }
+});
+
 test("every t(\"key\") call in app.js exists", () => {
   const src = readFileSync(join(DOCS, "app.js"), "utf8");
   const keys = [...src.matchAll(/\bt\(\s*"(\w+)"/g)].map(m => m[1]);

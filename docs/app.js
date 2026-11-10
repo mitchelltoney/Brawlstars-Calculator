@@ -8,9 +8,9 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-11-10.1";
-import { matchupNotes } from "./matchup-notes.js?v=2026-11-10.1";
-import { HTML_LANG, pickLang, translate, translateClass, formatMonthYear } from "./i18n.js?v=2026-11-10.1";
+} from "./calculate.js?v=2026-11-10.2";
+import { matchupNotes } from "./matchup-notes.js?v=2026-11-10.2";
+import { HTML_LANG, pickLang, translate, translateClass, formatMonthYear } from "./i18n.js?v=2026-11-10.2";
 
 // ── Language ───────────────────────────────────────────────────────────────
 // ?lang= (one visit) beats the saved EN/ES/PT toggle, which beats the browser's
@@ -38,8 +38,8 @@ function localPath(path) {
 // until they arrive (or for a pair without one) the English note shows.
 const notesByLang = { en: matchupNotes };
 const noteModules = {
-  es: () => import("./i18n/es/matchup-notes.js?v=2026-11-10.1"),
-  pt: () => import("./i18n/pt/matchup-notes.js?v=2026-11-10.1"),
+  es: () => import("./i18n/es/matchup-notes.js?v=2026-11-10.2"),
+  pt: () => import("./i18n/pt/matchup-notes.js?v=2026-11-10.2"),
 };
 
 function loadNotes(l) {
@@ -56,9 +56,21 @@ function noteFor(defender, counter) {
   return notesByLang[lang]?.[defender]?.[counter] ?? matchupNotes[defender]?.[counter];
 }
 
+// The homepage's hreflang alternates are /?lang=es and /?lang=pt; when such a
+// URL is what chose the language, it is its own canonical (the static tag in
+// index.html names the English page).
+function syncCanonical() {
+  const link = document.querySelector('link[rel="canonical"]');
+  if (!link) return;
+  const home = new URL("/", link.href).href;
+  const fromParam = new URLSearchParams(window.location.search).get("lang") === lang;
+  link.setAttribute("href", fromParam && lang !== "en" ? `${home}?lang=${lang}` : home);
+}
+
 function applyStaticStrings() {
   document.documentElement.lang = HTML_LANG[lang];
   document.title = t("pageTitle");
+  syncCanonical();
   document.querySelectorAll("[data-i18n]").forEach(el => {
     el.textContent = t(el.dataset.i18n);
   });
@@ -608,6 +620,7 @@ function setLang(next) {
   if (url.searchParams.has("lang")) {
     url.searchParams.delete("lang");
     history.replaceState(null, "", url);
+    syncCanonical();
   }
   if (!changed) return;
   applyStaticStrings();

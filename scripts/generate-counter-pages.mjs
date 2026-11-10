@@ -578,7 +578,7 @@ const stylesHash = hash8(readFileSync(join(ROOT, "docs", "styles.css"), "utf8"))
 
 // Every generated page exists in each PAGE_LANGS language; each <url> lists
 // its siblings as xhtml:link alternates. The calculator home localizes
-// client-side, so it has a single entry.
+// client-side, so its language versions are /?lang=es and /?lang=pt.
 function sitemap() {
   const pages = [
     { path: "/counters/", priority: "0.7", changefreq: "weekly" },
@@ -586,8 +586,12 @@ function sitemap() {
     ...roster.map(n => ({ path: `/counters/${slug(n)}/`, priority: "0.6", changefreq: "monthly" })),
     ...siteMaps.map(m => ({ path: `/maps/${m.slug}/`, priority: "0.5", changefreq: "monthly" })),
   ];
+  const homeAlternates = [
+    ...PAGE_LANGS.map(l => [HTML_LANG[l], SITE + calcHref(l)]),
+    ["x-default", `${SITE}/`],
+  ];
   const urls = [
-    { loc: `${SITE}/`, priority: "0.9", changefreq: "weekly", alternates: [] },
+    ...PAGE_LANGS.map(l => ({ loc: SITE + calcHref(l), priority: "0.9", changefreq: "weekly", alternates: homeAlternates })),
     ...PAGE_LANGS.flatMap(lang => pages.map(p => ({
       loc: SITE + localPath(lang, p.path),
       priority: p.priority,
