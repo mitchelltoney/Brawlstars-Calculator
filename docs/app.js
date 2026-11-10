@@ -8,12 +8,12 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-10-30";
-import { matchupNotes } from "./matchup-notes.js?v=2026-10-30";
-import { pickLang, translate, translateClass, formatMonthYear } from "./i18n.js?v=2026-10-30";
+} from "./calculate.js?v=2026-11-10";
+import { matchupNotes } from "./matchup-notes.js?v=2026-11-10";
+import { HTML_LANG, pickLang, translate, translateClass, formatMonthYear } from "./i18n.js?v=2026-11-10";
 
 // ── Language ───────────────────────────────────────────────────────────────
-// ?lang= (one visit) beats the saved EN/ES toggle, which beats the browser's
+// ?lang= (one visit) beats the saved EN/ES/PT toggle, which beats the browser's
 // languages. Static text is tagged in the HTML with data-i18n (textContent),
 // data-i18n-html (innerHTML) or data-i18n-attr="attr:key,attr:key".
 
@@ -29,7 +29,7 @@ function t(key, vars) {
 }
 
 function applyStaticStrings() {
-  document.documentElement.lang = lang;
+  document.documentElement.lang = HTML_LANG[lang];
   document.title = t("pageTitle");
   document.querySelectorAll("[data-i18n]").forEach(el => {
     el.textContent = t(el.dataset.i18n);
@@ -565,7 +565,7 @@ document.addEventListener("keydown", e => {
   runCalc();
 });
 
-// ── EN/ES toggle ───────────────────────────────────────────────────────────
+// ── EN/ES/PT toggle ────────────────────────────────────────────────────────
 
 function setLang(next) {
   const changed = next !== lang;

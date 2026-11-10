@@ -98,7 +98,7 @@ body {
   transform: translateY(-1px);
 }
 
-/* ── EN/ES toggle ──
+/* ── EN/ES/PT toggle ──
  * Two copies in the markup: .lang-nav sits in the nav on desktop; the nav is
  * already full at phone width, so .lang-header takes over above the title. */
 .lang-toggle {

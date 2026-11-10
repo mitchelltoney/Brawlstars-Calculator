@@ -1,13 +1,18 @@
 // UI strings for the calculator pages (index.html / classic.html via app.js).
 // Plain ES module with no DOM dependencies, so tests/ can import it.
 //
-// Brawler, star power and gadget names are never translated: Spanish players
-// use the official in-game English names. Keys ending in "Html" are inserted
-// with innerHTML (trusted, authored here); every other key is plain text.
+// Brawler, star power and gadget names are never translated: Spanish and
+// Brazilian players use the official in-game English names. Keys ending in
+// "Html" are inserted with innerHTML (trusted, authored here); every other key
+// is plain text.
 // {name}-style placeholders are filled by translate().
 
-export const LANGS = ["en", "es"];
+export const LANGS = ["en", "es", "pt"];
 export const DEFAULT_LANG = "en";
+
+// <html lang> per UI language. "pt" is Brazilian Portuguese; pt-PT browsers
+// get it too until there is a European Portuguese table.
+export const HTML_LANG = { en: "en", es: "es", pt: "pt-BR" };
 
 export const strings = {
   en: {
@@ -177,6 +182,90 @@ export const strings = {
       "Healer": "Sanador",
     },
   },
+
+  pt: {
+    pageTitle: "Calculadora de counterpicks para o Ranqueado do Brawl Stars",
+    langToggleLabel: "Idioma",
+    navMaps: "Mapas",
+    navClassic: "Versão clássica",
+    navCounters: "Counters por brawler",
+    heroTitleHtml: "Calculadora de<br>Counterpicks",
+    heroSubtitle: "Toque nos brawlers que seus adversários escolheram e os resultados vão mostrar quais brawlers dão counter neles, para você fazer o melhor pick.",
+    iconSize: "Tamanho dos ícones",
+    iconSmall: "Ícones pequenos",
+    iconMedium: "Ícones médios",
+    iconLarge: "Ícones grandes",
+    pickHeading: "Escolha até três brawlers",
+    bans: "Bans",
+    bansCount: "Bans ({n})",
+    banTitle: "Modo de ban: toque nos brawlers para marcá-los como banidos; eles ficam ocultos nos resultados",
+    banHintHtml: "O modo de ban está ativado: toque nos brawlers para marcá-los como banidos e eles vão sumir dos resultados. Toque em <strong>Bans</strong> de novo para terminar.",
+    sortRarity: "Raridade",
+    sortAlpha: "Alfabética",
+    nameAddPlaceholder: "Adicione um brawler…",
+    nameAddLabel: "Adicionar um brawler pelo nome",
+    nameAddBtn: "Adicionar",
+    calculate: "Calcular",
+    calcHint: "Escolha pelo menos um brawler primeiro: toque em um ícone acima ou digite um nome.",
+    removePick: "Remover {name}",
+    clearPicks: "Limpar",
+    guideLinkTitle: "Guia completo de counters: {name}",
+    countersLabel: "Counters:",
+    allCountersBanned: "Todos os counters de {name} estão banidos.",
+    noCounterData: "{name} acabou de chegar: ainda não há dados de counters. Eles serão adicionados na próxima atualização.",
+    alsoWeakTo: "Também perde para: {list}",
+    doubleOverlapsHtml: "Sobreposições<br>duplas:",
+    tripleOverlapsHtml: "Sobreposições<br>triplas:",
+    banNoteOne: "{n} counter banido oculto dos resultados.",
+    banNoteOther: "{n} counters banidos ocultos dos resultados.",
+    shareLink: "Copiar link destes picks",
+    shareCopied: "Link copiado",
+    shareTitle: "Counterpicks de Brawl Stars",
+    featureCountersTitle: "Counters por brawler",
+    featureCountersText: "O guia completo de counters de cada brawler: quem ganha dele, de quem ele ganha e por que cada confronto funciona.",
+    featureCountersGo: "Ver todos os {n}",
+    featureMapsTitle: "Melhores brawlers por mapa",
+    featureMapsText: "Picks por tier e os bans mais inteligentes para cada mapa, com base no cenário competitivo.",
+    featureMapsGo: "Ver mapas",
+    widthHandleLabel: "Largura do layout",
+    widthHandleTitle: "Arraste para ajustar a largura (clique duplo para redefinir)",
+    footerSourceHtml: "Counterpicks baseados principalmente nos dados de ranking do <strong>SpenLC</strong> · dados atualizados em <span id=\"dataFreshness\">{date}</span>",
+    footerBrowse: "Ver counters brawler por brawler",
+    disclaimerHtml: "Este material não é oficial e não é endossado pela Supercell. Para mais informações, consulte a <a href=\"https://supercell.com/en/fan-content-policy/\" rel=\"noopener\">Política de Conteúdo de Fãs da Supercell</a>.",
+    feedbackOpen: "Feedback",
+    feedbackHeading: "Enviar feedback",
+    close: "Fechar",
+    fbType: "Tipo",
+    fbTypePlaceholder: "Selecione um tipo…",
+    fbSuggestion: "Sugestão",
+    fbBug: "Relatar bug",
+    fbData: "Dados de counter errados",
+    fbOther: "Outro",
+    fbMessage: "Mensagem",
+    fbMessagePlaceholder: "O que você quer nos contar?",
+    fbEmail: "E-mail",
+    fbEmailOptional: "(opcional, se quiser uma resposta)",
+    fbEmailPlaceholder: "voce@exemplo.com",
+    fbSubmit: "Enviar feedback",
+    fbSending: "Enviando…",
+    fbError: "Algo deu errado. Tente novamente.",
+    fbThanksHtml: "Valeu pelo feedback!<br>Ele ajuda a melhorar a calculadora.",
+    classicTitle: "Calculadora de Counterpicks",
+    classicGo: "Ir",
+    classicSourceHtml: "Counterpicks baseados principalmente nos dados de ranking do <strong>SpenLC</strong>.",
+    classicNewUi: "Nova interface",
+    classes: {
+      "Sniper": "Atirador de elite",
+      "Thrower": "Arremessador",
+      "Tank": "Tanque",
+      "Anti-Tank": "Antitanque",
+      "Assassin": "Assassino",
+      "Knockback": "Empurrão",
+      "Spawner": "Invocador",
+      "Wallbreaker": "Quebra-paredes",
+      "Healer": "Curandeiro",
+    },
+  },
 };
 
 const MONTHS = {
@@ -184,9 +273,11 @@ const MONTHS = {
        "August", "September", "October", "November", "December"],
   es: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
        "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+  pt: ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
+       "agosto", "setembro", "outubro", "novembro", "dezembro"],
 };
 
-// "es-MX" / "ES" / "es" → "es"; unsupported or empty → null.
+// "es-MX" / "ES" / "es" → "es", "pt-PT" → "pt"; unsupported or empty → null.
 export function normalizeLang(code) {
   if (typeof code !== "string") return null;
   const primary = code.trim().toLowerCase().split(/[-_]/)[0];
@@ -221,12 +312,12 @@ export function translateClass(lang, cls) {
   return (strings[lang] || strings[DEFAULT_LANG]).classes[cls] ?? cls;
 }
 
-// counters.js stamps freshness as English "October 2026"; Spanish shows
-// "octubre de 2026". Anything unparseable passes through unchanged.
+// counters.js stamps freshness as English "October 2026"; Spanish and
+// Portuguese share the "octubre de 2026" / "outubro de 2026" pattern.
+// Anything unparseable passes through unchanged.
 export function formatMonthYear(text, lang) {
   const m = /^([A-Za-z]+) (\d{4})$/.exec(String(text).trim());
-  if (!m || lang === "en") return text;
+  if (!m || lang === "en" || !MONTHS[lang]) return text;
   const idx = MONTHS.en.findIndex(name => name.toLowerCase() === m[1].toLowerCase());
-  if (idx === -1 || !MONTHS[lang]) return text;
-  return lang === "es" ? `${MONTHS.es[idx]} de ${m[2]}` : text;
+  return idx === -1 ? text : `${MONTHS[lang][idx]} de ${m[2]}`;
 }

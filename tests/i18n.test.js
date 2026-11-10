@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   LANGS,
+  HTML_LANG,
   strings,
   normalizeLang,
   detectLang,
@@ -69,6 +70,17 @@ test("every data-i18n key in the calculator pages exists", () => {
   }
 });
 
+test("each language toggle offers every UI language, and each has an <html lang>", () => {
+  const html = readFileSync(join(DOCS, "index.html"), "utf8");
+  const toggles = [...html.matchAll(/<div class="lang-toggle[^"]*"[\s\S]*?<\/div>/g)].map(m => m[0]);
+  assert.equal(toggles.length, 2, "nav + header toggles");
+  for (const toggle of toggles) {
+    const offered = [...toggle.matchAll(/data-lang="(\w+)"/g)].map(m => m[1]);
+    assert.deepEqual(offered, LANGS);
+  }
+  for (const lang of LANGS) assert.ok(HTML_LANG[lang], `HTML_LANG.${lang}`);
+});
+
 test("every t(\"key\") call in app.js exists", () => {
   const src = readFileSync(join(DOCS, "app.js"), "utf8");
   const keys = [...src.matchAll(/\bt\(\s*"(\w+)"/g)].map(m => m[1]);
@@ -85,7 +97,10 @@ test("normalizeLang maps regional and cased codes to supported languages", () =>
   assert.equal(normalizeLang("es_419"), "es");
   assert.equal(normalizeLang("ES"), "es");
   assert.equal(normalizeLang("en-GB"), "en");
-  assert.equal(normalizeLang("pt-BR"), null);
+  assert.equal(normalizeLang("pt-BR"), "pt");
+  assert.equal(normalizeLang("pt-PT"), "pt");
+  assert.equal(normalizeLang("PT"), "pt");
+  assert.equal(normalizeLang("fr-FR"), null);
   assert.equal(normalizeLang(""), null);
   assert.equal(normalizeLang(undefined), null);
 });
@@ -94,7 +109,10 @@ test("detectLang takes the first supported browser language, defaulting to Engli
   assert.equal(detectLang(["es-AR", "en-US"]), "es");
   assert.equal(detectLang(["en-US", "es"]), "en");
   assert.equal(detectLang(["fr-FR", "es-ES"]), "es");
-  assert.equal(detectLang(["pt-BR", "fr"]), "en");
+  assert.equal(detectLang(["pt-BR", "en"]), "pt");
+  assert.equal(detectLang(["en-US", "pt-BR"]), "en");
+  assert.equal(detectLang(["de-DE", "pt-PT"]), "pt");
+  assert.equal(detectLang(["de-DE", "fr"]), "en");
   assert.equal(detectLang("es-CO"), "es");
   assert.equal(detectLang(undefined), "en");
   assert.equal(detectLang([]), "en");
@@ -105,28 +123,38 @@ test("pickLang precedence: ?lang= param, then saved toggle, then browser", () =>
   assert.equal(pickLang({ param: null, stored: "en", preferred: ["es-MX"] }), "en");
   assert.equal(pickLang({ param: "xx", stored: "es", preferred: ["en-US"] }), "es");
   assert.equal(pickLang({ stored: null, preferred: ["es-MX"] }), "es");
+  assert.equal(pickLang({ param: "pt", stored: "es", preferred: ["en-US"] }), "pt");
+  assert.equal(pickLang({ stored: "pt", preferred: ["es-MX"] }), "pt");
   assert.equal(pickLang({}), "en");
 });
 
 test("translate fills placeholders and falls back to English, then the key", () => {
   assert.equal(translate("es", "removePick", { name: "El Primo" }), "Quitar a El Primo");
+  assert.equal(translate("pt", "removePick", { name: "El Primo" }), "Remover El Primo");
   assert.equal(translate("en", "bansCount", { n: 3 }), "Bans (3)");
   assert.equal(translate("xx", "calculate"), "Calculate");
   assert.equal(translate("es", "noSuchKey"), "noSuchKey");
 });
 
 test("brawler names pass through untranslated", () => {
-  for (const name of ["Mr P", "El Primo", "8bit", "Jae-Yong"]) {
-    assert.ok(translate("es", "guideLinkTitle", { name }).includes(name));
+  for (const lang of LANGS) {
+    for (const name of ["Mr P", "El Primo", "8bit", "Jae-Yong"]) {
+      assert.ok(translate(lang, "guideLinkTitle", { name }).includes(name), `${lang} ${name}`);
+    }
   }
   assert.equal(translateClass("es", "Tank"), "Tanque");
+  assert.equal(translateClass("pt", "Thrower"), "Arremessador");
   assert.equal(translateClass("es", "Unlisted"), "Unlisted");
 });
 
 test("formatMonthYear localizes the counters.js freshness stamp", () => {
   assert.equal(formatMonthYear("October 2026", "es"), "octubre de 2026");
   assert.equal(formatMonthYear("July 2026", "es"), "julio de 2026");
+  assert.equal(formatMonthYear("October 2026", "pt"), "outubro de 2026");
+  assert.equal(formatMonthYear("March 2027", "pt"), "março de 2027");
   assert.equal(formatMonthYear("October 2026", "en"), "October 2026");
   assert.equal(formatMonthYear("Fall 2026", "es"), "Fall 2026");
-  assert.match(formatMonthYear(dataUpdated, "es"), /^[a-z]+ de \d{4}$/);
+  for (const lang of ["es", "pt"]) {
+    assert.match(formatMonthYear(dataUpdated, lang), /^[a-zç]+ de \d{4}$/, lang);
+  }
 });
