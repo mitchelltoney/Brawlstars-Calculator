@@ -1,7 +1,10 @@
 // Static per-brawler counter page generator.
 //
 // Emits docs/counters/<slug>/index.html for every roster brawler, plus a
-// docs/counters/index.html directory page and a regenerated docs/sitemap.xml.
+// docs/counters/index.html directory page, the same tree translated under
+// docs/es/counters/ and docs/pt/counters/ (texts from docs/i18n/<lang>/, see
+// scripts/i18n-content.mjs), and a regenerated docs/sitemap.xml with hreflang
+// alternates for every page.
 // Run by hand after editing docs/counters.js, then commit the output — the
 // GitHub Pages deploy itself stays build-free:
 //
@@ -21,10 +24,14 @@ import { matchupNotes } from "../docs/matchup-notes.js";
 import { reverseNotes } from "../docs/reverse-notes.js";
 import { loadoutIcons } from "../docs/loadout-icons.js";
 import { maps as siteMaps } from "../docs/map-data.js";
+import {
+  PAGE_LANGS, SITE, HTML_LANG, pageText, localPath, calcHref, hreflangLinks,
+  langSwitch, disclaimerHtml, formatMonthYear, translateClass, topList, langSwitchCss,
+} from "./lib/page-i18n.mjs";
+import { localizedContent } from "./lib/content-i18n.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const OUT = join(ROOT, "docs", "counters");
-const SITE = "https://brawlcalculator.com";
+const outDir = lang => join(ROOT, "docs", ...(lang === "en" ? [] : [lang]), "counters");
 
 const roster = Object.keys(counters);
 
@@ -60,28 +67,30 @@ function renderNote(note) {
   return html;
 }
 
-function card(name) {
-  return `<a class="card" href="/counters/${slug(name)}/">
+function card(name, lang) {
+  return `<a class="card" href="${localPath(lang, `/counters/${slug(name)}/`)}">
   <img src="${iconFile(name)}" alt="${esc(name)}" width="72" height="72" loading="lazy" decoding="async">
   <span>${esc(name)}</span>
 </a>`;
 }
 
-function pageShell({ title, description, canonical, body, ogTitle, scripts = "" }) {
+function pageShell({ lang, path, title, description, body, ogTitle, scripts = "" }) {
+  const T = pageText[lang];
+  const canonical = SITE + localPath(lang, path);
   const nav = `<nav class="site-nav">
-  <a class="brand" href="/">
+  <a class="brand" href="${calcHref(lang)}">
     <img src="/loading_chester.png" alt="" width="26" height="26" decoding="async">
     <span>Brawl Calculator</span>
   </a>
   <div class="nav-links">
-    <a class="nav-quiet" href="/maps/">Maps</a>
-    <a class="nav-quiet" href="/counters/">All brawlers</a>
-    <a class="nav-cta" href="/">Open Calculator</a>
+    <a class="nav-quiet" href="${localPath(lang, "/maps/")}">${T.navMaps}</a>
+    <a class="nav-quiet" href="${localPath(lang, "/counters/")}">${T.navAllBrawlers}</a>
+    <a class="nav-cta" href="${calcHref(lang)}">${T.navOpenCalc}</a>
   </div>
 </nav>`;
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${HTML_LANG[lang]}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -89,6 +98,7 @@ function pageShell({ title, description, canonical, body, ogTitle, scripts = "" 
 <meta name="robots" content="index, follow">
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
+${hreflangLinks(path)}
 <meta property="og:site_name" content="Brawlstars Calculator">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(ogTitle ?? title)}">
@@ -108,12 +118,11 @@ function pageShell({ title, description, canonical, body, ogTitle, scripts = "" 
 </head>
 <body>
 ${nav}
-${body}
+${body.replace("<!--lang-switch-->", langSwitch(lang, path))}
 <footer>
-  <p>Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated ${esc(dataUpdated)}</p>
-  <p><a href="/">Open the counterpick calculator</a> · <a href="/counters/">All brawlers</a></p>
-  <p class="disclaimer">This material is unofficial and is not endorsed by Supercell. For more information
-    see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
+  <p>${T.countersFooterSource(esc(formatMonthYear(dataUpdated, lang)))}</p>
+  <p><a href="${calcHref(lang)}">${T.footerOpenCalc}</a> · <a href="${localPath(lang, "/counters/")}">${T.navAllBrawlers}</a></p>
+  <p class="disclaimer">${disclaimerHtml(lang)}</p>
 </footer>
 ${scripts}
 </body>
@@ -121,31 +130,35 @@ ${scripts}
 `;
 }
 
-function brawlerPage(name) {
+function brawlerPage(name, lang, text) {
+  const T = pageText[lang];
+  const L = p => localPath(lang, p);
+  const date = formatMonthYear(dataUpdated, lang);
   const { direct, classes } = counters[name];
   const beats = strongAgainst.get(name) ?? [];
-  const canonical = `${SITE}/counters/${slug(name)}/`;
+  const path = `/counters/${slug(name)}/`;
+  const canonical = SITE + L(path);
 
   const description = direct.length
-    ? `The best counters to ${name} in Brawl Stars ranked: ${direct.slice(0, 3).join(", ")}${direct.length > 3 ? " and more" : ""}. Hand-curated counter data, updated ${dataUpdated}.`
-    : `${name} is brand new to Brawl Stars — curated counter data is coming with the next update. See who ${name} counters and try the counterpick calculator.`;
+    ? T.counterDescription(name, topList(lang, direct), date)
+    : T.counterDescriptionNew(name);
 
   const jsonLd = [{
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Brawl Calculator", item: `${SITE}/` },
-      { "@type": "ListItem", position: 2, name: "Counters", item: `${SITE}/counters/` },
-      { "@type": "ListItem", position: 3, name: `${name} Counters`, item: canonical },
+      { "@type": "ListItem", position: 1, name: "Brawl Calculator", item: SITE + calcHref(lang) },
+      { "@type": "ListItem", position: 2, name: T.crumbCounters, item: SITE + L("/counters/") },
+      { "@type": "ListItem", position: 3, name: T.counterCrumb(name), item: canonical },
     ],
   }];
   if (direct.length) {
     jsonLd.push({
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: `Best counters to ${name} in Brawl Stars`,
+      name: T.counterItemList(name),
       itemListElement: direct.map((c, i) =>
-        ({ "@type": "ListItem", position: i + 1, name: c, url: `${SITE}/counters/${slug(c)}/` })),
+        ({ "@type": "ListItem", position: i + 1, name: c, url: SITE + L(`/counters/${slug(c)}/`) })),
     });
   }
 
@@ -165,9 +178,9 @@ function brawlerPage(name) {
 
   const strongMapsSection = strongMaps.length
     ? `<section>
-  <h2>${esc(name)} shines on these maps</h2>
+  <h2>${esc(T.strongMaps(name))}</h2>
   <div class="chip-row map-links">
-${strongMaps.map(m => `    <a class="map-link" href="/maps/${m.slug}/">${esc(m.name)} <span>${esc(m.mode)}</span></a>`).join("\n")}
+${strongMaps.map(m => `    <a class="map-link" href="${L(`/maps/${m.slug}/`)}">${esc(m.name)} <span>${esc(m.mode)}</span></a>`).join("\n")}
   </div>
 </section>`
     : "";
@@ -179,29 +192,29 @@ ${strongMaps.map(m => `    <a class="map-link" href="/maps/${m.slug}/">${esc(m.n
   const countersBody = hasNotes
     ? `<ul class="counter-list">
 ${direct.map(c => `  <li>
-    <a class="counter-link" href="/counters/${slug(c)}/">
+    <a class="counter-link" href="${L(`/counters/${slug(c)}/`)}">
       <img src="${iconFile(c)}" alt="" width="44" height="44" loading="lazy" decoding="async">
       <span>${esc(c)}</span>
     </a>
-    ${notes[c] ? `<p class="why">${renderNote(notes[c])}</p>` : ""}
+    ${notes[c] ? `<p class="why">${renderNote(text(`m|${name}|${c}`))}</p>` : ""}
   </li>`).join("\n")}
 </ul>`
     : `<div class="grid">
-${direct.map(card).join("\n")}
+${direct.map(c => card(c, lang)).join("\n")}
   </div>`;
 
   const countersSection = direct.length
     ? `<section>
-  <h2>Best counters to ${esc(name)}</h2>
+  <h2>${esc(T.bestCounters(name))}</h2>
   ${countersBody}
 </section>`
     : `<section>
-  <h2>Best counters to ${esc(name)}</h2>
-  <p class="note">${esc(name)} is brand new — curated counter data lands with the next update.</p>
+  <h2>${esc(T.bestCounters(name))}</h2>
+  <p class="note">${esc(T.brandNew(name))}</p>
 </section>`;
 
   const classesSection = classes.length
-    ? `<p class="classes">Also weak to: ${classes.map(c => `<span class="chip">${esc(c)}</span>`).join(" ")}</p>`
+    ? `<p class="classes">${T.alsoWeakTo} ${classes.map(c => `<span class="chip">${esc(translateClass(lang, c))}</span>`).join(" ")}</p>`
     : "";
 
   // Dedicated reverse notes (reverseNotes[owner][target]): phrased for this
@@ -211,20 +224,20 @@ ${direct.map(card).join("\n")}
   const beatsBody = hasBeatNotes
     ? `<ul class="counter-list">
 ${beats.map(t => `  <li>
-    <a class="counter-link" href="/counters/${slug(t)}/">
+    <a class="counter-link" href="${L(`/counters/${slug(t)}/`)}">
       <img src="${iconFile(t)}" alt="" width="44" height="44" loading="lazy" decoding="async">
       <span>${esc(t)}</span>
     </a>
-    ${reverseNotes[name]?.[t] ? `<p class="why">${renderNote(reverseNotes[name][t])}</p>` : ""}
+    ${reverseNotes[name]?.[t] ? `<p class="why">${renderNote(text(`r|${name}|${t}`))}</p>` : ""}
   </li>`).join("\n")}
 </ul>`
     : `<div class="grid">
-${beats.map(card).join("\n")}
+${beats.map(t => card(t, lang)).join("\n")}
   </div>`;
 
   const beatsSection = beats.length
     ? `<section>
-  <h2>${esc(name)} is a strong pick against</h2>
+  <h2>${esc(T.strongAgainst(name))}</h2>
   ${beatsBody}
 </section>`
     : "";
@@ -232,45 +245,53 @@ ${beats.map(card).join("\n")}
   const body = `<script type="application/ld+json">
 ${JSON.stringify(jsonLd)}
 </script>
-<nav class="crumbs"><a href="/">Calculator</a> › <a href="/counters/">Counters</a> › <span>${esc(name)}</span></nav>
+<div class="crumbs-row">
+<nav class="crumbs"><a href="${calcHref(lang)}">${T.crumbCalc}</a> › <a href="${L("/counters/")}">${T.crumbCounters}</a> › <span>${esc(name)}</span></nav>
+<!--lang-switch-->
+</div>
 <header>
   <img class="portrait" src="${iconFile(name)}" alt="${esc(name)}" width="96" height="96" decoding="async">
-  <h1>${esc(name)} Counters</h1>
-  <p class="subtitle">Best picks against ${esc(name)} in Brawl Stars ranked · updated ${esc(dataUpdated)}</p>
+  <h1>${esc(T.counterH1(name))}</h1>
+  <p class="subtitle">${esc(T.counterSubtitle(name, date))}</p>
 </header>
 <main>
 ${countersSection}
 ${classesSection}
 ${beatsSection}
 ${strongMapsSection}
-<a class="cta" href="/?p=${encodeURIComponent(name)}">Countering a full enemy team? Open the calculator</a>
+<a class="cta" href="${esc(calcHref(lang, name))}">${T.counterCta}</a>
 </main>`;
 
   return pageShell({
-    title: `${name} Counters — Best Brawlers Against ${name} (${dataUpdated})`,
-    ogTitle: `${name} Counters — Brawl Stars`,
+    lang,
+    path,
+    title: T.counterTitle(name, date),
+    ogTitle: T.counterOgTitle(name),
     description,
-    canonical,
     body,
   });
 }
 
-function indexPage() {
-  const canonical = `${SITE}/counters/`;
-  const body = `<nav class="crumbs"><a href="/">Calculator</a> › <span>Counters</span></nav>
+function indexPage(lang) {
+  const T = pageText[lang];
+  const date = formatMonthYear(dataUpdated, lang);
+  const body = `<div class="crumbs-row">
+<nav class="crumbs"><a href="${calcHref(lang)}">${T.crumbCalc}</a> › <span>${T.crumbCounters}</span></nav>
+<!--lang-switch-->
+</div>
 <header>
-  <h1>Brawl Stars Counters, Brawler by Brawler</h1>
-  <p class="subtitle">Hand-curated counterpicks for every brawler · updated ${esc(dataUpdated)}</p>
+  <h1>${esc(T.indexH1)}</h1>
+  <p class="subtitle">${esc(T.indexSubtitle(date))}</p>
 </header>
 <main>
   <div class="page-search">
-    <input id="brawlerSearch" type="search" placeholder="Search brawlers…"
-           aria-label="Search brawlers" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <input id="brawlerSearch" type="search" placeholder="${esc(T.searchBrawlers)}"
+           aria-label="${esc(T.searchBrawlersLabel)}" autocomplete="off" autocapitalize="off" spellcheck="false">
   </div>
   <div class="grid index-grid">
-${[...roster].sort((a, b) => a.localeCompare(b)).map(card).join("\n")}
+${[...roster].sort((a, b) => a.localeCompare(b)).map(n => card(n, lang)).join("\n")}
   </div>
-  <p class="note search-empty" hidden>No brawlers match that search.</p>
+  <p class="note search-empty" hidden>${esc(T.noBrawlerMatch)}</p>
 </main>`;
   const scripts = `<script>
 (function () {
@@ -292,10 +313,11 @@ ${[...roster].sort((a, b) => a.localeCompare(b)).map(card).join("\n")}
 })();
 </script>`;
   return pageShell({
-    title: `Brawl Stars Counters for Every Brawler (${dataUpdated})`,
-    ogTitle: "Brawl Stars Counters — Every Brawler",
-    description: `Who counters every Brawl Stars brawler — hand-curated ranked counter lists for all ${roster.length} brawlers, updated ${dataUpdated}.`,
-    canonical,
+    lang,
+    path: "/counters/",
+    title: T.indexTitle(date),
+    ogTitle: T.indexOgTitle,
+    description: T.indexDescription(roster.length, date),
     body,
     scripts,
   });
@@ -387,6 +409,7 @@ body {
 }
 .crumbs a { color: var(--text-2); text-decoration: none; }
 .crumbs a:hover { color: var(--text); }
+.crumbs-row { max-width: 720px; margin-bottom: 2rem; }
 header { text-align: center; margin-bottom: 2.5rem; max-width: 560px; }
 .portrait { border-radius: 18px; background: var(--surface); margin-bottom: 1rem; }
 h1 {
@@ -545,7 +568,7 @@ footer p + p { margin-top: 0.5rem; }
 footer a { color: var(--text-2); }
 footer a:hover { color: var(--text); }
 footer .disclaimer { font-size: 0.64rem; }
-`;
+${langSwitchCss}`;
 
 // Content-hash cache busters so stylesheet changes are visible immediately
 // (GitHub Pages otherwise serves stale CSS for up to 10 minutes).
@@ -553,19 +576,33 @@ const hash8 = s => createHash("sha1").update(s).digest("hex").slice(0, 8);
 const cssHash = hash8(css);
 const stylesHash = hash8(readFileSync(join(ROOT, "docs", "styles.css"), "utf8"));
 
+// Every generated page exists in each PAGE_LANGS language; each <url> lists
+// its siblings as xhtml:link alternates. The calculator home localizes
+// client-side, so it has a single entry.
 function sitemap() {
+  const pages = [
+    { path: "/counters/", priority: "0.7", changefreq: "weekly" },
+    { path: "/maps/", priority: "0.7", changefreq: "weekly" },
+    ...roster.map(n => ({ path: `/counters/${slug(n)}/`, priority: "0.6", changefreq: "monthly" })),
+    ...siteMaps.map(m => ({ path: `/maps/${m.slug}/`, priority: "0.5", changefreq: "monthly" })),
+  ];
   const urls = [
-    { loc: `${SITE}/`, priority: "0.9", changefreq: "weekly" },
-    { loc: `${SITE}/counters/`, priority: "0.7", changefreq: "weekly" },
-    { loc: `${SITE}/maps/`, priority: "0.7", changefreq: "weekly" },
-    ...roster.map(n => ({ loc: `${SITE}/counters/${slug(n)}/`, priority: "0.6", changefreq: "monthly" })),
-    ...siteMaps.map(m => ({ loc: `${SITE}/maps/${m.slug}/`, priority: "0.5", changefreq: "monthly" })),
+    { loc: `${SITE}/`, priority: "0.9", changefreq: "weekly", alternates: [] },
+    ...PAGE_LANGS.flatMap(lang => pages.map(p => ({
+      loc: SITE + localPath(lang, p.path),
+      priority: p.priority,
+      changefreq: p.changefreq,
+      alternates: [
+        ...PAGE_LANGS.map(l => [HTML_LANG[l], SITE + localPath(l, p.path)]),
+        ["x-default", SITE + p.path],
+      ],
+    }))),
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.map(u => `  <url>
     <loc>${u.loc}</loc>
-    <lastmod>${today}</lastmod>
+${u.alternates.map(([hl, href]) => `    <xhtml:link rel="alternate" hreflang="${hl}" href="${href}"/>\n`).join("")}    <lastmod>${today}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`).join("\n")}
@@ -574,16 +611,20 @@ ${urls.map(u => `  <url>
 }
 
 // Regenerate from scratch so renamed/removed brawlers don't leave stale pages.
-await rm(OUT, { recursive: true, force: true });
-await mkdir(OUT, { recursive: true });
-
-await writeFile(join(OUT, "counters.css"), css);
-await writeFile(join(OUT, "index.html"), indexPage());
-for (const name of roster) {
-  const dir = join(OUT, slug(name));
-  await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, "index.html"), brawlerPage(name));
+for (const lang of PAGE_LANGS) {
+  const out = outDir(lang);
+  const text = await localizedContent(lang);
+  await rm(out, { recursive: true, force: true });
+  await mkdir(out, { recursive: true });
+  // One shared stylesheet: every language's pages link /counters/counters.css.
+  if (lang === "en") await writeFile(join(out, "counters.css"), css);
+  await writeFile(join(out, "index.html"), indexPage(lang));
+  for (const name of roster) {
+    const dir = join(out, slug(name));
+    await mkdir(dir, { recursive: true });
+    await writeFile(join(dir, "index.html"), brawlerPage(name, lang, text));
+  }
 }
 await writeFile(join(ROOT, "docs", "sitemap.xml"), sitemap());
 
-console.log(`Generated ${roster.length} brawler pages + index + sitemap (data updated: ${dataUpdated}).`);
+console.log(`Generated ${roster.length} brawler pages + index in ${PAGE_LANGS.join("/")} + sitemap (data updated: ${dataUpdated}).`);

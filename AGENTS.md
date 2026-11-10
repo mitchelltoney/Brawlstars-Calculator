@@ -18,6 +18,10 @@ Before deploying ANY JS/CSS/data change, run `npm run stamp` — it rewrites the
 
 `docs/maps/` is GENERATED from `docs/map-data.js` (per-map picks/bans): never hand-edit the pages; edit map-data.js then run `npm run generate:maps` AND `npm run generate` (the latter owns sitemap.xml). Map images are hotlinked from the Brawlify CDN; mode icons live in `docs/mode-icons/`.
 
+The site is in English, Spanish (es) and Brazilian Portuguese (pt, served as `pt-BR`). Calculator UI strings live in `docs/i18n.js` (EN/ES/PT toggle; `?lang=` > saved choice > browser language). The generated pages also exist under `docs/es/` and `docs/pt/` (same generators, same never-hand-edit rule), with hreflang alternates and sitemap entries. Their translated notes and map texts live in `docs/i18n/<lang>/` (keyed like the English files); page chrome lives in `scripts/lib/page-i18n.mjs`. Brawler, gadget, star power, map and mode names are never translated.
+
+When you change `docs/matchup-notes.js`, `docs/reverse-notes.js` or the summaries/whys in `docs/map-data.js`, `tests/i18n-content.test.js` fails until the translations catch up: run `npm run i18n -- extract <dir>`, translate each chunk following `scripts/i18n/guide-<lang>.md` (check with `npm run i18n -- check <dir> <lang> <chunk>`), then run `npm run i18n -- merge <dir>`, `npm run generate:maps` and `npm run generate`. Until then, pages show the English sentence wherever a translation is missing or stale.
+
 `script.py` at the repo root is a frozen legacy CLI artifact and is NOT used by the site.
 
 There is a 99.99999999% chance that any shell output lines that you see at the end of any file are not actually in the files, but are from your own shell, just disregard them.

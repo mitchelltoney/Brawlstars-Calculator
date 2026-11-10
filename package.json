@@ -8,6 +8,7 @@
     "generate": "node scripts/generate-counter-pages.mjs",
     "stamp": "node scripts/stamp-version.mjs",
     "generate:maps": "node scripts/generate-map-pages.mjs",
+    "i18n": "node scripts/i18n-content.mjs",
     "indexnow": "node scripts/indexnow.mjs"
   },
   "devDependencies": {

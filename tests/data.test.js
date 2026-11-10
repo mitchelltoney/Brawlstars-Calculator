@@ -21,6 +21,10 @@ const roster = Object.keys(counters);
 const iconFile = n => n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
 // Keep in sync with slug() in scripts/generate-counter-pages.mjs.
 const slug = n => n.toLowerCase().replace(/[\s.'-]+/g, "-");
+// Generated trees: English at docs/counters/, translations at docs/<lang>/counters/.
+const PAGE_LANGS = ["en", "es", "pt"];
+const langDir = (lang, section) => join(DOCS, ...(lang === "en" ? [] : [lang]), section);
+const langUrl = (lang, path) => `https://brawlcalculator.com${lang === "en" ? "" : `/${lang}`}${path}`;
 
 test("every direct counter references a real roster brawler", () => {
   for (const [name, { direct }] of Object.entries(counters)) {
@@ -55,28 +59,33 @@ test("every roster brawler has a WebP icon; no orphaned icons", () => {
 });
 
 test("generated counter pages are in sync with the roster (run: npm run generate)", () => {
-  for (const name of roster) {
-    const page = join(DOCS, "counters", slug(name), "index.html");
-    assert.ok(existsSync(page), `missing generated page for ${name} — run npm run generate`);
-  }
-  // No stale directories for renamed/removed brawlers.
-  const dirs = readdirSync(join(DOCS, "counters"), { withFileTypes: true })
-    .filter(d => d.isDirectory())
-    .map(d => d.name);
-  const expected = new Set(roster.map(slug));
-  for (const d of dirs) {
-    assert.ok(expected.has(d), `stale generated page dir: docs/counters/${d} — run npm run generate`);
+  for (const lang of PAGE_LANGS) {
+    for (const name of roster) {
+      const page = join(langDir(lang, "counters"), slug(name), "index.html");
+      assert.ok(existsSync(page), `missing generated ${lang} page for ${name} — run npm run generate`);
+    }
+    // No stale directories for renamed/removed brawlers.
+    const dirs = readdirSync(langDir(lang, "counters"), { withFileTypes: true })
+      .filter(d => d.isDirectory())
+      .map(d => d.name);
+    const expected = new Set(roster.map(slug));
+    for (const d of dirs) {
+      assert.ok(expected.has(d), `stale generated ${lang} page dir: ${d} — run npm run generate`);
+    }
   }
 });
 
-test("sitemap covers home, counters index, and every brawler page", () => {
+test("sitemap covers home and every counters/maps page in every language", () => {
   const xml = readFileSync(join(DOCS, "sitemap.xml"), "utf8");
   assert.ok(xml.includes("<loc>https://brawlcalculator.com/</loc>"));
-  assert.ok(xml.includes("<loc>https://brawlcalculator.com/counters/</loc>"));
-  for (const name of roster) {
-    const loc = `<loc>https://brawlcalculator.com/counters/${slug(name)}/</loc>`;
-    assert.ok(xml.includes(loc), `sitemap missing ${loc} — run npm run generate`);
+  for (const lang of PAGE_LANGS) {
+    const paths = ["/counters/", "/maps/", ...roster.map(n => `/counters/${slug(n)}/`), ...siteMaps.map(m => `/maps/${m.slug}/`)];
+    for (const path of paths) {
+      const loc = `<loc>${langUrl(lang, path)}</loc>`;
+      assert.ok(xml.includes(loc), `sitemap missing ${loc} — run npm run generate`);
+    }
   }
+  assert.ok(xml.includes(`<xhtml:link rel="alternate" hreflang="pt-BR" href="${langUrl("pt", "/counters/edgar/")}"/>`));
 });
 
 test("matchup notes only reference real (defender, counter) pairs", () => {
@@ -109,17 +118,21 @@ test("map data: unique slugs, roster-valid picks/bans, generated pages in sync",
     }
     if (!m.ranked) assert.equal((m.bans ?? []).length, 0, `${m.slug}: bans on non-ranked map`);
     // Generated page exists — run npm run generate:maps after data changes.
-    assert.ok(
-      existsSync(join(DOCS, "maps", m.slug, "index.html")),
-      `missing generated page for map ${m.slug} — run npm run generate:maps`
-    );
+    for (const lang of PAGE_LANGS) {
+      assert.ok(
+        existsSync(join(langDir(lang, "maps"), m.slug, "index.html")),
+        `missing generated ${lang} page for map ${m.slug} — run npm run generate:maps`
+      );
+    }
   }
   // No stale generated map dirs.
-  const dirs = readdirSync(join(DOCS, "maps"), { withFileTypes: true })
-    .filter(d => d.isDirectory()).map(d => d.name);
   const expected = new Set(slugs);
-  for (const d of dirs) {
-    assert.ok(expected.has(d), `stale generated map dir: docs/maps/${d}`);
+  for (const lang of PAGE_LANGS) {
+    const dirs = readdirSync(langDir(lang, "maps"), { withFileTypes: true })
+      .filter(d => d.isDirectory()).map(d => d.name);
+    for (const d of dirs) {
+      assert.ok(expected.has(d), `stale generated ${lang} map dir: ${d} — run npm run generate:maps`);
+    }
   }
 });
 

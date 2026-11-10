@@ -41,10 +41,10 @@
   }
 </script>
 <link rel="preload" href="fonts/lilitaone-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script src="loader.js?v=2026-11-10"></script>
-<script type="module" src="app.js?v=2026-11-10"></script>
-<link rel="stylesheet" href="styles.css?v=2026-11-10">
-<link rel="stylesheet" href="index.css?v=2026-11-10">
+<script src="loader.js?v=2026-11-10.1"></script>
+<script type="module" src="app.js?v=2026-11-10.1"></script>
+<link rel="stylesheet" href="styles.css?v=2026-11-10.1">
+<link rel="stylesheet" href="index.css?v=2026-11-10.1">
 </head>
 <body>
 
@@ -60,9 +60,9 @@
     <span>Brawl Calculator</span>
   </a>
   <div class="nav-links">
-    <a class="nav-quiet nav-keep" href="maps/" data-i18n="navMaps">Maps</a>
+    <a class="nav-quiet nav-keep" href="maps/" data-lpath="maps/" data-i18n="navMaps">Maps</a>
     <a class="nav-quiet" href="classic.html" data-i18n="navClassic">Classic view</a>
-    <a class="nav-cta" href="counters/" data-i18n="navCounters">Counters by Brawler</a>
+    <a class="nav-cta" href="counters/" data-lpath="counters/" data-i18n="navCounters">Counters by Brawler</a>
     <div class="lang-toggle lang-nav" role="group" aria-label="Language" data-i18n-attr="aria-label:langToggleLabel">
       <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="es" lang="es" aria-pressed="false">ES</button>
@@ -124,7 +124,7 @@
   <div id="output"></div>
 
   <div class="feature-cards">
-    <a class="feature-card" href="counters/">
+    <a class="feature-card" href="counters/" data-lpath="counters/">
       <div class="feature-icons">
         <img src="icons/edgar.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
         <img src="icons/piper.webp" alt="" width="34" height="34" loading="lazy" decoding="async">
@@ -139,7 +139,7 @@
       </div>
       <span class="feature-go" id="featureCountersGo">Browse all 108</span>
     </a>
-    <a class="feature-card" href="maps/">
+    <a class="feature-card" href="maps/" data-lpath="maps/">
       <div class="feature-icons feature-icons-modes">
         <img src="mode-icons/gem-grab.webp" alt="" width="34" height="31" loading="lazy" decoding="async">
         <img src="mode-icons/brawl-ball.webp" alt="" width="34" height="31" loading="lazy" decoding="async">
@@ -161,7 +161,7 @@
 
 <footer>
   <p id="footerSource">Counterpicks determined primarily from <strong>SpenLC</strong> ranking data · data updated <span id="dataFreshness">October 2026</span></p>
-  <p><a href="counters/" data-i18n="footerBrowse">Browse counters brawler-by-brawler</a> · <a href="classic.html" data-i18n="navClassic">Classic view</a></p>
+  <p><a href="counters/" data-lpath="counters/" data-i18n="footerBrowse">Browse counters brawler-by-brawler</a> · <a href="classic.html" data-i18n="navClassic">Classic view</a></p>
   <p class="disclaimer" data-i18n-html="disclaimerHtml">This material is unofficial and is not endorsed by Supercell. For more information
     see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
 </footer>

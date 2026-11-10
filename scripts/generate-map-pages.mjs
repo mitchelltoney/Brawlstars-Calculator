@@ -1,6 +1,8 @@
 // Static generator for the maps feature: docs/maps/index.html (interactive
 // browser: search-as-you-type, mode filter chips, URL state) plus one SEO
-// page per map under docs/maps/<slug>/. Data source: docs/map-data.js.
+// page per map under docs/maps/<slug>/, and the same tree translated under
+// docs/es/maps/ and docs/pt/maps/. Data source: docs/map-data.js; translated
+// summaries and whys come from docs/i18n/<lang>/map-text.js.
 //
 //   npm run generate:maps
 //
@@ -14,10 +16,14 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 import { maps, modes, mapsUpdated } from "../docs/map-data.js";
+import {
+  PAGE_LANGS, SITE, HTML_LANG, pageText, localPath, calcHref, hreflangLinks,
+  langSwitch, disclaimerHtml, formatMonthYear, topList, langSwitchCss,
+} from "./lib/page-i18n.mjs";
+import { localizedContent } from "./lib/content-i18n.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const OUT = join(ROOT, "docs", "maps");
-const SITE = "https://brawlcalculator.com";
+const outDir = lang => join(ROOT, "docs", ...(lang === "en" ? [] : [lang]), "maps");
 
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const brawlerIcon = n => "/icons/" + n.toLowerCase().replace(/[\s.'-]/g, "_") + ".webp";
@@ -50,30 +56,33 @@ function modeRank(name) {
   return MODE_ORDER.length + (NICHE_MODES.has(name) ? 100 : 0);
 }
 
-const CONFIDENCE = {
-  high:   { label: "Strong data",        blurb: "Backed by multiple competitive sources.",              cls: "conf-high" },
-  medium: { label: "Decent data",        blurb: "Based on limited competitive sources.",                cls: "conf-med" },
-  low:    { label: "Early estimates",    blurb: "Little map-specific data exists so far.",              cls: "conf-low" },
-  none:   { label: "Not enough data",    blurb: "Not enough competitive data exists yet for this map.", cls: "conf-none" },
-};
+// Labels and blurbs per language live in pageText[lang].confidence.
+const CONFIDENCE_CLS = { high: "conf-high", medium: "conf-med", low: "conf-low", none: "conf-none" };
+function confidence(lang, level) {
+  const key = CONFIDENCE_CLS[level] ? level : "none";
+  return { ...pageText[lang].confidence[key], cls: CONFIDENCE_CLS[key] };
+}
 
-function nav(active) {
+function nav(lang, active) {
+  const T = pageText[lang];
   return `<nav class="site-nav">
-  <a class="brand" href="/">
+  <a class="brand" href="${calcHref(lang)}">
     <img src="/loading_chester.png" alt="" width="26" height="26" decoding="async">
     <span>Brawl Calculator</span>
   </a>
   <div class="nav-links">
-    <a class="nav-quiet${active === "maps" ? " nav-active" : ""}" href="/maps/">Maps</a>
-    <a class="nav-quiet${active === "counters" ? " nav-active" : ""}" href="/counters/">Counters</a>
-    <a class="nav-cta" href="/">Open Calculator</a>
+    <a class="nav-quiet${active === "maps" ? " nav-active" : ""}" href="${localPath(lang, "/maps/")}">${T.navMaps}</a>
+    <a class="nav-quiet${active === "counters" ? " nav-active" : ""}" href="${localPath(lang, "/counters/")}">${T.navCounters}</a>
+    <a class="nav-cta" href="${calcHref(lang)}">${T.navOpenCalc}</a>
   </div>
 </nav>`;
 }
 
-function pageShell({ title, description, canonical, body, scripts = "" }) {
+function pageShell({ lang, path, title, description, body, scripts = "" }) {
+  const T = pageText[lang];
+  const canonical = SITE + localPath(lang, path);
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${HTML_LANG[lang]}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -81,6 +90,7 @@ function pageShell({ title, description, canonical, body, scripts = "" }) {
 <meta name="robots" content="index, follow">
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
+${hreflangLinks(path)}
 <meta property="og:site_name" content="Brawlstars Calculator">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(title)}">
@@ -99,12 +109,11 @@ function pageShell({ title, description, canonical, body, scripts = "" }) {
 <link rel="stylesheet" href="/maps/maps.css?v=${cssHash}">
 </head>
 <body>
-${body}
+${body.replace("<!--lang-switch-->", langSwitch(lang, path))}
 <footer>
-  <p>Map picks researched from competitive sources · updated ${esc(mapsUpdated)}</p>
-  <p><a href="/">Open the counterpick calculator</a> · <a href="/counters/">Counters by brawler</a> · <a href="/maps/">All maps</a></p>
-  <p class="disclaimer">This material is unofficial and is not endorsed by Supercell. For more information
-    see <a href="https://supercell.com/en/fan-content-policy/" rel="noopener">Supercell's Fan Content Policy</a>.</p>
+  <p>${esc(T.mapsFooterSource(formatMonthYear(mapsUpdated, lang)))}</p>
+  <p><a href="${calcHref(lang)}">${T.footerOpenCalc}</a> · <a href="${localPath(lang, "/counters/")}">${T.footerCountersByBrawler}</a> · <a href="${localPath(lang, "/maps/")}">${T.footerAllMaps}</a></p>
+  <p class="disclaimer">${disclaimerHtml(lang)}</p>
 </footer>
 ${scripts}
 </body>
@@ -123,61 +132,64 @@ function iconSrc(file) {
   return `/mode-icons/${file}?v=${iconHashCache.get(file)}`;
 }
 
-function modeChip(m, { link = true } = {}) {
+function modeChip(m, lang, { link = true } = {}) {
   const icon = m.icon ? `<img src="${iconSrc(m.icon)}" alt="" width="18" height="18" loading="lazy" decoding="async">` : "";
   const inner = `${icon}<span>${esc(m.name)}</span>`;
   return link
-    ? `<a class="mode-tag" href="/maps/?mode=${m.slug}">${inner}</a>`
+    ? `<a class="mode-tag" href="${localPath(lang, "/maps/")}?mode=${m.slug}">${inner}</a>`
     : `<span class="mode-tag">${inner}</span>`;
 }
 
-function pickChip(name) {
-  return `<a class="pick-chip-link" href="/counters/${brawlerSlug(name)}/">
+function pickChip(name, lang) {
+  return `<a class="pick-chip-link" href="${localPath(lang, `/counters/${brawlerSlug(name)}/`)}">
     <img src="${brawlerIcon(name)}" alt="" width="34" height="34" loading="lazy" decoding="async">
     <span>${esc(name)}</span>
   </a>`;
 }
 
 // ── Per-map page ────────────────────────────────────────────────────────────
-function mapPage(m) {
-  const canonical = `${SITE}/maps/${m.slug}/`;
-  const conf = CONFIDENCE[m.confidence] ?? CONFIDENCE.none;
+function mapPage(m, lang, text) {
+  const T = pageText[lang];
+  const L = p => localPath(lang, p);
+  const path = `/maps/${m.slug}/`;
+  const canonical = SITE + L(path);
+  const conf = confidence(lang, m.confidence);
   const modeMeta = modes.find(x => x.name === m.mode);
   const sNames = (m.picks.S ?? []).map(p => p.name);
+  const chip = n => pickChip(n, lang);
 
   const description = m.confidence === "none"
-    ? `${m.name} (${m.mode}) — not enough competitive data yet for reliable pick suggestions. Browse other Brawl Stars maps on Brawl Calculator.`
-    : `Best brawlers for ${m.name} (${m.mode}) in Brawl Stars: ${sNames.slice(0, 3).join(", ")}${sNames.length > 3 ? " and more" : ""}. ${m.ranked ? "Plus the top bans for ranked drafts. " : ""}Updated ${mapsUpdated}.`;
+    ? T.mapDescriptionNone(m.name, m.mode)
+    : T.mapDescription(m.name, m.mode, topList(lang, sNames), m.ranked, formatMonthYear(mapsUpdated, lang));
 
   const tierSection = m.confidence === "none" ? `
 <section class="no-data-block">
-  <h2>Best brawlers</h2>
-  <p class="note">${esc(conf.blurb)} Check back after this map has seen more competitive play — or open the
-  <a href="/">counterpick calculator</a> to draft around your opponents instead.</p>
+  <h2>${T.bestBrawlers}</h2>
+  <p class="note">${T.noDataNote(esc(conf.blurb), calcHref(lang))}</p>
 </section>` : `
 <section>
-  <h2>S tier — best picks</h2>
+  <h2>${T.tierS}</h2>
   <ul class="counter-list">
 ${(m.picks.S ?? []).map(p => `  <li>
-    ${pickChip(p.name)}
-    <p class="why">${esc(p.why ?? "")}</p>
+    ${chip(p.name)}
+    <p class="why">${esc(p.why ? text(`p|${m.slug}|${p.name}`) : "")}</p>
   </li>`).join("\n")}
   </ul>
 </section>
 ${(m.picks.A ?? []).length ? `<section>
-  <h2>A tier — strong picks</h2>
-  <div class="chip-row">${m.picks.A.map(pickChip).join("\n")}</div>
+  <h2>${T.tierA}</h2>
+  <div class="chip-row">${m.picks.A.map(chip).join("\n")}</div>
 </section>` : ""}
 ${(m.picks.B ?? []).length ? `<section>
-  <h2>B tier — solid picks</h2>
-  <div class="chip-row">${m.picks.B.map(pickChip).join("\n")}</div>
+  <h2>${T.tierB}</h2>
+  <div class="chip-row">${m.picks.B.map(chip).join("\n")}</div>
 </section>` : ""}
 ${m.ranked && (m.bans ?? []).length ? `<section>
-  <h2>Best bans</h2>
+  <h2>${T.bestBans}</h2>
   <ul class="counter-list">
 ${m.bans.map(b => `  <li>
-    ${pickChip(b.name)}
-    <p class="why">${esc(b.why ?? "")}</p>
+    ${chip(b.name)}
+    <p class="why">${esc(b.why ? text(`b|${m.slug}|${b.name}`) : "")}</p>
   </li>`).join("\n")}
   </ul>
 </section>` : ""}`;
@@ -187,8 +199,8 @@ ${m.bans.map(b => `  <li>
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Brawl Calculator", item: `${SITE}/` },
-        { "@type": "ListItem", position: 2, name: "Maps", item: `${SITE}/maps/` },
+        { "@type": "ListItem", position: 1, name: "Brawl Calculator", item: SITE + calcHref(lang) },
+        { "@type": "ListItem", position: 2, name: T.crumbMaps, item: SITE + L("/maps/") },
         { "@type": "ListItem", position: 3, name: m.name, item: canonical },
       ],
     },
@@ -197,44 +209,47 @@ ${m.bans.map(b => `  <li>
     jsonLd.push({
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: `Best brawlers for ${m.name} (${m.mode})`,
+      name: T.mapItemList(m.name, m.mode),
       itemListElement: [...sNames, ...(m.picks.A ?? []), ...(m.picks.B ?? [])]
-        .map((n, i) => ({ "@type": "ListItem", position: i + 1, name: n, url: `${SITE}/counters/${brawlerSlug(n)}/` })),
+        .map((n, i) => ({ "@type": "ListItem", position: i + 1, name: n, url: SITE + L(`/counters/${brawlerSlug(n)}/`) })),
     });
   }
 
   const body = `<script type="application/ld+json">
 ${JSON.stringify(jsonLd)}
 </script>
-${nav("maps")}
-<nav class="crumbs"><a href="/">Calculator</a> › <a href="/maps/">Maps</a> › <span>${esc(m.name)}</span></nav>
+${nav(lang, "maps")}
+<div class="crumbs-row">
+<nav class="crumbs"><a href="${calcHref(lang)}">${T.crumbCalc}</a> › <a href="${L("/maps/")}">${T.crumbMaps}</a> › <span>${esc(m.name)}</span></nav>
+<!--lang-switch-->
+</div>
 <header class="map-header">
-  <img class="map-art" src="${m.image}" alt="${esc(m.name)} map layout" loading="eager" decoding="async">
+  <img class="map-art" src="${m.image}" alt="${esc(T.mapArtAlt(m.name))}" loading="eager" decoding="async">
   <div class="map-head-text">
-    ${modeMeta ? modeChip(modeMeta) : ""}
+    ${modeMeta ? modeChip(modeMeta, lang) : ""}
     <h1>${esc(m.name)}</h1>
-    <p class="subtitle">${m.summary ? esc(m.summary) : `Best brawlers for ${esc(m.name)} in ${esc(m.mode)}.`}</p>
+    <p class="subtitle">${m.summary ? esc(text(`s|${m.slug}`)) : esc(T.mapSubtitleFallback(m.name, m.mode))}</p>
     <p class="conf-badge ${conf.cls}" title="${esc(conf.blurb)}">${esc(conf.label)}</p>
   </div>
 </header>
 <main>
 ${tierSection}
-<a class="cta" href="/">Drafting right now? Open the counterpick calculator</a>
+<a class="cta" href="${calcHref(lang)}">${T.mapCta}</a>
 </main>`;
 
   return pageShell({
-    title: m.confidence === "none"
-      ? `${m.name} (${m.mode}) — Brawl Stars Map`
-      : `Best Brawlers for ${m.name} (${m.mode}) — Picks & Bans`,
+    lang,
+    path,
+    title: m.confidence === "none" ? T.mapTitleNone(m.name, m.mode) : T.mapTitle(m.name, m.mode),
     description,
-    canonical,
     body,
   });
 }
 
 // ── Interactive index ───────────────────────────────────────────────────────
-function mapsIndex() {
-  const canonical = `${SITE}/maps/`;
+function mapsIndex(lang) {
+  const T = pageText[lang];
+  const date = formatMonthYear(mapsUpdated, lang);
   const researched = maps.filter(m => m.confidence !== "none").length;
 
   const byRank = (a, b) => modeRank(a.name) - modeRank(b.name) || b.count - a.count;
@@ -249,10 +264,10 @@ function mapsIndex() {
   </button>`;
 
   const chips = `<div class="mode-chips" id="modeChips">
-  <button class="mode-chip active" data-mode="all">All <span class="count">${standardCount}</span></button>
+  <button class="mode-chip active" data-mode="all">${T.modeAll} <span class="count">${standardCount}</span></button>
 ${standardModes.map(m => chip(m)).join("\n")}
   <button class="mode-chip" id="nicheToggle" aria-expanded="false"
-          title="Limited-time and event modes">More modes <span class="count">${nicheModes.length}</span></button>
+          title="${esc(T.moreModesTitle)}">${T.moreModes} <span class="count">${nicheModes.length}</span></button>
 ${nicheModes.map(m => chip(m, " niche-chip")).join("\n")}
 </div>`;
 
@@ -260,9 +275,9 @@ ${nicheModes.map(m => chip(m, " niche-chip")).join("\n")}
     modeRank(a.mode) - modeRank(b.mode) || a.name.localeCompare(b.name));
 
   const cards = orderedMaps.map(m => {
-    const conf = CONFIDENCE[m.confidence] ?? CONFIDENCE.none;
+    const conf = confidence(lang, m.confidence);
     const modeMeta = modes.find(x => x.name === m.mode);
-    return `  <a class="map-card" href="/maps/${m.slug}/" data-mode="${m.modeSlug}"
+    return `  <a class="map-card" href="${localPath(lang, `/maps/${m.slug}/`)}" data-mode="${m.modeSlug}"
      data-niche="${NICHE_MODES.has(m.mode) ? "1" : "0"}"
      data-name="${esc(m.name.toLowerCase())}">
     <img src="${m.image}" alt="" loading="lazy" decoding="async">
@@ -277,22 +292,25 @@ ${nicheModes.map(m => chip(m, " niche-chip")).join("\n")}
   </a>`;
   }).join("\n");
 
-  const body = `${nav("maps")}
-<nav class="crumbs"><a href="/">Calculator</a> › <span>Maps</span></nav>
+  const body = `${nav(lang, "maps")}
+<div class="crumbs-row">
+<nav class="crumbs"><a href="${calcHref(lang)}">${T.crumbCalc}</a> › <span>${T.crumbMaps}</span></nav>
+<!--lang-switch-->
+</div>
 <header>
-  <h1>Best Brawlers by Map</h1>
-  <p class="subtitle">Pick a map to see the strongest picks and bans · ${researched} of ${maps.length} maps researched · updated ${esc(mapsUpdated)}</p>
+  <h1>${esc(T.mapsH1)}</h1>
+  <p class="subtitle">${esc(T.mapsSubtitle(researched, maps.length, date))}</p>
 </header>
 <main class="maps-main">
   <div class="page-search">
-    <input id="mapSearch" type="search" placeholder="Search maps…"
-           aria-label="Search maps" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <input id="mapSearch" type="search" placeholder="${esc(T.searchMaps)}"
+           aria-label="${esc(T.searchMapsLabel)}" autocomplete="off" autocapitalize="off" spellcheck="false">
   </div>
 ${chips}
   <div class="map-grid" id="mapGrid">
 ${cards}
   </div>
-  <p class="note search-empty" hidden>No maps match. Try a different search or mode.</p>
+  <p class="note search-empty" hidden>${esc(T.noMapMatch)}</p>
 </main>`;
 
   const scripts = `<script>
@@ -363,9 +381,10 @@ ${cards}
 </script>`;
 
   return pageShell({
-    title: `Best Brawlers for Every Map — Brawl Stars Picks & Bans (${mapsUpdated})`,
-    description: `Best brawlers and bans for every Brawl Stars map, filterable by game mode — ${maps.length} maps with tiered picks researched from competitive data.`,
-    canonical,
+    lang,
+    path: "/maps/",
+    title: T.mapsTitle(date),
+    description: T.mapsDescription(maps.length),
     body,
     scripts,
   });
@@ -413,6 +432,7 @@ body {
 .crumbs { width: 100%; max-width: 1080px; font-size: 0.78rem; color: var(--text-3); margin-bottom: 1.75rem; }
 .crumbs a { color: var(--text-2); text-decoration: none; }
 .crumbs a:hover { color: var(--text); }
+.crumbs-row { max-width: 1080px; margin-bottom: 1.75rem; }
 header { text-align: center; margin-bottom: 2rem; max-width: 640px; }
 h1 { font-family: 'Brawl Stars', sans-serif; font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.12; margin-bottom: 0.5rem;
   background: linear-gradient(160deg, #ffffff 30%, rgba(255,255,255,0.6) 100%);
@@ -485,7 +505,7 @@ footer p + p { margin-top: 0.5rem; }
 footer a { color: var(--text-2); }
 footer a:hover { color: var(--text); }
 footer .disclaimer { font-size: 0.64rem; }
-
+${langSwitchCss}
 @media (max-width: 640px) {
   .nav-quiet { display: inline; } /* keep Maps/Counters reachable on mobile */
   .brand span { display: none; }
@@ -506,18 +526,23 @@ const stylesHash = hash8(readFileSync(join(ROOT, "docs", "styles.css"), "utf8"))
 
 // ── Emit ────────────────────────────────────────────────────────────────────
 // Wipe generated map dirs (keep nothing stale), then write everything.
-try {
-  for (const entry of await readdir(OUT, { withFileTypes: true })) {
-    await rm(join(OUT, entry.name), { recursive: true, force: true });
-  }
-} catch { /* first run */ }
-await mkdir(OUT, { recursive: true });
+for (const lang of PAGE_LANGS) {
+  const out = outDir(lang);
+  const text = await localizedContent(lang);
+  try {
+    for (const entry of await readdir(out, { withFileTypes: true })) {
+      await rm(join(out, entry.name), { recursive: true, force: true });
+    }
+  } catch { /* first run */ }
+  await mkdir(out, { recursive: true });
 
-await writeFile(join(OUT, "maps.css"), css);
-await writeFile(join(OUT, "index.html"), mapsIndex());
-for (const m of maps) {
-  const dir = join(OUT, m.slug);
-  await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, "index.html"), mapPage(m));
+  // One shared stylesheet: every language's pages link /maps/maps.css.
+  if (lang === "en") await writeFile(join(out, "maps.css"), css);
+  await writeFile(join(out, "index.html"), mapsIndex(lang));
+  for (const m of maps) {
+    const dir = join(out, m.slug);
+    await mkdir(dir, { recursive: true });
+    await writeFile(join(dir, "index.html"), mapPage(m, lang, text));
+  }
 }
-console.log(`Generated ${maps.length} map pages + interactive index (updated: ${mapsUpdated}).`);
+console.log(`Generated ${maps.length} map pages + interactive index in ${PAGE_LANGS.join("/")} (updated: ${mapsUpdated}).`);

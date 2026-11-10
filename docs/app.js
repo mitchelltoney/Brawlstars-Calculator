@@ -8,14 +8,15 @@ import {
   prefixMatches,
   addPick,
   togglePick,
-} from "./calculate.js?v=2026-11-10";
-import { matchupNotes } from "./matchup-notes.js?v=2026-11-10";
-import { HTML_LANG, pickLang, translate, translateClass, formatMonthYear } from "./i18n.js?v=2026-11-10";
+} from "./calculate.js?v=2026-11-10.1";
+import { matchupNotes } from "./matchup-notes.js?v=2026-11-10.1";
+import { HTML_LANG, pickLang, translate, translateClass, formatMonthYear } from "./i18n.js?v=2026-11-10.1";
 
 // ── Language ───────────────────────────────────────────────────────────────
 // ?lang= (one visit) beats the saved EN/ES/PT toggle, which beats the browser's
 // languages. Static text is tagged in the HTML with data-i18n (textContent),
-// data-i18n-html (innerHTML) or data-i18n-attr="attr:key,attr:key".
+// data-i18n-html (innerHTML) or data-i18n-attr="attr:key,attr:key"; links to
+// the generated pages carry data-lpath and point at /es/… or /pt/… copies.
 
 const LANG_KEY = "lang";
 let lang = pickLang({
@@ -28,6 +29,33 @@ function t(key, vars) {
   return translate(lang, key, vars);
 }
 
+// "counters/" → "es/counters/" (relative, like the links in index.html).
+function localPath(path) {
+  return lang === "en" ? path : `${lang}/${path}`;
+}
+
+// Matchup-note tooltips in the UI language. Translations load on demand;
+// until they arrive (or for a pair without one) the English note shows.
+const notesByLang = { en: matchupNotes };
+const noteModules = {
+  es: () => import("./i18n/es/matchup-notes.js?v=2026-11-10.1"),
+  pt: () => import("./i18n/pt/matchup-notes.js?v=2026-11-10.1"),
+};
+
+function loadNotes(l) {
+  if (notesByLang[l] || !noteModules[l]) return;
+  noteModules[l]()
+    .then(m => {
+      notesByLang[l] = m.matchupNotes;
+      if (l === lang && hasCalculated) renderResults({ scroll: false });
+    })
+    .catch(() => {});
+}
+
+function noteFor(defender, counter) {
+  return notesByLang[lang]?.[defender]?.[counter] ?? matchupNotes[defender]?.[counter];
+}
+
 function applyStaticStrings() {
   document.documentElement.lang = HTML_LANG[lang];
   document.title = t("pageTitle");
@@ -36,6 +64,9 @@ function applyStaticStrings() {
   });
   document.querySelectorAll("[data-i18n-html]").forEach(el => {
     el.innerHTML = t(el.dataset.i18nHtml);
+  });
+  document.querySelectorAll("[data-lpath]").forEach(el => {
+    el.setAttribute("href", localPath(el.dataset.lpath));
   });
   document.querySelectorAll("[data-i18n-attr]").forEach(el => {
     for (const pair of el.dataset.i18nAttr.split(",")) {
@@ -463,7 +494,7 @@ function renderResults({ scroll = false } = {}) {
 
     const label = document.createElement("h3");
     label.innerHTML =
-      `<a href="counters/${pageSlug(group.brawler)}/" title="${t("guideLinkTitle", { name: group.brawler })}">${group.brawler}</a><br>${t("countersLabel")}`;
+      `<a href="${localPath(`counters/${pageSlug(group.brawler)}/`)}" title="${t("guideLinkTitle", { name: group.brawler })}">${group.brawler}</a><br>${t("countersLabel")}`;
     row.appendChild(label);
 
     const body = document.createElement("div");
@@ -475,7 +506,7 @@ function renderResults({ scroll = false } = {}) {
     hiddenByBans += group.counters.length - visible.length;
     if (visible.length) {
       visible.forEach(c =>
-        cards.appendChild(makeCard(c, matchupNotes[group.brawler]?.[c])));
+        cards.appendChild(makeCard(c, noteFor(group.brawler, c))));
     } else {
       const note = document.createElement("p");
       note.className = "no-data";
@@ -583,8 +614,11 @@ function setLang(next) {
   updateSortLabel();
   updateBanToggle();
   renderTray();
+  loadNotes(lang);
   if (hasCalculated) renderResults({ scroll: false });
 }
+
+loadNotes(lang);
 
 document.querySelectorAll(".lang-toggle button").forEach(btn => {
   btn.addEventListener("click", () => setLang(btn.dataset.lang));
